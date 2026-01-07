@@ -34,21 +34,18 @@ const INITIAL_RATES: ReturnRates = {
 
 /**
  * Premium "Invest Right" Logo
- * Stylish badge with a professional check mark.
+ * Just a stylish, professional standalone tick mark.
  */
-const CompanyLogo: React.FC<{ sizeClass?: string; iconSize?: number }> = ({ 
-  sizeClass = "w-10 h-10", 
-  iconSize = 22
+const CompanyLogo: React.FC<{ size?: number; className?: string }> = ({ 
+  size = 32,
+  className = ""
 }) => {
   return (
-    <div className={`${sizeClass} bg-slate-950 rounded-xl flex items-center justify-center border border-amber-500/40 shadow-xl shrink-0 relative overflow-hidden group transition-all`}>
-      <div className="absolute inset-0 bg-gradient-to-br from-amber-500/10 to-transparent"></div>
-      <div className="absolute top-1 right-1">
-        <Sparkles className="w-2.5 h-2.5 text-amber-500/40" />
-      </div>
-      <div className="bg-amber-500/10 p-1 rounded-lg border border-amber-500/20">
-        <Check size={iconSize} className="text-amber-500 stroke-[3.5px] relative z-10 drop-shadow-[0_0_10px_rgba(245,158,11,0.5)]" />
-      </div>
+    <div className={`flex items-center justify-center ${className}`}>
+      <Check 
+        size={size} 
+        className="text-amber-500 stroke-[3.5px] drop-shadow-[0_2px_4px_rgba(245,158,11,0.3)] transition-transform hover:scale-110" 
+      />
     </div>
   );
 };
@@ -57,7 +54,7 @@ const PrintHeader: React.FC<{ inputs: UserInputs }> = ({ inputs }) => (
   <div className="flex flex-col border-b border-slate-200 pb-8 mb-10">
     <div className="flex justify-between items-center">
       <div className="flex items-center gap-6">
-        <CompanyLogo sizeClass="w-16 h-16" iconSize={32} />
+        <CompanyLogo size={48} />
         <div>
           <h1 className="text-3xl font-black text-slate-900 tracking-tight leading-none uppercase">Invest Right</h1>
           <p className="text-slate-400 text-[11px] mt-2 font-bold uppercase tracking-[0.25em]">FinWise Strategic Wealth Report</p>
@@ -145,8 +142,8 @@ export default function App() {
   };
 
   /**
-   * Enhanced PDF Download Logic
-   * Fixes "half text" issue by ensuring high-dpi capture and consistent scale.
+   * Enhanced PDF Download Logic (Landscape Mode)
+   * Fixes layout issues by using landscape orientation and optimized capture dimensions.
    */
   const handleDownloadPdf = async () => {
     const element = document.getElementById('report-content');
@@ -154,24 +151,25 @@ export default function App() {
 
     setIsDownloading(true);
 
-    // Fixed container width for PDF ensures the layout doesn't collapse
+    // Optimized width for landscape A4 (approx 1.41 aspect ratio)
     const originalStyle = element.getAttribute('style') || '';
-    element.style.width = '1000px'; 
-    element.style.padding = '40px';
+    element.style.width = '1280px'; 
+    element.style.padding = '50px';
+    element.style.backgroundColor = '#ffffff';
 
     const opt = {
       margin: 10,
-      filename: `Invest_Right_Strategy_${new Date().toISOString().split('T')[0]}.pdf`,
+      filename: `Invest_Right_Landscape_${new Date().toISOString().split('T')[0]}.pdf`,
       image: { type: 'jpeg', quality: 0.98 },
       html2canvas: { 
-        scale: 2, // High resolution
+        scale: 2, 
         useCORS: true, 
         logging: false, 
         backgroundColor: '#ffffff',
-        width: 1000,
-        windowWidth: 1000
+        width: 1280,
+        windowWidth: 1280
       },
-      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' }
     };
 
     try {
@@ -200,7 +198,7 @@ export default function App() {
       <div className="bg-slate-950 text-white shadow-xl sticky top-0 z-50 no-print border-b border-amber-500/10">
         <div className="max-w-3xl mx-auto px-6 py-4 flex justify-between items-center">
           <div className="flex items-center gap-4">
-            <CompanyLogo />
+            <CompanyLogo size={28} />
             <div className="flex flex-col">
               <h1 className="text-base font-black tracking-tight leading-none uppercase">Invest Right</h1>
               <p className="text-amber-500/70 text-[10px] font-bold uppercase tracking-[0.2em] mt-1 opacity-90">Strategic Advisor</p>
@@ -496,15 +494,15 @@ export default function App() {
               >
                 {isDownloading ? (
                   <>
-                    <Loader2 className="w-6 h-6 animate-spin" /> Finalizing Report...
+                    <Loader2 className="w-6 h-6 animate-spin" /> Finalizing Landscape Report...
                   </>
                 ) : (
                   <>
-                    <Download className="w-6 h-6" /> Download Professional Report
+                    <Download className="w-6 h-6" /> Download Landscape PDF Report
                   </>
                 )}
               </button>
-              <p className="text-[10px] text-slate-400 text-center font-bold italic tracking-wide">High-resolution PDF will download automatically to your device.</p>
+              <p className="text-[10px] text-slate-400 text-center font-bold italic tracking-wide">Report will download directly in high-resolution landscape orientation.</p>
             </div>
           </div>
         )}
