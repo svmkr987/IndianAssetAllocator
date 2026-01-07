@@ -4,7 +4,7 @@ import {
   TrendingUp, Shield, AlertTriangle, PieChart, Target, ArrowRight,
   CheckCircle2, Calculator, RefreshCw, Home, Settings2, BarChart3,
   Sliders, FileText, CheckSquare, Coins, Lock, Printer, PlusCircle,
-  Gem, Wallet, ArrowUp, Download
+  Gem, Wallet, ArrowUp, Download, Sparkles, Loader2
 } from 'lucide-react';
 import { UserInputs, Exclusions, ReturnRates, AllocationResult, RiskLevel, ProjectionBreakdown } from './types';
 import { calculateAllocation, formatCurrency, formatDate } from './utils';
@@ -33,31 +33,34 @@ const INITIAL_RATES: ReturnRates = {
 };
 
 /**
- * Premium MKR Logo
- * Minimalist black & gold design.
+ * Premium FinWise "FW" Logo
+ * Modern diamond-cut monogram.
  */
 const CompanyLogo: React.FC<{ sizeClass?: string; textSize?: string }> = ({ 
   sizeClass = "w-10 h-10", 
-  textSize = "text-[10px]" 
+  textSize = "text-[12px]" 
 }) => {
   return (
-    <div className={`${sizeClass} bg-slate-950 rounded-lg flex items-center justify-center border border-amber-500/30 shadow-lg shrink-0 relative overflow-hidden group transition-all`}>
-      <div className="absolute inset-0 bg-gradient-to-br from-amber-500/10 to-transparent"></div>
-      <span className={`text-amber-500 font-extrabold ${textSize} leading-none select-none tracking-widest uppercase relative z-10`}>
-        MKR
+    <div className={`${sizeClass} bg-slate-950 rounded-xl flex items-center justify-center border border-amber-500/40 shadow-xl shrink-0 relative overflow-hidden group transition-all`}>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-amber-500/20 via-transparent to-transparent"></div>
+      <div className="absolute top-1 right-1">
+        <Sparkles className="w-2 h-2 text-amber-500 opacity-50" />
+      </div>
+      <span className={`text-amber-500 font-black ${textSize} leading-none select-none tracking-tighter relative z-10`}>
+        FW
       </span>
     </div>
   );
 };
 
 const PrintHeader: React.FC<{ inputs: UserInputs }> = ({ inputs }) => (
-  <div className="hidden print:flex flex-col border-b border-slate-200 pb-6 mb-8">
+  <div className="flex flex-col border-b border-slate-200 pb-6 mb-8">
     <div className="flex justify-between items-center">
       <div className="flex items-center gap-5">
-        <CompanyLogo sizeClass="w-14 h-14" textSize="text-sm" />
+        <CompanyLogo sizeClass="w-14 h-14" textSize="text-lg" />
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 tracking-tight leading-none">Invest Right</h1>
-          <p className="text-slate-400 text-xs mt-1.5 font-medium uppercase tracking-widest">A Financial Strategy by MKR FinWise</p>
+          <h1 className="text-2xl font-black text-slate-900 tracking-tight leading-none uppercase">Invest Right</h1>
+          <p className="text-slate-400 text-[10px] mt-1.5 font-bold uppercase tracking-[0.2em]">FinWise Private Wealth Strategy</p>
         </div>
       </div>
       <div className="text-right">
@@ -66,7 +69,7 @@ const PrintHeader: React.FC<{ inputs: UserInputs }> = ({ inputs }) => (
       </div>
     </div>
     
-    <div className="mt-8 grid grid-cols-4 gap-6 bg-slate-50/50 p-6 rounded-xl border border-slate-100">
+    <div className="mt-8 grid grid-cols-4 gap-6 bg-slate-50 p-6 rounded-xl border border-slate-100">
       <div>
         <div className="text-[10px] text-slate-400 uppercase font-bold tracking-wider mb-1">Investor Age</div>
         <div className="font-bold text-slate-800 text-lg">{inputs.age} Years</div>
@@ -92,6 +95,7 @@ export default function App() {
   const [showCalculator, setShowCalculator] = useState(false);
   const [showRatesModal, setShowRatesModal] = useState(false);
   const [isSipLocked, setIsSipLocked] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
 
   const [rates, setRates] = useState<ReturnRates>(INITIAL_RATES);
   const [inputs, setInputs] = useState<UserInputs>(INITIAL_INPUTS);
@@ -140,20 +144,32 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleDownloadPdf = () => {
+  /**
+   * Direct PDF Download Implementation
+   * Uses html2pdf library injected via index.html
+   */
+  const handleDownloadPdf = async () => {
+    const element = document.getElementById('report-content');
+    if (!element) return;
+
+    setIsDownloading(true);
+
+    const opt = {
+      margin: 10,
+      filename: `FinWise_Report_${new Date().toISOString().split('T')[0]}.pdf`,
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2, useCORS: true, logging: false },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+
     try {
-      const originalTitle = document.title;
-      const cleanDate = new Date().toISOString().split('T')[0];
-      document.title = `Invest_Right_Report_${cleanDate}`;
-      
-      requestAnimationFrame(() => {
-        window.print();
-        setTimeout(() => {
-          document.title = originalTitle;
-        }, 2000);
-      });
+      // @ts-ignore
+      await html2pdf().set(opt).from(element).save();
     } catch (error) {
-      console.error("Print dialog failed", error);
+      console.error("PDF generation failed:", error);
+      alert("Something went wrong during PDF generation. Please try again.");
+    } finally {
+      setIsDownloading(false);
     }
   };
 
@@ -173,7 +189,7 @@ export default function App() {
             <CompanyLogo />
             <div className="flex flex-col">
               <h1 className="text-base font-bold tracking-tight leading-none uppercase">Invest Right</h1>
-              <p className="text-amber-500/70 text-[10px] font-bold uppercase tracking-[0.2em] mt-1 opacity-80">by MKR FinWise</p>
+              <p className="text-amber-500/70 text-[10px] font-bold uppercase tracking-[0.2em] mt-1 opacity-80">FinWise Wealth</p>
             </div>
           </div>
           
@@ -191,8 +207,6 @@ export default function App() {
 
       <main className="max-w-3xl mx-auto px-4 py-10 print:p-0 print:max-w-none">
         
-        {step === 2 && <PrintHeader inputs={inputs} />}
-
         {/* Step 1: Configuration */}
         {step === 1 && (
           <div className="bg-white rounded-2xl shadow-2xl border border-slate-200/60 p-8 sm:p-10 animate-in fade-in slide-in-from-bottom-4 duration-500 relative overflow-hidden">
@@ -325,134 +339,133 @@ export default function App() {
           </div>
         )}
 
-        {/* Step 2: Results */}
+        {/* Step 2: Results Area (Wrapped in ID for PDF capture) */}
         {step === 2 && result && (
-          <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-            
-            {/* Summary Banner */}
-            <div className="bg-slate-950 rounded-2xl p-8 text-white shadow-2xl relative overflow-hidden group border border-amber-500/10 print:bg-white print:text-slate-950 print:border print:border-slate-200">
-              <div className="absolute top-0 right-0 p-8 opacity-10">
-                <BarChart3 size={120} className="text-amber-500" />
-              </div>
-
-              <div className="flex items-center justify-between text-amber-500/80 mb-8 border-b border-white/5 pb-4">
-                <div className="flex items-center gap-2 font-bold text-[10px] uppercase tracking-[0.2em]">
-                  <BarChart3 className="w-4 h-4" /> Strategic Wealth Projection
-                </div>
-                <button onClick={() => setShowRatesModal(true)} className="no-print p-2.5 bg-white/5 hover:bg-white/10 rounded-lg transition-colors text-[10px] text-amber-500 flex items-center gap-2 font-bold uppercase tracking-wider border border-amber-500/20">
-                  <Settings2 className="w-3.5 h-3.5" /> Return Models
-                </button>
-              </div>
+          <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <div id="report-content" className="space-y-8 bg-[#fcfcfd] p-0">
               
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 relative z-10">
-                <div>
-                   <div className="text-slate-500 text-[10px] font-bold uppercase tracking-widest mb-2">Cumulative Capital</div>
-                   <div className="text-2xl font-bold text-white tracking-tight">{formatCurrency(result!.projection.invested)}</div>
-                </div>
-                <div>
-                   <div className="text-slate-500 text-[10px] font-bold uppercase tracking-widest mb-2">Estimated Yield</div>
-                   <div className="text-2xl font-bold text-emerald-500 tracking-tight">
-                     +{formatCurrency(result.projection.value - result.projection.invested)}
-                   </div>
-                </div>
-                <div>
-                  <div className="text-amber-500/80 text-[10px] font-bold uppercase tracking-widest mb-2">Estimated Corpus</div>
-                  <div className="text-4xl font-black text-white tracking-tighter">{formatCurrency(result!.projection.value)}</div>
-                </div>
-              </div>
-              
-              <div className="mt-10 pt-6 border-t border-white/5">
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                   {Object.entries(result.projection.breakdown).map(([asset, data]) => {
-                     const breakdownData = data as ProjectionBreakdown;
-                     return breakdownData.invested > 0 && (
-                      <div key={asset} className="bg-white/[0.03] p-4 rounded-xl border border-white/5">
-                         <div className="font-bold text-slate-300 text-[10px] uppercase tracking-wider mb-2 flex items-center justify-between">
-                           {asset} <span className="text-amber-500/50">{rates[asset as keyof ReturnRates]}%</span>
-                         </div>
-                         <div className="text-xs font-bold text-white">{formatCurrency(breakdownData.invested + breakdownData.returns)}</div>
-                      </div>
-                     );
-                   })}
-                </div>
+              {/* For PDF export, we show a clean header if not in browser print mode */}
+              <div className="bg-white p-0 rounded-2xl">
+                <PrintHeader inputs={inputs} />
               </div>
 
-              <div className="mt-6 pt-6 border-t border-white/5 flex flex-wrap gap-6 items-center">
-                <div className="flex items-center gap-3">
-                  <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Weighted Efficiency</span>
-                  <span className="text-xs font-black text-emerald-500 bg-emerald-500/10 px-3 py-1 rounded border border-emerald-500/20">~{result.projection.weightedRate}% Annually</span>
+              {/* Summary Banner */}
+              <div className="bg-slate-950 rounded-2xl p-8 text-white shadow-2xl relative overflow-hidden group border border-amber-500/10 print:bg-white print:text-slate-950 print:border print:border-slate-200">
+                <div className="absolute top-0 right-0 p-8 opacity-10">
+                  <BarChart3 size={120} className="text-amber-500" />
                 </div>
-                {parseFloat(inputs.stepUp) > 0 && (
-                   <div className="flex items-center gap-3">
-                     <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Step-up Engine</span>
-                     <span className="text-xs font-black text-amber-500 bg-amber-500/10 px-3 py-1 rounded border border-amber-500/20">{inputs.stepUp}% P.A.</span>
-                   </div>
-                )}
-              </div>
-            </div>
 
-            {/* Main Allocation Cards */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-5 print-break-inside-avoid">
-              <AssetCard title="Equity" percent={result.percentages.equity} amount={result.amounts.equity} color="border-emerald-600" icon={TrendingUp} desc="Growth & Wealth" />
-              <AssetCard title="Debt" percent={result.percentages.debt} amount={result.amounts.debt} color={exclusions.debt ? "border-slate-200 opacity-40" : "border-slate-800"} icon={Shield} desc={exclusions.debt ? "Excluded" : "Safety & Buffer"} />
-              <AssetCard title="Gold" percent={result.percentages.gold} amount={result.amounts.gold} color={exclusions.commodities ? "border-slate-200 opacity-40" : "border-amber-500"} icon={PieChart} desc={exclusions.commodities ? "Excluded" : "Value Store"} />
-              <AssetCard title="Silver" percent={result.percentages.silver} amount={result.amounts.silver} color={exclusions.commodities ? "border-slate-200 opacity-40" : "border-slate-400"} icon={Coins} desc={exclusions.commodities ? "Excluded" : "Commodity Hedge"} />
-            </div>
-
-            {/* Detailed Equity Allocation */}
-            {result.percentages.equity > 0 && (
-              <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200/60 print-break-inside-avoid">
-                <div className="bg-slate-50 p-5 border-b border-slate-100 flex justify-between items-center">
-                  <h3 className="font-bold text-slate-900 flex items-center gap-3 text-xs uppercase tracking-widest"><TrendingUp className="w-4 h-4 text-emerald-600" /> Equity Components</h3>
-                  <span className="text-[10px] font-bold text-slate-500 border border-slate-200 px-3 py-1.5 rounded-lg uppercase tracking-wider">
-                    {formatCurrency(result.amounts.equity)} Monthly
-                  </span>
+                <div className="flex items-center justify-between text-amber-500/80 mb-8 border-b border-white/5 pb-4">
+                  <div className="flex items-center gap-2 font-bold text-[10px] uppercase tracking-[0.2em]">
+                    <BarChart3 className="w-4 h-4" /> Strategic Wealth Projection
+                  </div>
+                  <button onClick={() => setShowRatesModal(true)} className="no-print p-2.5 bg-white/5 hover:bg-white/10 rounded-lg transition-colors text-[10px] text-amber-500 flex items-center gap-2 font-bold uppercase tracking-wider border border-amber-500/20">
+                    <Settings2 className="w-3.5 h-3.5" /> Return Models
+                  </button>
                 </div>
-                <div className="p-8">
-                  {(Object.entries(result.equitySplit) as [string, number][]).map(([name, pct]) => {
-                     const catAmount = Math.round((result!.amounts.equity * pct) / 100);
-                     return pct > 0 && <ProgressBar key={name} label={name} value={pct} amount={formatCurrency(catAmount)} colorClass={name.includes('US') ? 'bg-slate-900' : 'bg-emerald-600'} />
-                  })}
+                
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 relative z-10">
+                  <div>
+                    <div className="text-slate-500 text-[10px] font-bold uppercase tracking-widest mb-2">Cumulative Capital</div>
+                    <div className="text-2xl font-bold text-white tracking-tight">{formatCurrency(result!.projection.invested)}</div>
+                  </div>
+                  <div>
+                    <div className="text-slate-500 text-[10px] font-bold uppercase tracking-widest mb-2">Estimated Yield</div>
+                    <div className="text-2xl font-bold text-emerald-500 tracking-tight">
+                      +{formatCurrency(result.projection.value - result.projection.invested)}
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-amber-500/80 text-[10px] font-bold uppercase tracking-widest mb-2">Estimated Corpus</div>
+                    <div className="text-4xl font-black text-white tracking-tighter">{formatCurrency(result!.projection.value)}</div>
+                  </div>
                 </div>
-              </div>
-            )}
+                
+                <div className="mt-10 pt-6 border-t border-white/5">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                    {Object.entries(result.projection.breakdown).map(([asset, data]) => {
+                      const breakdownData = data as ProjectionBreakdown;
+                      return breakdownData.invested > 0 && (
+                        <div key={asset} className="bg-white/[0.03] p-4 rounded-xl border border-white/5">
+                          <div className="font-bold text-slate-300 text-[10px] uppercase tracking-wider mb-2 flex items-center justify-between">
+                            {asset} <span className="text-amber-500/50">{rates[asset as keyof ReturnRates]}%</span>
+                          </div>
+                          <div className="text-xs font-bold text-white">{formatCurrency(breakdownData.invested + breakdownData.returns)}</div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
 
-            {/* Rationale & Recommendations */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 print-break-inside-avoid">
-              <div className="bg-white p-6 rounded-2xl border border-slate-200/60 shadow-sm">
-                <h4 className="font-bold text-slate-900 mb-5 text-[10px] uppercase tracking-[0.2em] border-b border-slate-50 pb-3 flex items-center gap-2">
-                  <FileText className="w-4 h-4 text-amber-600" /> Strategic Logic
-                </h4>
-                <p className={`text-xs leading-relaxed font-medium ${exclusions.debt && parseInt(inputs.horizon) < 5 ? 'text-red-600' : 'text-slate-600'}`}>{result.rationale}</p>
-              </div>
-
-              <div className="bg-white p-6 rounded-2xl border border-slate-200/60 shadow-sm">
-                <h4 className="font-bold text-slate-900 mb-5 text-[10px] uppercase tracking-[0.2em] border-b border-slate-50 pb-3 flex items-center gap-2">
-                  <Gem className="w-4 h-4 text-emerald-600" /> Asset Selection
-                </h4>
-                <div className="space-y-3">
-                  {!exclusions.debt && (
-                    <div className="flex justify-between items-center">
-                      <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Fixed Income</span>
-                      <span className="text-[10px] font-black text-slate-900 uppercase">Short/Med Bonds</span>
+                <div className="mt-6 pt-6 border-t border-white/5 flex flex-wrap gap-6 items-center">
+                  <div className="flex items-center gap-3">
+                    <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Weighted Efficiency</span>
+                    <span className="text-xs font-black text-emerald-500 bg-emerald-500/10 px-3 py-1 rounded border border-emerald-500/20">~{result.projection.weightedRate}% Annually</span>
+                  </div>
+                  {parseFloat(inputs.stepUp) > 0 && (
+                    <div className="flex items-center gap-3">
+                      <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Step-up Engine</span>
+                      <span className="text-xs font-black text-amber-500 bg-amber-500/10 px-3 py-1 rounded border border-amber-500/20">{inputs.stepUp}% P.A.</span>
                     </div>
                   )}
-                  {!exclusions.commodities && (
-                    <div className="flex justify-between items-center">
-                      <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Metals</span>
-                      <span className="text-[10px] font-black text-slate-900 uppercase">ETFs / SGB</span>
-                    </div>
-                  )}
-                  <div className="flex justify-between items-center">
-                    <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Equity</span>
-                    <span className="text-[10px] font-black text-slate-900 uppercase">Index & Alpha</span>
+                </div>
+              </div>
+
+              {/* Main Allocation Cards */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-5 print-break-inside-avoid">
+                <AssetCard title="Equity" percent={result.percentages.equity} amount={result.amounts.equity} color="border-emerald-600" icon={TrendingUp} desc="Growth & Wealth" />
+                <AssetCard title="Debt" percent={result.percentages.debt} amount={result.amounts.debt} color={exclusions.debt ? "border-slate-200 opacity-40" : "border-slate-800"} icon={Shield} desc={exclusions.debt ? "Excluded" : "Safety & Buffer"} />
+                <AssetCard title="Gold" percent={result.percentages.gold} amount={result.amounts.gold} color={exclusions.commodities ? "border-slate-200 opacity-40" : "border-amber-500"} icon={PieChart} desc={exclusions.commodities ? "Excluded" : "Value Store"} />
+                <AssetCard title="Silver" percent={result.percentages.silver} amount={result.amounts.silver} color={exclusions.commodities ? "border-slate-200 opacity-40" : "border-slate-400"} icon={Coins} desc={exclusions.commodities ? "Excluded" : "Commodity Hedge"} />
+              </div>
+
+              {/* Detailed Equity Allocation */}
+              {result.percentages.equity > 0 && (
+                <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200/60 print-break-inside-avoid">
+                  <div className="bg-slate-50 p-5 border-b border-slate-100 flex justify-between items-center">
+                    <h3 className="font-bold text-slate-900 flex items-center gap-3 text-xs uppercase tracking-widest"><TrendingUp className="w-4 h-4 text-emerald-600" /> Equity Components</h3>
+                    <span className="text-[10px] font-bold text-slate-500 border border-slate-200 px-3 py-1.5 rounded-lg uppercase tracking-wider">
+                      {formatCurrency(result.amounts.equity)} Monthly
+                    </span>
+                  </div>
+                  <div className="p-8">
+                    {(Object.entries(result.equitySplit) as [string, number][]).map(([name, pct]) => {
+                      const catAmount = Math.round((result!.amounts.equity * pct) / 100);
+                      return pct > 0 && <ProgressBar key={name} label={name} value={pct} amount={formatCurrency(catAmount)} colorClass={name.includes('US') ? 'bg-slate-900' : 'bg-emerald-600'} />
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* Logic & Disclaimers in PDF too */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 print-break-inside-avoid">
+                <div className="bg-white p-6 rounded-2xl border border-slate-200/60 shadow-sm">
+                  <h4 className="font-bold text-slate-900 mb-5 text-[10px] uppercase tracking-[0.2em] border-b border-slate-50 pb-3 flex items-center gap-2">
+                    <FileText className="w-4 h-4 text-amber-600" /> Strategic Logic
+                  </h4>
+                  <p className={`text-xs leading-relaxed font-medium ${exclusions.debt && parseInt(inputs.horizon) < 5 ? 'text-red-600' : 'text-slate-600'}`}>{result.rationale}</p>
+                </div>
+                <div className="bg-white p-6 rounded-2xl border border-slate-200/60 shadow-sm">
+                  <h4 className="font-bold text-slate-900 mb-5 text-[10px] uppercase tracking-[0.2em] border-b border-slate-50 pb-3 flex items-center gap-2">
+                    <Gem className="w-4 h-4 text-emerald-600" /> Asset Selection
+                  </h4>
+                  <div className="text-[10px] text-slate-500 leading-relaxed">
+                    Based on market conditions, we recommend utilizing high-efficiency index funds for equity and sovereign bonds for debt components.
                   </div>
                 </div>
               </div>
+
+              {/* Footer Disclaimer (Always visible in Report Area) */}
+              <div className="flex gap-5 p-6 border border-slate-100 bg-slate-50 rounded-2xl print-break-inside-avoid">
+                <AlertTriangle className="w-6 h-6 text-amber-600 shrink-0" />
+                <div className="text-[10px] text-slate-500 leading-relaxed font-medium">
+                  <p><strong className="text-slate-900 uppercase tracking-wider">Professional Disclosure:</strong> This document is generated for informational planning only. Investment portfolios should be reviewed periodically with a FinWise expert.</p>
+                </div>
+              </div>
             </div>
 
-            {/* Actions */}
-            <div className="no-print space-y-4 pt-6">
+            {/* Actions (Excluded from PDF via no-print and ID selection) */}
+            <div className="no-print space-y-4 pt-12">
               <div className="grid grid-cols-2 gap-4">
                 <button onClick={() => { setStep(1); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
                   className="bg-slate-100 hover:bg-slate-200 text-slate-900 font-bold py-4 rounded-xl transition-all text-[11px] uppercase tracking-widest flex items-center justify-center gap-2">
@@ -466,22 +479,21 @@ export default function App() {
               
               <button 
                 onClick={handleDownloadPdf} 
-                className="w-full bg-slate-950 hover:bg-black text-amber-500 font-bold py-5 rounded-xl transition-all shadow-2xl flex items-center justify-center gap-3 active:scale-[0.99] uppercase text-xs tracking-[0.2em] border border-amber-500/20"
+                disabled={isDownloading}
+                className="w-full bg-slate-950 hover:bg-black text-amber-500 font-bold py-5 rounded-xl transition-all shadow-2xl flex items-center justify-center gap-3 active:scale-[0.99] uppercase text-xs tracking-[0.2em] border border-amber-500/20 disabled:opacity-70 disabled:cursor-not-allowed"
               >
-                <Download className="w-5 h-5" /> Download Report as PDF
+                {isDownloading ? (
+                  <>
+                    <Loader2 className="w-5 h-5 animate-spin" /> Generating PDF...
+                  </>
+                ) : (
+                  <>
+                    <Download className="w-5 h-5" /> Download Report as PDF
+                  </>
+                )}
               </button>
-              <p className="text-[10px] text-slate-400 text-center font-medium italic">When the dialog opens, select "Save as PDF" to download your strategy.</p>
+              <p className="text-[10px] text-slate-400 text-center font-medium italic">Your personalized wealth blueprint will download directly to your device.</p>
             </div>
-
-            {/* Disclaimer */}
-            <div className="flex gap-5 p-6 border border-slate-100 bg-slate-50/50 rounded-2xl print-break-inside-avoid">
-              <AlertTriangle className="w-6 h-6 text-amber-600 shrink-0" />
-              <div className="text-[10px] text-slate-500 leading-relaxed font-medium">
-                <p><strong className="text-slate-900 uppercase tracking-wider">Professional Disclosure:</strong> This engine generates asset allocation models based on historical parameters and risk frameworks. It is designed for educational and planning purposes only and is not a substitute for SEBI-registered advisory services.</p>
-                <p className="mt-3 font-bold italic text-slate-400">*Investment values fluctuate with market cycles. Review documents before allocation.</p>
-              </div>
-            </div>
-
           </div>
         )}
       </main>
