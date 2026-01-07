@@ -4,7 +4,7 @@ import {
   TrendingUp, Shield, AlertTriangle, PieChart, Target, ArrowRight,
   CheckCircle2, Calculator, RefreshCw, Home, Settings2, BarChart3,
   Sliders, FileText, CheckSquare, Coins, Lock, Printer, PlusCircle,
-  Gem, Wallet
+  Gem, Wallet, ArrowUp
 } from 'lucide-react';
 import { UserInputs, Exclusions, ReturnRates, AllocationResult, RiskLevel, ProjectionBreakdown } from './types';
 import { calculateAllocation, formatCurrency, formatDate } from './utils';
@@ -17,7 +17,7 @@ const INITIAL_INPUTS: UserInputs = {
   stepUp: '0', 
   horizon: '10', 
   risk: 'Medium' 
-};
+ };
 
 const INITIAL_EXCLUSIONS: Exclusions = {
   debt: false,
@@ -33,33 +33,18 @@ const INITIAL_RATES: ReturnRates = {
 };
 
 /**
- * Logo Component with fallback handling
+ * Simplified Branded Logo Component
+ * Focuses purely on the 'MKR' identity as requested.
  */
-const CompanyLogo: React.FC<{ sizeClass?: string; iconSize?: number }> = ({ 
+const CompanyLogo: React.FC<{ sizeClass?: string; textSize?: string }> = ({ 
   sizeClass = "w-10 h-10", 
-  iconSize = 20 
+  textSize = "text-xs" 
 }) => {
-  const [error, setError] = useState(false);
-  // Using root-relative path and a version query to bypass cache
-  const logoPath = "/logo.png?v=2";
-
   return (
-    <div className={`${sizeClass} bg-white rounded-full flex items-center justify-center overflow-hidden border border-white/20 shadow-sm shrink-0`}>
-      {!error ? (
-        <img 
-          src={logoPath} 
-          alt="MKR FinWise" 
-          className="w-full h-full object-contain p-0.5"
-          onError={() => {
-            console.warn("Logo failed to load at:", logoPath);
-            setError(true);
-          }}
-        />
-      ) : (
-        <div className="bg-indigo-50 w-full h-full flex items-center justify-center">
-          <TrendingUp size={iconSize} className="text-indigo-600" />
-        </div>
-      )}
+    <div className={`${sizeClass} bg-white rounded-xl flex items-center justify-center overflow-hidden border border-white/20 shadow-sm shrink-0 relative group transition-all`}>
+      <span className={`text-indigo-700 font-black ${textSize} leading-none select-none tracking-tighter uppercase`}>
+        MKR
+      </span>
     </div>
   );
 };
@@ -68,7 +53,7 @@ const PrintHeader: React.FC<{ inputs: UserInputs }> = ({ inputs }) => (
   <div className="hidden print:flex flex-col border-b-2 border-slate-800 pb-4 mb-6">
     <div className="flex justify-between items-center">
       <div className="flex items-center gap-4">
-        <CompanyLogo sizeClass="w-16 h-16" iconSize={32} />
+        <CompanyLogo sizeClass="w-16 h-16" textSize="text-2xl" />
         <div>
           <h1 className="text-2xl font-bold text-slate-900 leading-none">Indian Asset Allocator</h1>
           <p className="text-slate-500 text-sm mt-1 font-semibold">Financial Strategy Report by MKR FinWise</p>
