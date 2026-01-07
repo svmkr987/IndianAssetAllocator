@@ -55,8 +55,8 @@ const PrintHeader: React.FC<{ inputs: UserInputs }> = ({ inputs }) => (
       <div className="flex items-center gap-4">
         <CompanyLogo sizeClass="w-16 h-16" textSize="text-2xl" />
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 leading-none">Indian Asset Allocator</h1>
-          <p className="text-slate-500 text-sm mt-1 font-semibold">Financial Strategy Report by MKR FinWise</p>
+          <h1 className="text-2xl font-bold text-slate-900 leading-none">Invest Right by MKR FinWise</h1>
+          <p className="text-slate-500 text-sm mt-1 font-semibold">Financial Strategy Report</p>
         </div>
       </div>
       <div className="text-right">
@@ -143,7 +143,7 @@ export default function App() {
     try {
       const originalTitle = document.title;
       const cleanDate = new Date().toISOString().split('T')[0];
-      document.title = `MKR_FinWise_Strategy_${cleanDate}`;
+      document.title = `Invest_Right_Strategy_${cleanDate}`;
       
       requestAnimationFrame(() => {
         window.print();
@@ -172,7 +172,7 @@ export default function App() {
           <div className="flex items-center gap-3">
             <CompanyLogo />
             <div>
-              <h1 className="text-lg font-bold tracking-tight leading-none">Indian Asset Allocator</h1>
+              <h1 className="text-lg font-bold tracking-tight leading-none">Invest Right</h1>
               <p className="text-indigo-200 text-[10px] font-bold uppercase tracking-wider mt-1 opacity-80">by MKR FinWise</p>
             </div>
           </div>
