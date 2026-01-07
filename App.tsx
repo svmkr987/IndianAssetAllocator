@@ -55,7 +55,7 @@ const ReportHeader: React.FC<{ inputs: UserInputs }> = ({ inputs }) => (
         <StylishTickLogo size={40} />
         <div>
           <h1 className="text-3xl font-black text-slate-900 tracking-tight leading-none uppercase">Invest Right</h1>
-          <p className="text-slate-400 text-[11px] mt-2 font-bold uppercase tracking-[0.25em]">Strategic Wealth Portfolio</p>
+          <p className="text-slate-400 text-[11px] mt-2 font-bold uppercase tracking-[0.25em]">by MKR FinWise</p>
         </div>
       </div>
       <div className="text-right">
