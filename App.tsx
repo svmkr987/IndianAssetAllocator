@@ -3,7 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { 
   TrendingUp, Shield, AlertTriangle, PieChart, Target, ArrowRight,
   CheckCircle2, Calculator, RefreshCw, Home, Settings2, BarChart3,
-  Sliders, FileText, CheckSquare, Coins, Lock, Printer, PlusCircle
+  Sliders, FileText, CheckSquare, Coins, Lock, Printer, PlusCircle,
+  Gem, Wallet
 } from 'lucide-react';
 import { UserInputs, Exclusions, ReturnRates, AllocationResult, RiskLevel, ProjectionBreakdown } from './types';
 import { calculateAllocation, formatCurrency, formatDate } from './utils';
@@ -31,12 +32,47 @@ const INITIAL_RATES: ReturnRates = {
   silver: 8 
 };
 
+/**
+ * Logo Component with fallback handling
+ */
+const CompanyLogo: React.FC<{ sizeClass?: string; iconSize?: number }> = ({ 
+  sizeClass = "w-10 h-10", 
+  iconSize = 20 
+}) => {
+  const [error, setError] = useState(false);
+  // Using root-relative path and a version query to bypass cache
+  const logoPath = "/logo.png?v=2";
+
+  return (
+    <div className={`${sizeClass} bg-white rounded-full flex items-center justify-center overflow-hidden border border-white/20 shadow-sm shrink-0`}>
+      {!error ? (
+        <img 
+          src={logoPath} 
+          alt="MKR FinWise" 
+          className="w-full h-full object-contain p-0.5"
+          onError={() => {
+            console.warn("Logo failed to load at:", logoPath);
+            setError(true);
+          }}
+        />
+      ) : (
+        <div className="bg-indigo-50 w-full h-full flex items-center justify-center">
+          <TrendingUp size={iconSize} className="text-indigo-600" />
+        </div>
+      )}
+    </div>
+  );
+};
+
 const PrintHeader: React.FC<{ inputs: UserInputs }> = ({ inputs }) => (
   <div className="hidden print:flex flex-col border-b-2 border-slate-800 pb-4 mb-6">
     <div className="flex justify-between items-center">
-      <div>
-        <h1 className="text-2xl font-bold text-slate-900 leading-none">Indian Asset Allocator</h1>
-        <p className="text-slate-500 text-sm mt-1 font-semibold">Financial Strategy Report</p>
+      <div className="flex items-center gap-4">
+        <CompanyLogo sizeClass="w-16 h-16" iconSize={32} />
+        <div>
+          <h1 className="text-2xl font-bold text-slate-900 leading-none">Indian Asset Allocator</h1>
+          <p className="text-slate-500 text-sm mt-1 font-semibold">Financial Strategy Report by MKR FinWise</p>
+        </div>
       </div>
       <div className="text-right">
         <div className="text-xs text-slate-400 uppercase tracking-wider font-semibold">Report Date</div>
@@ -122,10 +158,8 @@ export default function App() {
     try {
       const originalTitle = document.title;
       const cleanDate = new Date().toISOString().split('T')[0];
-      document.title = `Strategy_Report_${cleanDate}`;
+      document.title = `MKR_FinWise_Strategy_${cleanDate}`;
       
-      // Use requestAnimationFrame to ensure the title update is registered 
-      // before the print dialog potentially blocks the main thread
       requestAnimationFrame(() => {
         window.print();
         setTimeout(() => {
@@ -149,18 +183,21 @@ export default function App() {
       
       {/* Header */}
       <div className="bg-indigo-700 text-white shadow-lg sticky top-0 z-50 no-print">
-        <div className="max-w-3xl mx-auto px-6 py-4 flex justify-between items-center">
-          <div>
-            <h1 className="text-xl font-bold tracking-tight">Indian Asset Allocator</h1>
-            <p className="text-indigo-200 text-xs font-medium">by MKR FinWise</p>
+        <div className="max-w-3xl mx-auto px-6 py-3 flex justify-between items-center">
+          <div className="flex items-center gap-3">
+            <CompanyLogo />
+            <div>
+              <h1 className="text-lg font-bold tracking-tight leading-none">Indian Asset Allocator</h1>
+              <p className="text-indigo-200 text-[10px] font-bold uppercase tracking-wider mt-1 opacity-80">by MKR FinWise</p>
+            </div>
           </div>
           
           {step === 2 && (
             <button 
               onClick={resetPlan} 
-              className="bg-indigo-600 hover:bg-indigo-500 px-4 py-2 rounded-lg transition-all text-white flex items-center gap-2 text-sm font-semibold shadow-inner border border-indigo-500/50"
+              className="bg-indigo-600 hover:bg-indigo-500 px-3 py-1.5 rounded-lg transition-all text-white flex items-center gap-1.5 text-xs font-bold shadow-inner border border-indigo-500/50"
             >
-              <PlusCircle className="w-4 h-4" />
+              <PlusCircle className="w-3.5 h-3.5" />
               <span>New Plan</span>
             </button>
           )}
