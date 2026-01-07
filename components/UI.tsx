@@ -13,18 +13,18 @@ interface CardProps {
 }
 
 export const AssetCard: React.FC<CardProps> = ({ title, percent, amount, color, icon: Icon, desc }) => (
-  <div className={`bg-white p-4 rounded-xl border-t-4 shadow-sm ${color} flex flex-col justify-between h-full print:shadow-none print:border border-slate-200`}>
+  <div className={`bg-white p-5 rounded-xl border-l-4 shadow-sm ${color} flex flex-col justify-between h-full border border-slate-100 transition-transform hover:scale-[1.02]`}>
     <div>
-      <div className="flex justify-between items-start mb-2">
-        <div className="flex items-center gap-2 text-slate-500 text-xs font-bold uppercase tracking-wide">
-          <Icon className="w-4 h-4 shrink-0" />
-          {title}
+      <div className="flex justify-between items-start mb-3">
+        <div className="p-1.5 bg-slate-50 rounded-md">
+          <Icon className="w-3.5 h-3.5 text-slate-500 shrink-0" />
         </div>
-        <span className="text-xl font-bold text-slate-800">{percent}%</span>
+        <span className="text-xs font-black text-slate-900 bg-slate-100 px-2 py-0.5 rounded uppercase tracking-tighter">{percent}%</span>
       </div>
-      <div className="text-lg font-semibold text-slate-700 mb-1 break-all">{formatCurrency(amount)}</div>
+      <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">{title}</div>
+      <div className="text-lg font-black text-slate-900 break-all tracking-tight">{formatCurrency(amount)}</div>
     </div>
-    <div className="text-xs text-slate-400 mt-2 pt-2 border-t border-slate-50">{desc}</div>
+    <div className="text-[9px] text-slate-400 mt-4 pt-3 border-t border-slate-50 font-bold uppercase tracking-wider">{desc}</div>
   </div>
 );
 
@@ -36,16 +36,16 @@ interface ProgressBarProps {
 }
 
 export const ProgressBar: React.FC<ProgressBarProps> = ({ label, value, amount, colorClass }) => (
-  <div className="mb-3 break-inside-avoid">
-    <div className="flex justify-between text-sm mb-1 flex-wrap">
-      <span className="text-slate-600 font-medium">{label}</span>
-      <div className="flex items-center gap-1">
-        <span className="font-bold text-slate-800 break-all">{amount}</span>
-        <span className="text-slate-400 text-xs shrink-0">({value}%)</span>
+  <div className="mb-6 break-inside-avoid">
+    <div className="flex justify-between items-center text-[10px] mb-2 font-bold tracking-wider uppercase">
+      <span className="text-slate-500">{label}</span>
+      <div className="flex items-center gap-2">
+        <span className="text-slate-900 font-black">{amount}</span>
+        <span className="text-slate-300 text-[9px]">/ {value}%</span>
       </div>
     </div>
-    <div className="w-full bg-slate-100 rounded-full h-2.5 print:border print:border-slate-200 overflow-hidden">
-      <div className={`h-full rounded-full ${colorClass} transition-all duration-500`} style={{ width: `${value}%` }}></div>
+    <div className="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+      <div className={`h-full rounded-full ${colorClass} transition-all duration-700 ease-out`} style={{ width: `${value}%` }}></div>
     </div>
   </div>
 );

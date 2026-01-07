@@ -16,7 +16,6 @@ export const SipCalculatorModal: React.FC<SipModalProps> = ({ isOpen, onClose, i
   const [returnRate, setReturnRate] = useState(12);
   const [calculatedSip, setCalculatedSip] = useState(0);
 
-  // Sync calculation whenever inputs or the external duration change
   useEffect(() => {
     const t = parseInt(targetAmount);
     const y = parseInt(initialDuration);
@@ -35,57 +34,59 @@ export const SipCalculatorModal: React.FC<SipModalProps> = ({ isOpen, onClose, i
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/60 z-[60] flex items-center justify-center p-4 backdrop-blur-sm print:hidden">
-      <div className="bg-white rounded-2xl w-full max-w-md shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
-        <div className="bg-indigo-700 p-4 flex justify-between items-center text-white">
-          <h3 className="font-bold flex items-center gap-2"><Calculator className="w-5 h-5" /> SIP Estimator</h3>
-          <button onClick={onClose} className="hover:bg-indigo-600 p-1 rounded-full transition-colors"><X className="w-5 h-5" /></button>
+    <div className="fixed inset-0 bg-slate-950/80 z-[60] flex items-center justify-center p-4 backdrop-blur-md animate-in fade-in duration-300">
+      <div className="bg-white rounded-2xl w-full max-w-md shadow-2xl overflow-hidden border border-white/10">
+        <div className="bg-slate-950 p-6 flex justify-between items-center border-b border-white/5">
+          <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-amber-500 flex items-center gap-3">
+            <Calculator className="w-4 h-4" /> Wealth Goal Planner
+          </h3>
+          <button onClick={onClose} className="text-slate-400 hover:text-white transition-colors"><X className="w-5 h-5" /></button>
         </div>
-        <div className="p-6 space-y-4">
+        <div className="p-8 space-y-6">
           <div>
-            <label className="block text-xs font-semibold text-slate-500 uppercase mb-1">Target Goal Amount (₹)</label>
+            <label className="block text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-2">Target Goal (₹)</label>
             <input 
               type="number" 
               value={targetAmount} 
               onChange={(e) => setTargetAmount(e.target.value)}
               placeholder="e.g. 50,00,000"
-              className="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none font-bold text-lg text-slate-800" 
+              className="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none font-bold text-xl text-slate-800" 
               autoFocus 
             />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-500 uppercase mb-1">Years (From Home)</label>
+              <label className="block text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-2">Years</label>
               <div className="relative">
                 <input 
                   type="number" 
                   value={initialDuration} 
                   readOnly 
-                  className="w-full p-2 bg-slate-100 text-slate-600 border border-slate-200 rounded-lg outline-none cursor-not-allowed font-semibold" 
+                  className="w-full p-4 bg-slate-100 text-slate-400 border border-slate-100 rounded-xl font-bold" 
                 />
-                <Lock className="w-3 h-3 text-slate-400 absolute right-3 top-3" />
+                <Lock className="w-3 h-3 text-slate-300 absolute right-4 top-1/2 -translate-y-1/2" />
               </div>
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-500 uppercase mb-1">Exp. Return (%)</label>
+              <label className="block text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-2">Rate (%)</label>
               <input 
                 type="number" 
                 value={returnRate} 
                 onChange={(e) => setReturnRate(Number(e.target.value))} 
-                className="w-full p-2 border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500 font-semibold" 
+                className="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none font-bold" 
               />
             </div>
           </div>
-          <div className="bg-indigo-50 rounded-xl p-4 text-center mt-2 border border-indigo-100">
-            <p className="text-xs text-indigo-600 font-semibold uppercase">Required Monthly Investment</p>
-            <p className="text-3xl font-bold text-indigo-700 my-1">{calculatedSip > 0 ? formatCurrency(calculatedSip) : "₹0"}</p>
+          <div className="bg-slate-950 rounded-xl p-6 text-center border border-amber-500/10 shadow-xl">
+            <p className="text-[9px] text-slate-500 font-bold uppercase tracking-widest mb-2">Calculated Monthly Requirement</p>
+            <p className="text-3xl font-black text-amber-500 tracking-tight">{calculatedSip > 0 ? formatCurrency(calculatedSip) : "₹0"}</p>
           </div>
           <button 
             disabled={calculatedSip <= 0} 
             onClick={() => onApply(calculatedSip)}
-            className="w-full bg-indigo-600 hover:bg-indigo-700 disabled:bg-slate-300 text-white font-semibold py-3 rounded-xl transition-all shadow-md active:scale-[0.98]"
+            className="w-full bg-slate-950 hover:bg-black disabled:bg-slate-200 text-amber-500 font-bold py-5 rounded-xl transition-all shadow-xl active:scale-[0.98] uppercase text-[11px] tracking-widest border border-amber-500/20"
           >
-            Use this Amount
+            Apply to Portfolio
           </button>
         </div>
       </div>
@@ -107,33 +108,35 @@ export const RatesSettingsModal: React.FC<RatesModalProps> = ({ isOpen, onClose,
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/60 z-[60] flex items-center justify-center p-4 backdrop-blur-sm print:hidden">
-      <div className="bg-white rounded-2xl w-full max-w-sm shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
-        <div className="bg-slate-800 p-4 flex justify-between items-center text-white">
-          <h3 className="font-bold flex items-center gap-2"><Settings2 className="w-4 h-4" /> Expected Returns</h3>
-          <button onClick={onClose} className="hover:bg-slate-700 p-1 rounded-full"><X className="w-5 h-5" /></button>
+    <div className="fixed inset-0 bg-slate-950/80 z-[60] flex items-center justify-center p-4 backdrop-blur-md animate-in fade-in duration-300">
+      <div className="bg-white rounded-2xl w-full max-w-sm shadow-2xl overflow-hidden border border-white/10">
+        <div className="bg-slate-950 p-6 flex justify-between items-center border-b border-white/5">
+          <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-amber-500 flex items-center gap-3">
+            <Settings2 className="w-4 h-4" /> Market Return Models
+          </h3>
+          <button onClick={onClose} className="text-slate-400 hover:text-white transition-colors"><X className="w-5 h-5" /></button>
         </div>
-        <div className="p-6 space-y-4">
-          <p className="text-xs text-slate-500">Adjust these percentages to see how they impact your projected wealth.</p>
+        <div className="p-8 space-y-6">
+          <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mb-4">Adjust annual growth rates for model sensitivity.</p>
           {[
-            { id: 'equity', label: 'Equity (Stocks)', color: 'text-emerald-600' },
-            { id: 'debt', label: 'Debt (FD/Bonds)', color: 'text-blue-600' },
-            { id: 'gold', label: 'Gold', color: 'text-yellow-600' },
-            { id: 'silver', label: 'Silver', color: 'text-slate-600' },
+            { id: 'equity', label: 'Equity Allocation', color: 'text-emerald-600' },
+            { id: 'debt', label: 'Fixed Income', color: 'text-slate-800' },
+            { id: 'gold', label: 'Gold Bullion', color: 'text-amber-600' },
+            { id: 'silver', label: 'Silver Assets', color: 'text-slate-500' },
           ].map((item) => (
             <div key={item.id} className="flex items-center justify-between">
-              <label className={`text-sm font-semibold ${item.color}`}>{item.label}</label>
-              <div className="relative w-24">
+              <label className={`text-[10px] font-bold uppercase tracking-widest ${item.color}`}>{item.label}</label>
+              <div className="relative w-28">
                 <input type="number" 
                   value={localRates[item.id as keyof ReturnRates]} 
                   onChange={(e) => setLocalRates({...localRates, [item.id]: Number(e.target.value)})}
-                  className="w-full p-2 border border-slate-300 rounded-lg text-right pr-6 outline-none focus:border-indigo-500" />
-                <span className="absolute right-2 top-2 text-slate-400 text-xs">%</span>
+                  className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-right pr-10 outline-none focus:border-amber-500 font-bold" />
+                <span className="absolute right-3 top-3 text-slate-300 text-xs">%</span>
               </div>
             </div>
           ))}
-          <button onClick={() => { onSave(localRates); onClose(); }} className="w-full bg-slate-800 hover:bg-slate-900 text-white font-semibold py-3 rounded-xl transition-all flex items-center justify-center gap-2 shadow-md">
-            <Save className="w-4 h-4" /> Update Projection
+          <button onClick={() => { onSave(localRates); onClose(); }} className="w-full bg-slate-950 hover:bg-black text-amber-500 font-bold py-5 rounded-xl transition-all flex items-center justify-center gap-3 shadow-xl uppercase text-[11px] tracking-widest border border-amber-500/20">
+            <Save className="w-4 h-4" /> Update Strategy
           </button>
         </div>
       </div>

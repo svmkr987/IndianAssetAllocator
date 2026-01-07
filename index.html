@@ -10,6 +10,12 @@
     <style>
       body {
         font-family: 'Inter', sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      .premium-grid {
+        background-image: radial-gradient(#e2e8f0 0.5px, transparent 0.5px);
+        background-size: 24px 24px;
       }
       @media print {
         .no-print {
@@ -40,9 +46,8 @@
     }
     </script>
   </head>
-  <body class="bg-slate-50 text-slate-900">
+  <body class="bg-[#fcfcfd] text-slate-900 premium-grid">
     <div id="root"></div>
-    <!-- This script tag is essential for Vercel/Vite to know where the app starts -->
     <script type="module" src="./index.tsx"></script>
   </body>
 </html>
