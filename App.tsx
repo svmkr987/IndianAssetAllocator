@@ -4,7 +4,7 @@ import {
   TrendingUp, Shield, AlertTriangle, PieChart, Target, ArrowRight,
   CheckCircle2, Calculator, RefreshCw, Home, Settings2, BarChart3,
   Sliders, FileText, CheckSquare, Coins, Lock, Printer, PlusCircle,
-  Gem, Wallet, ArrowUp
+  Gem, Wallet, ArrowUp, Download
 } from 'lucide-react';
 import { UserInputs, Exclusions, ReturnRates, AllocationResult, RiskLevel, ProjectionBreakdown } from './types';
 import { calculateAllocation, formatCurrency, formatDate } from './utils';
@@ -144,7 +144,7 @@ export default function App() {
     try {
       const originalTitle = document.title;
       const cleanDate = new Date().toISOString().split('T')[0];
-      document.title = `Invest_Right_Strategy_${cleanDate}`;
+      document.title = `Invest_Right_Report_${cleanDate}`;
       
       requestAnimationFrame(() => {
         window.print();
@@ -468,8 +468,9 @@ export default function App() {
                 onClick={handleDownloadPdf} 
                 className="w-full bg-slate-950 hover:bg-black text-amber-500 font-bold py-5 rounded-xl transition-all shadow-2xl flex items-center justify-center gap-3 active:scale-[0.99] uppercase text-xs tracking-[0.2em] border border-amber-500/20"
               >
-                <Printer className="w-5 h-5" /> Export Portfolio Report
+                <Download className="w-5 h-5" /> Download Report as PDF
               </button>
+              <p className="text-[10px] text-slate-400 text-center font-medium italic">When the dialog opens, select "Save as PDF" to download your strategy.</p>
             </div>
 
             {/* Disclaimer */}
