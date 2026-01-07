@@ -4,11 +4,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Invest Right | Strategic Wealth Advisor</title>
+    <title>Invest Right by MKR FinWise | Indian Asset Planning</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- html2pdf library for direct downloads -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
       body {
         font-family: 'Inter', sans-serif;
@@ -29,6 +27,12 @@
           -webkit-print-color-adjust: exact;
           print-color-adjust: exact;
         }
+        @page {
+          margin: 1.5cm;
+        }
+        .print-break-inside-avoid {
+          break-inside: avoid;
+        }
       }
     </style>
     <script type="importmap">
@@ -42,7 +46,7 @@
     }
     </script>
   </head>
-  <body class="bg-[#f8f9fb] text-slate-900 premium-grid">
+  <body class="bg-[#fcfcfd] text-slate-900 premium-grid">
     <div id="root"></div>
     <script type="module" src="./index.tsx"></script>
   </body>
