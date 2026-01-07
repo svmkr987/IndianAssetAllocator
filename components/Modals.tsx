@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { X, Calculator, Settings2, Save, Lock } from 'lucide-react';
 import { formatCurrency } from '../utils';
@@ -112,7 +111,7 @@ export const RatesSettingsModal: React.FC<RatesModalProps> = ({ isOpen, onClose,
       <div className="bg-white rounded-2xl w-full max-w-sm shadow-2xl overflow-hidden border border-white/10">
         <div className="bg-slate-950 p-6 flex justify-between items-center border-b border-white/5">
           <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-amber-500 flex items-center gap-3">
-            <Settings2 className="w-4 h-4" /> Market Return Models
+            <Settings2 className="w-4 h-4" /> Expected Returns
           </h3>
           <button onClick={onClose} className="text-slate-400 hover:text-white transition-colors"><X className="w-5 h-5" /></button>
         </div>
