@@ -13,22 +13,30 @@ interface SipModalProps {
 export const SipCalculatorModal: React.FC<SipModalProps> = ({ isOpen, onClose, initialDuration, onApply }) => {
   const [targetAmount, setTargetAmount] = useState('');
   const [returnRate, setReturnRate] = useState(12);
+  const [inflationRate, setInflationRate] = useState(6);
   const [calculatedSip, setCalculatedSip] = useState(0);
+  const [adjustedTarget, setAdjustedTarget] = useState(0);
 
   useEffect(() => {
     const t = parseInt(targetAmount);
     const y = parseInt(initialDuration);
     const r = parseFloat(returnRate.toString());
+    const inf = parseFloat(inflationRate.toString());
     
     if (t > 0 && y > 0 && r > 0) {
+      // Inflation Adjusted Target Calculation
+      const inflationAdjustedTargetValue = t * Math.pow(1 + inf / 100, y);
+      setAdjustedTarget(Math.round(inflationAdjustedTargetValue));
+      
       const i = r / 12 / 100;
       const n = y * 12;
       const factor = ((Math.pow(1 + i, n) - 1) / i) * (1 + i);
-      setCalculatedSip(Math.round(t / factor));
+      setCalculatedSip(Math.round(inflationAdjustedTargetValue / factor));
     } else {
       setCalculatedSip(0);
+      setAdjustedTarget(0);
     }
-  }, [targetAmount, initialDuration, returnRate]);
+  }, [targetAmount, initialDuration, returnRate, inflationRate]);
 
   if (!isOpen) return null;
 
@@ -67,7 +75,7 @@ export const SipCalculatorModal: React.FC<SipModalProps> = ({ isOpen, onClose, i
               </div>
             </div>
             <div>
-              <label className="block text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-2">Rate (%)</label>
+              <label className="block text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-2">Return Rate (%)</label>
               <input 
                 type="number" 
                 value={returnRate} 
@@ -75,6 +83,19 @@ export const SipCalculatorModal: React.FC<SipModalProps> = ({ isOpen, onClose, i
                 className="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none font-bold" 
               />
             </div>
+          </div>
+          <div>
+            <label className="block text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-2">Expected Inflation (%)</label>
+            <input 
+              type="number" 
+              value={inflationRate} 
+              onChange={(e) => setInflationRate(Number(e.target.value))} 
+              className="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none font-bold" 
+            />
+          </div>
+          <div className="bg-slate-50 rounded-xl p-4 border border-slate-100">
+            <label className="block text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1">Adjusted Target Value (Future Value)</label>
+            <p className="text-lg font-black text-slate-700">{adjustedTarget > 0 ? formatCurrency(adjustedTarget) : "₹0"}</p>
           </div>
           <div className="bg-slate-950 rounded-xl p-6 text-center border border-amber-500/10 shadow-xl">
             <p className="text-[9px] text-slate-500 font-bold uppercase tracking-widest mb-2">Calculated Monthly Requirement</p>
@@ -108,7 +129,7 @@ export const RatesSettingsModal: React.FC<RatesModalProps> = ({ isOpen, onClose,
 
   return (
     <div className="fixed inset-0 bg-slate-950/80 z-[60] flex items-center justify-center p-4 backdrop-blur-md animate-in fade-in duration-300">
-      <div className="bg-white rounded-2xl w-full max-w-sm shadow-2xl overflow-hidden border border-white/10">
+      <div className="bg-white rounded-2xl w-full max-sm shadow-2xl overflow-hidden border border-white/10">
         <div className="bg-slate-950 p-6 flex justify-between items-center border-b border-white/5">
           <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-amber-500 flex items-center gap-3">
             <Settings2 className="w-4 h-4" /> Expected Returns

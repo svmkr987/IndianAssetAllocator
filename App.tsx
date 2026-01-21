@@ -221,7 +221,7 @@ export default function App() {
                    {!isSipLocked ? (
                      <button onClick={() => setShowCalculator(true)}
                        className="text-[10px] text-amber-600 font-extrabold hover:text-amber-700 flex items-center gap-1.5 uppercase tracking-[0.15em]">
-                       <Calculator className="w-4 h-4" /> SIP Estimator
+                       <Calculator className="w-4 h-4" /> Inflation adjusted SIP Estimator
                      </button>
                    ) : (
                      <button onClick={handleUnlockSip}
