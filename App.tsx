@@ -55,7 +55,7 @@ const ReportHeader: React.FC<{ inputs: UserInputs }> = ({ inputs }) => (
         <StylishTickLogo size={40} />
         <div>
           <h1 className="text-3xl font-black text-slate-900 tracking-tight leading-none uppercase">Invest Right</h1>
-          <p className="text-slate-400 text-[11px] mt-2 font-bold uppercase tracking-[0.25em]">by MKR FinWise</p>
+          <p className="text-amber-500 text-[11px] mt-2 font-bold uppercase tracking-[0.25em]">by MKR FinWise</p>
         </div>
       </div>
       <div className="text-right">
@@ -149,7 +149,7 @@ export default function App() {
   }, [rates, exclusions, step]);
 
   return (
-    <div className="min-h-screen pb-20 print:bg-white print:pb-0 flex flex-col">
+    <div className="min-h-screen pb-32 print:bg-white print:pb-0 flex flex-col">
       
       {/* Navbar */}
       <div className="bg-slate-950 text-white shadow-xl sticky top-0 z-50 no-print border-b border-amber-500/20">
@@ -158,7 +158,7 @@ export default function App() {
             <StylishTickLogo size={24} />
             <div className="flex flex-col">
               <h1 className="text-base font-black tracking-tight leading-none uppercase">Invest Right</h1>
-              <p className="text-amber-500/70 text-[10px] font-bold uppercase tracking-[0.2em] mt-1">by MKR FinWise</p>
+              <p className="text-amber-500 text-[10px] font-bold uppercase tracking-[0.2em] mt-1">by MKR FinWise</p>
             </div>
           </div>
           
@@ -429,9 +429,14 @@ export default function App() {
                 </div>
               </div>
               
-              {/* Report Footer Contact */}
-              <div className="pt-8 border-t border-slate-100 text-center">
-                <p className="text-slate-400 text-[9px] font-bold uppercase tracking-[0.25em]">CONTACT US FOR MORE DETAILS : +91-9008264816</p>
+              {/* Report Footer Contact (Visible only on the report/PDF) */}
+              <div className="pt-8 border-t border-slate-100 text-center flex flex-col items-center gap-1.5">
+                <p className="text-slate-600 text-[11px] italic font-medium tracking-wide">
+                  "Not all Mutual Funds & ETFs are worth your money."
+                </p>
+                <p className="text-slate-400 text-[10px] font-medium tracking-wider">
+                  Find out which ones: <span className="text-slate-900 font-bold ml-1">+91-9008264816</span>
+                </p>
               </div>
             </div>
 
@@ -460,9 +465,16 @@ export default function App() {
         )}
       </main>
 
-      {/* Global Page Footer */}
-      <footer className="no-print pb-10 text-center">
-        <p className="text-slate-400 text-[9px] font-bold uppercase tracking-[0.25em]">CONTACT US FOR MORE DETAILS : +91-9008264816</p>
+      {/* FIXED Professional Black Footer */}
+      <footer className="no-print fixed bottom-0 left-0 right-0 bg-slate-950 text-white border-t border-amber-500/20 py-6 z-50 shadow-[0_-4px_20px_-5px_rgba(0,0,0,0.5)]">
+        <div className="max-w-4xl mx-auto px-6 text-center flex flex-col items-center gap-1.5">
+          <p className="text-white text-[11px] italic font-medium tracking-wide opacity-90">
+            "Not all Mutual Funds & ETFs are worth your money."
+          </p>
+          <p className="text-slate-400 text-[10px] font-medium tracking-wide">
+            Find out which ones: <span className="text-amber-500 font-bold ml-1">+91-9008264816</span>
+          </p>
+        </div>
       </footer>
 
       <SipCalculatorModal 
