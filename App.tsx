@@ -149,7 +149,7 @@ export default function App() {
   }, [rates, exclusions, step]);
 
   return (
-    <div className="min-h-screen pb-20 print:bg-white print:pb-0">
+    <div className="min-h-screen pb-20 print:bg-white print:pb-0 flex flex-col">
       
       {/* Navbar */}
       <div className="bg-slate-950 text-white shadow-xl sticky top-0 z-50 no-print border-b border-amber-500/20">
@@ -174,7 +174,7 @@ export default function App() {
         </div>
       </div>
 
-      <main className="max-w-4xl mx-auto px-4 py-10 print:p-0 print:max-w-none">
+      <main className="max-w-4xl mx-auto px-4 py-10 print:p-0 print:max-w-none flex-grow">
         
         {/* Input Stage */}
         {step === 1 && (
@@ -297,7 +297,8 @@ export default function App() {
               </div>
 
               <button onClick={handleCalculate}
-                className="w-full bg-slate-950 hover:bg-black text-amber-500 font-black py-6 rounded-2xl shadow-2xl transition-all flex items-center justify-center gap-4 active:scale-[0.98] uppercase text-sm tracking-[0.3em] border border-amber-500/20">
+                className="w-full bg-slate-950 hover:bg-black text-amber-500 font-black py-6 rounded-2xl shadow-2xl transition-all flex items-center justify-center gap-4 active:scale-[0.98] uppercase text-sm tracking-[0.3em] border border-amber-500/20"
+              >
                 Generate Strategy <ArrowRight className="w-5 h-5" />
               </button>
             </div>
@@ -427,6 +428,11 @@ export default function App() {
                   <p><strong className="text-slate-900">Important Notice:</strong> This framework is based on modern portfolio theory. Market performance is not guaranteed. Please consult a qualified advisor before finalizing your investments.</p>
                 </div>
               </div>
+              
+              {/* Report Footer Contact */}
+              <div className="pt-8 border-t border-slate-100 text-center">
+                <p className="text-slate-400 text-[9px] font-bold uppercase tracking-[0.25em]">CONTACT US FOR MORE DETAILS : +91-9008264816</p>
+              </div>
             </div>
 
             {/* Actions Area */}
@@ -453,6 +459,11 @@ export default function App() {
           </div>
         )}
       </main>
+
+      {/* Global Page Footer */}
+      <footer className="no-print pb-10 text-center">
+        <p className="text-slate-400 text-[9px] font-bold uppercase tracking-[0.25em]">CONTACT US FOR MORE DETAILS : +91-9008264816</p>
+      </footer>
 
       <SipCalculatorModal 
         isOpen={showCalculator} 
