@@ -425,7 +425,7 @@ export default function App() {
               <div className="flex gap-8 p-10 border border-slate-100 bg-slate-50 rounded-[2rem]">
                 <AlertTriangle className="w-8 h-8 text-amber-600 shrink-0" />
                 <div className="text-[11px] text-slate-500 leading-relaxed font-semibold uppercase tracking-wide">
-                  <p><strong className="text-slate-900">Important Notice:</strong> This framework is based on modern portfolio theory. Market performance is not guaranteed. Please consult a qualified advisor before finalizing your investments.</p>
+                  <p><strong className="text-slate-900">Important Notice:</strong> This framework is based on modern portfolio theory. The information shared is for educational and informational purposes only and should not be considered as investment advice. The presenter is not a SEBI registered investment advisor. Market investments are subject to risk. Please consult a SEBI registered financial advisor before making any investment decisions.</p>
                 </div>
               </div>
               
