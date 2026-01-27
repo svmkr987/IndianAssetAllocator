@@ -435,7 +435,7 @@ export default function App() {
                   "Not all Mutual Funds & ETFs are worth your money."
                 </p>
                 <p className="text-slate-400 text-[10px] font-medium tracking-wider">
-                  Find out which ones: <span className="text-slate-900 font-bold ml-1">+91-9008264816</span> (Only Whatsapp)
+                  Find out which ones: <a href="https://wa.me/919008264816?text=Hi" target="_blank" rel="noopener noreferrer" className="text-amber-500 font-bold ml-1" >+91-9008264816</a> (Only Whatsapp)
                 </p>
               </div>
             </div>
@@ -472,7 +472,7 @@ export default function App() {
             "Not all Mutual Funds & ETFs are worth your money."
           </p>
           <p className="text-slate-400 text-[10px] font-medium tracking-wide">
-            Find out which ones: <span className="text-amber-500 font-bold ml-1">+91-9008264816</span> (Only Whatsapp)
+            Find out which ones: <a href="https://wa.me/919008264816?text=Hi" target="_blank" rel="noopener noreferrer" className="text-amber-500 font-bold ml-1" >+91-9008264816</a> (Only Whatsapp)
           </p>
         </div>
       </footer>
