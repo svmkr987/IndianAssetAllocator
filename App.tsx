@@ -3,7 +3,7 @@ import {
   TrendingUp, Shield, AlertTriangle, PieChart, Target, ArrowRight,
   Calculator, RefreshCw, Settings2, BarChart3,
   Sliders, FileText, CheckSquare, Coins, Lock, PlusCircle,
-  Gem, Printer, Loader2, Check, ShieldCheck
+  Gem, Printer, Loader2, Check, ShieldCheck, Users
 } from 'lucide-react';
 import { UserInputs, Exclusions, ReturnRates, AllocationResult, RiskLevel, ProjectionBreakdown } from './types';
 import { calculateAllocation, formatCurrency, formatDate } from './utils';
@@ -30,6 +30,9 @@ const INITIAL_RATES: ReturnRates = {
   gold: 8, 
   silver: 8 
 };
+
+// Base visitor offset to start from your preferred number
+const BASE_VISITORS = 1000;
 
 /**
  * Professional Standalone Tick Logo
@@ -90,11 +93,32 @@ export default function App() {
   const [showCalculator, setShowCalculator] = useState(false);
   const [showRatesModal, setShowRatesModal] = useState(false);
   const [isSipLocked, setIsSipLocked] = useState(false);
+  const [visitorCount, setVisitorCount] = useState<number | null>(null);
 
   const [rates, setRates] = useState<ReturnRates>(INITIAL_RATES);
   const [inputs, setInputs] = useState<UserInputs>(INITIAL_INPUTS);
   const [exclusions, setExclusions] = useState<Exclusions>(INITIAL_EXCLUSIONS);
   const [result, setResult] = useState<AllocationResult | null>(null);
+
+  // Improved Visitor Counter Logic (using counterapi.dev - more stable)
+  useEffect(() => {
+    const updateCounter = async () => {
+      try {
+        // We use counterapi.dev as a more stable alternative to countapi.xyz
+        // Namespace: mkrfinwise, Key: investright-v1
+        const response = await fetch('https://api.counterapi.dev/v1/mkrfinwise/investright-v1/up');
+        if (response.ok) {
+          const data = await response.json();
+          // counterapi.dev returns { count: number }
+          setVisitorCount(data.count);
+        }
+      } catch (err) {
+        // Silent catch to prevent console "Failed to fetch" errors from scaring users
+        // The display logic handles null by showing the BASE_VISITORS
+      }
+    };
+    updateCounter();
+  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -147,6 +171,8 @@ export default function App() {
       setResult(calculateAllocation(inputs, rates, exclusions));
     }
   }, [rates, exclusions, step]);
+
+  const displayCount = (visitorCount !== null ? visitorCount + BASE_VISITORS : BASE_VISITORS);
 
   return (
     <div className="min-h-screen pb-32 print:bg-white print:pb-0 flex flex-col">
@@ -431,6 +457,12 @@ export default function App() {
               
               {/* Report Footer Contact (Visible only on the report/PDF) */}
               <div className="pt-8 border-t border-slate-100 text-center flex flex-col items-center gap-1.5">
+                <div className="flex items-center gap-2 px-4 py-1.5 bg-slate-950 rounded-full border border-amber-500/20 mb-2">
+                  <Users className="w-3.5 h-3.5 text-amber-500" />
+                  <span className="text-[10px] font-black text-slate-100 uppercase tracking-widest italic">
+                    Trusted by {displayCount.toLocaleString()}+ Investors
+                  </span>
+                </div>
                 <p className="text-slate-600 text-[11px] italic font-medium tracking-wide">
                   "Not all Mutual Funds & ETFs are worth your money."
                 </p>
@@ -468,6 +500,12 @@ export default function App() {
       {/* FIXED Professional Black Footer */}
       <footer className="no-print fixed bottom-0 left-0 right-0 bg-slate-950 text-white border-t border-amber-500/20 py-6 z-50 shadow-[0_-4px_20px_-5px_rgba(0,0,0,0.5)]">
         <div className="max-w-4xl mx-auto px-6 text-center flex flex-col items-center gap-1.5">
+          <div className="flex items-center gap-2 px-3 py-1 bg-white/5 rounded-full border border-white/10 mb-1">
+            <Users className="w-3 h-3 text-amber-500" />
+            <span className="text-[9px] font-bold text-slate-300 uppercase tracking-[0.2em]">
+              Trusted by {displayCount.toLocaleString()}+ Investors
+            </span>
+          </div>
           <p className="text-white text-[11px] italic font-medium tracking-wide opacity-90">
             "Not all Mutual Funds & ETFs are worth your money."
           </p>
