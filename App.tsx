@@ -11,10 +11,10 @@ import { AssetCard, ProgressBar } from './components/UI';
 import { SipCalculatorModal, RatesSettingsModal } from './components/Modals';
 
 const INITIAL_INPUTS: UserInputs = { 
-  age: '30', 
-  amount: '10000', 
+  age: '25', 
+  amount: '20000', 
   stepUp: '0', 
-  horizon: '10', 
+  horizon: '15', 
   risk: 'Medium' 
  };
 
