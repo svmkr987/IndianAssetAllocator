@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { X, Calculator, Settings2, Save, Lock } from 'lucide-react';
-import { formatCurrency } from '../utils';
+import { formatCurrency, formatNumberIndian, parseNumberIndian } from '../utils';
 import { ReturnRates } from '../types';
 
 interface SipModalProps {
@@ -53,9 +53,9 @@ export const SipCalculatorModal: React.FC<SipModalProps> = ({ isOpen, onClose, i
           <div>
             <label className="block text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-2">Target Goal (₹)</label>
             <input 
-              type="number" 
-              value={targetAmount} 
-              onChange={(e) => setTargetAmount(e.target.value)}
+              type="text" 
+              value={formatNumberIndian(targetAmount)} 
+              onChange={(e) => setTargetAmount(parseNumberIndian(e.target.value))}
               placeholder="e.g. 50,00,000"
               className="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none font-bold text-xl text-slate-800" 
               autoFocus 

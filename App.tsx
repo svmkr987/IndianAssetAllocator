@@ -6,7 +6,7 @@ import {
   Gem, Printer, Loader2, Check, ShieldCheck, Users
 } from 'lucide-react';
 import { UserInputs, Exclusions, ReturnRates, AllocationResult, RiskLevel, ProjectionBreakdown } from './types';
-import { calculateAllocation, formatCurrency, formatDate } from './utils';
+import { calculateAllocation, formatCurrency, formatDate, formatNumberIndian, parseNumberIndian } from './utils';
 import { AssetCard, ProgressBar } from './components/UI';
 import { SipCalculatorModal, RatesSettingsModal } from './components/Modals';
 
@@ -104,17 +104,13 @@ export default function App() {
   useEffect(() => {
     const updateCounter = async () => {
       try {
-        // We use counterapi.dev as a more stable alternative to countapi.xyz
-        // Namespace: mkrfinwise, Key: investright-v1
         const response = await fetch('https://api.counterapi.dev/v1/mkrfinwise/investright-v1/up');
         if (response.ok) {
           const data = await response.json();
-          // counterapi.dev returns { count: number }
           setVisitorCount(data.count);
         }
       } catch (err) {
-        // Silent catch to prevent console "Failed to fetch" errors from scaring users
-        // The display logic handles null by showing the BASE_VISITORS
+        // Silent catch
       }
     };
     updateCounter();
@@ -122,7 +118,12 @@ export default function App() {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setInputs(prev => ({ ...prev, [name]: value }));
+    if (name === 'amount') {
+      const raw = parseNumberIndian(value);
+      setInputs(prev => ({ ...prev, [name]: raw }));
+    } else {
+      setInputs(prev => ({ ...prev, [name]: value }));
+    }
   };
   
   const toggleExclusion = (key: keyof Exclusions) => {
@@ -258,9 +259,9 @@ export default function App() {
                 </div>
                 <div className="relative">
                   <input 
-                    type="number" 
+                    type="text" 
                     name="amount" 
-                    value={inputs.amount} 
+                    value={formatNumberIndian(inputs.amount)} 
                     onChange={handleInputChange} 
                     readOnly={isSipLocked}
                     className={`w-full p-8 border rounded-2xl outline-none transition-all font-black text-4xl tracking-tighter ${

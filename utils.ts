@@ -1,4 +1,3 @@
-
 import { UserInputs, Exclusions, ReturnRates, AllocationResult } from './types';
 
 export const formatCurrency = (amount: number): string => {
@@ -7,6 +6,17 @@ export const formatCurrency = (amount: number): string => {
     currency: 'INR',
     maximumFractionDigits: 0,
   }).format(amount);
+};
+
+export const formatNumberIndian = (val: string | number): string => {
+  if (val === '') return '';
+  const num = typeof val === 'string' ? parseInt(val.replace(/,/g, '')) : val;
+  if (isNaN(num)) return '';
+  return new Intl.NumberFormat('en-IN').format(num);
+};
+
+export const parseNumberIndian = (val: string): string => {
+  return val.replace(/,/g, '').replace(/[^\d]/g, '');
 };
 
 export const formatDate = (): string => {
