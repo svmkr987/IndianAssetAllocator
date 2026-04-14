@@ -365,11 +365,11 @@ export default function App() {
                   </div>
                 </div>
                 
-                <div className="mt-12 pt-10 border-t border-white/10 grid grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="mt-12 pt-10 border-t border-white/10 flex flex-wrap justify-center gap-6 max-w-3xl mx-auto">
                   {Object.entries(result.projection.breakdown).map(([asset, data]) => {
                     const breakdown = data as ProjectionBreakdown;
                     return breakdown.invested > 0 && (
-                      <div key={asset} className="bg-white/[0.08] p-5 rounded-2xl border border-white/5">
+                      <div key={asset} className="bg-white/[0.08] p-5 rounded-2xl border border-white/5 w-full sm:w-64">
                         <div className="font-bold text-slate-400 text-[10px] uppercase tracking-wider mb-4 flex items-center justify-between border-b border-white/5 pb-2">
                           {asset} <span className="text-amber-500/70">{rates[asset as keyof ReturnRates]}%</span>
                         </div>
