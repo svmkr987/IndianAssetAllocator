@@ -140,9 +140,7 @@ export const RatesSettingsModal: React.FC<RatesModalProps> = ({ isOpen, onClose,
           <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mb-4">Adjust annual growth rates for model sensitivity.</p>
           {[
             { id: 'equity', label: 'Equity Allocation', color: 'text-emerald-600' },
-            { id: 'debt', label: 'Fixed Income', color: 'text-slate-800' },
             { id: 'gold', label: 'Gold Bullion', color: 'text-amber-600' },
-            { id: 'silver', label: 'Silver Assets', color: 'text-slate-500' },
           ].map((item) => (
             <div key={item.id} className="flex items-center justify-between">
               <label className={`text-[10px] font-bold uppercase tracking-widest ${item.color}`}>{item.label}</label>

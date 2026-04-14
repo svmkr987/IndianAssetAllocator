@@ -10,16 +10,13 @@ export interface UserInputs {
 }
 
 export interface Exclusions {
-  debt: boolean;
   commodities: boolean;
   usEquity: boolean;
 }
 
 export interface ReturnRates {
   equity: number;
-  debt: number;
   gold: number;
-  silver: number;
 }
 
 export interface ProjectionBreakdown {
@@ -30,16 +27,12 @@ export interface ProjectionBreakdown {
 export interface AllocationResult {
   percentages: {
     equity: number;
-    debt: number;
     gold: number;
-    silver: number;
   };
   equitySplit: Record<string, number>;
   amounts: {
     equity: number;
-    debt: number;
     gold: number;
-    silver: number;
   };
   rationale: string;
   projection: {
@@ -48,9 +41,7 @@ export interface AllocationResult {
     weightedRate: string;
     breakdown: {
       equity: ProjectionBreakdown;
-      debt: ProjectionBreakdown;
       gold: ProjectionBreakdown;
-      silver: ProjectionBreakdown;
     };
   };
 }

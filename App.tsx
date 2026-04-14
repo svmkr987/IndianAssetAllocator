@@ -19,16 +19,13 @@ const INITIAL_INPUTS: UserInputs = {
  };
 
 const INITIAL_EXCLUSIONS: Exclusions = {
-  debt: false,
   commodities: false,
   usEquity: false
 };
 
 const INITIAL_RATES: ReturnRates = { 
   equity: 12, 
-  debt: 7, 
-  gold: 8, 
-  silver: 8 
+  gold: 8 
 };
 
 // Base visitor offset to start from your preferred number
@@ -316,7 +313,7 @@ export default function App() {
                         </div>
                         <input type="checkbox" className="hidden" checked={exclusions[key]} onChange={() => toggleExclusion(key)} />
                         <span className="text-xs font-bold text-slate-800 uppercase tracking-wider">
-                          Exclude {key === 'usEquity' ? 'International Equity' : key === 'commodities' ? 'Precious Metals' : 'Debt/Fixed Income'}
+                          Exclude {key === 'usEquity' ? 'International Equity' : 'Precious Metals'}
                         </span>
                       </label>
                     ))}
@@ -405,11 +402,9 @@ export default function App() {
               </div>
 
               {/* Asset Grid */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              <div className="grid grid-cols-2 gap-6">
                 <AssetCard title="Equity" percent={result.percentages.equity} amount={result.amounts.equity} color="border-emerald-600" icon={TrendingUp} desc="Long-term Growth" />
-                <AssetCard title="Debt" percent={result.percentages.debt} amount={result.amounts.debt} color={exclusions.debt ? "border-slate-200 opacity-40" : "border-slate-800"} icon={Shield} desc={exclusions.debt ? "Excluded" : "Fixed Income Buffer"} />
                 <AssetCard title="Gold" percent={result.percentages.gold} amount={result.amounts.gold} color={exclusions.commodities ? "border-slate-200 opacity-40" : "border-amber-500"} icon={PieChart} desc={exclusions.commodities ? "Excluded" : "Inflation Hedge"} />
-                <AssetCard title="Silver" percent={result.percentages.silver} amount={result.amounts.silver} color={exclusions.commodities ? "border-slate-200 opacity-40" : "border-slate-400"} icon={Coins} desc={exclusions.commodities ? "Excluded" : "Commodity Alpha"} />
               </div>
 
               {/* Equity Split */}
@@ -436,14 +431,14 @@ export default function App() {
                   <h4 className="font-black text-slate-900 mb-6 text-[11px] uppercase tracking-[0.3em] border-b border-slate-100 pb-4 flex items-center gap-3">
                     <FileText className="w-6 h-6 text-amber-600" /> Allocation Thesis
                   </h4>
-                  <p className={`text-sm leading-relaxed font-medium ${exclusions.debt && parseInt(inputs.horizon) < 5 ? 'text-red-600' : 'text-slate-700'}`}>{result.rationale}</p>
+                  <p className={`text-sm leading-relaxed font-medium text-slate-700`}>{result.rationale}</p>
                 </div>
                 <div className="bg-white p-10 rounded-[2rem] border border-slate-200/60 shadow-sm">
                   <h4 className="font-black text-slate-900 mb-6 text-[11px] uppercase tracking-[0.3em] border-b border-slate-100 pb-4 flex items-center gap-3">
                     <Gem className="w-6 h-6 text-emerald-600" /> Expert View
                   </h4>
                   <div className="text-[11px] text-slate-500 leading-relaxed font-bold italic">
-                    Focus on low-cost Index Funds for Equity core. Use Sovereign Gold Bonds (SGB) for tax-efficient metal exposure. Maintain high-quality liquid debt for stability.
+                    Focus on low-cost Index Funds for Equity core. Use Sovereign Gold Bonds (SGB) for tax-efficient metal exposure.
                   </div>
                 </div>
               </div>

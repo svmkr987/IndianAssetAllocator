@@ -62,123 +62,153 @@ export const calculateAllocation = (
   const monthlyInvestment = parseInt(inputs.amount) || 0;
   const horizon = parseInt(inputs.horizon) || 0;
   const stepUp = parseFloat(inputs.stepUp) || 0;
-  const riskProfile = inputs.risk;
+  
+  // Map risk to 1, 2, 3
+  const R = inputs.risk === 'Low' ? 1 : inputs.risk === 'Medium' ? 2 : 3;
+  const A = age;
+  const T = horizon;
+  const C = monthlyInvestment;
 
-  let equity = 0;
-  let debt = 0;
-  let gold = 0;
-  let silver = 0;
+  const notes: string[] = [];
 
-  if (horizon < 3) {
-    equity = 0; debt = 100; gold = 0; silver = 0;
-  } else if (horizon >= 3 && horizon < 5) {
-    equity = 20; debt = 75; gold = 5; silver = 0;
-  } else if (horizon >= 5 && horizon < 8) {
-    equity = riskProfile === 'High' ? 60 : (riskProfile === 'Medium' ? 50 : 40);
-    gold = 7; silver = 3; debt = 100 - equity - (gold + silver);
-  } else {
-    let baseEquity = Math.max(0, 110 - age);
-    if (riskProfile === 'Low') baseEquity -= 20;
-    if (riskProfile === 'Medium') baseEquity -= 10;
-    const equityCap = riskProfile === 'High' ? 85 : (riskProfile === 'Medium' ? 70 : 50);
+  // --- STEP 1: INITIAL ALLOCATION ---
+  let goldPercent = 5 + (A / 10) + (4 - R) * 3;
+  goldPercent = Math.min(Math.max(goldPercent, 5), 20);
+  
+  let totalEquity = 100 - goldPercent;
 
-    equity = Math.min(baseEquity, equityCap);
-    gold = 7; silver = 3; debt = 100 - equity - (gold + silver);
+  // --- STEP 2: APPLY ADVISOR OVERRIDES ---
+  // Rule 1: Age Guardrail
+  if (A >= 50 && totalEquity > 60) {
+    totalEquity = 60;
+    goldPercent = 40;
+    notes.push("Capital Protection: Equity capped at 60% due to age (50+).");
   }
 
-  if (exclusions.debt) {
-    equity += debt;
-    debt = 0;
-  }
-  if (exclusions.commodities) {
-    equity += (gold + silver);
-    gold = 0;
-    silver = 0;
+  // Step 5: US Allocation
+  let usPercent = 10 + (T / 2);
+  usPercent = Math.min(Math.max(usPercent, 10), 25);
+  
+  // Step 6: India Equity
+  let indiaEquity = totalEquity - usPercent;
+
+  // Step 7: Split India Equity
+  let largeCap = indiaEquity * (0.5 - (0.1 * R));
+  let midCap = indiaEquity * (0.3 + (0.05 * R));
+  let smallCap = indiaEquity - largeCap - midCap;
+
+  // Rule 2: Short-term Horizon Shield
+  if (T < 3) {
+    largeCap += smallCap;
+    smallCap = 0;
+    notes.push("Volatility Shield: Small-caps removed for short horizon (< 3 yrs).");
   }
 
-  // Ensure sum is 100
-  const total = equity + debt + gold + silver;
-  if (total !== 100 && total > 0) {
-    const factor = 100 / total;
-    equity = Math.round(equity * factor);
-    debt = Math.round(debt * factor);
-    gold = Math.round(gold * factor);
-    silver = 100 - equity - debt - gold;
+  // Rule 3: High-Risk/Low-Risk Refinement
+  if (R === 1) { // Low Risk
+    const shift = midCap * 0.2;
+    midCap -= shift;
+    largeCap += shift;
   }
 
-  let equitySplit: Record<string, number> = {};
-  if (equity > 0) {
-    const showUS = !exclusions.usEquity && horizon >= 5 && (riskProfile === 'Medium' || riskProfile === 'High');
-    const usAllocation = showUS ? 15 : 0;
-    let remainingEquity = 100 - usAllocation;
-
-    if (riskProfile === 'Low' || horizon < 5) {
-      equitySplit = {
-        'Large Cap / Nifty 50': 100,
-        'Mid Cap': 0,
-        'Small Cap': 0,
-        'US / International': 0,
-      };
-    } else if (riskProfile === 'Medium') {
-      equitySplit = {
-        'Large Cap / Nifty 50': Math.round(remainingEquity * 0.6),
-        'Mid Cap': Math.round(remainingEquity * 0.4),
-        'Small Cap': 0,
-        'US / International': usAllocation,
-      };
+  // --- EXCLUSIONS HANDLING ---
+  if (exclusions.usEquity) {
+    const usAmount = usPercent;
+    usPercent = 0;
+    const totalIndia = largeCap + midCap + smallCap;
+    if (totalIndia > 0) {
+      largeCap += usAmount * (largeCap / totalIndia);
+      midCap += usAmount * (midCap / totalIndia);
+      smallCap += usAmount * (smallCap / totalIndia);
     } else {
-      equitySplit = {
-        'Large Cap / Nifty 50': Math.round(remainingEquity * 0.5),
-        'Mid Cap': Math.round(remainingEquity * 0.3),
-        'Small Cap': Math.round(remainingEquity * 0.2),
-        'US / International': usAllocation,
-      };
+      largeCap += usAmount;
     }
-    const currentSum = Object.values(equitySplit).reduce((a, b) => a + b, 0);
-    if (currentSum !== 100) {
-      equitySplit['Large Cap / Nifty 50'] += (100 - currentSum);
+    notes.push("International Equity excluded: Reallocated to domestic equity.");
+  }
+
+  if (exclusions.commodities) {
+    largeCap += goldPercent;
+    goldPercent = 0;
+    notes.push("Commodities excluded: Gold allocation moved to Large Cap Equity for stability.");
+  }
+
+  // --- STEP 3: FINAL ROUNDING & RESIDUAL ---
+  const roundTo2 = (num: number) => Math.round(num * 100) / 100;
+  
+  goldPercent = roundTo2(goldPercent);
+  usPercent = roundTo2(usPercent);
+  largeCap = roundTo2(largeCap);
+  midCap = roundTo2(midCap);
+  smallCap = roundTo2(smallCap);
+
+  // Fix rounding errors to ensure exactly 100%
+  const total = goldPercent + usPercent + largeCap + midCap + smallCap;
+  if (total !== 100) {
+    largeCap += (100 - total);
+    largeCap = roundTo2(largeCap);
+  }
+
+  const equityPercent = roundTo2(largeCap + midCap + smallCap + usPercent);
+
+  // Normalize equity split to sum to 100% of the equity portion
+  const normalize = (val: number) => equityPercent > 0 ? roundTo2((val / equityPercent) * 100) : 0;
+  
+  let normLarge = normalize(largeCap);
+  let normMid = normalize(midCap);
+  let normSmall = normalize(smallCap);
+  let normUS = normalize(usPercent);
+
+  // Ensure normalized values sum to exactly 100
+  if (equityPercent > 0) {
+    const normTotal = normLarge + normMid + normSmall + normUS;
+    if (normTotal !== 100) {
+      normLarge += (100 - normTotal);
+      normLarge = roundTo2(normLarge);
     }
   }
 
-  const amounts = {
-    equity: Math.round((monthlyInvestment * equity) / 100),
-    debt: Math.round((monthlyInvestment * debt) / 100),
-    gold: Math.round((monthlyInvestment * gold) / 100),
-    silver: Math.round((monthlyInvestment * silver) / 100),
+  const equitySplit = {
+    'Large Cap / Nifty 50': normLarge,
+    'Mid Cap': normMid,
+    'Small Cap': normSmall,
+    'US / International': normUS,
   };
 
+  const amounts = {
+    equity: Math.round((C * equityPercent) / 100),
+    gold: Math.round((C * goldPercent) / 100),
+  };
+
+  // Fix total amount rounding
+  const totalAmount = amounts.equity + amounts.gold;
+  if (totalAmount !== C && C > 0) {
+    amounts.equity += (C - totalAmount);
+  }
+
   const equityProj = calculateStepUpProjection(amounts.equity, rates.equity, horizon, stepUp);
-  const debtProj = calculateStepUpProjection(amounts.debt, rates.debt, horizon, stepUp);
   const goldProj = calculateStepUpProjection(amounts.gold, rates.gold, horizon, stepUp);
-  const silverProj = calculateStepUpProjection(amounts.silver, rates.silver, horizon, stepUp);
 
-  const totalInvested = equityProj.invested + debtProj.invested + goldProj.invested + silverProj.invested;
-  const totalValue = equityProj.value + debtProj.value + goldProj.value + silverProj.value;
+  const totalInvested = equityProj.invested + goldProj.invested;
+  const totalValue = equityProj.value + goldProj.value;
 
-  const weightedReturn = ((equity * rates.equity) + (debt * rates.debt) + (gold * rates.gold) + (silver * rates.silver)) / 100;
+  const weightedReturn = ((equityPercent * rates.equity) + (goldPercent * rates.gold)) / 100;
 
-  const rationaleNotes = [];
-  if (horizon < 3) rationaleNotes.push("Safety is the priority for short durations.");
-  else if (equity > 80) rationaleNotes.push("Aggressive growth strategy focused on wealth creation.");
-  else rationaleNotes.push("Balanced approach for steady growth and stability.");
-
-  if (exclusions.debt && horizon < 5) rationaleNotes.push("WARNING: Excluding Debt for a short-term goal is extremely risky.");
-  if (exclusions.commodities) rationaleNotes.push("Excluding Gold/Silver removes the inflation hedge.");
+  if (notes.length === 0) {
+    notes.push("Standard strategic allocation applied based on your profile.");
+  }
 
   return {
-    percentages: { equity, debt, gold, silver },
+    percentages: { equity: equityPercent, gold: goldPercent },
     equitySplit,
     amounts,
-    rationale: rationaleNotes.join(" "),
+    rationale: notes.join(" "),
     projection: {
       invested: totalInvested,
       value: totalValue,
       weightedRate: weightedReturn.toFixed(1),
       breakdown: {
         equity: { invested: equityProj.invested, returns: equityProj.value - equityProj.invested },
-        debt: { invested: debtProj.invested, returns: debtProj.value - debtProj.invested },
         gold: { invested: goldProj.invested, returns: goldProj.value - goldProj.invested },
-        silver: { invested: silverProj.invested, returns: silverProj.value - silverProj.invested },
       },
     },
   };
