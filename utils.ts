@@ -4,19 +4,34 @@ export const formatCurrency = (amount: number): string => {
   return new Intl.NumberFormat('en-IN', {
     style: 'currency',
     currency: 'INR',
-    maximumFractionDigits: 0,
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
   }).format(amount);
 };
 
 export const formatNumberIndian = (val: string | number): string => {
   if (val === '') return '';
-  const num = typeof val === 'string' ? parseInt(val.replace(/,/g, '')) : val;
+  const strVal = val.toString().replace(/,/g, '');
+  const num = parseFloat(strVal);
   if (isNaN(num)) return '';
-  return new Intl.NumberFormat('en-IN').format(num);
+  
+  const parts = strVal.split('.');
+  const formattedInt = new Intl.NumberFormat('en-IN').format(parseInt(parts[0] || '0', 10));
+  
+  if (parts.length > 1) {
+    return `${formattedInt}.${parts[1]}`;
+  }
+  
+  return formattedInt;
 };
 
 export const parseNumberIndian = (val: string): string => {
-  return val.replace(/,/g, '').replace(/[^\d]/g, '');
+  let clean = val.replace(/,/g, '').replace(/[^\d.]/g, '');
+  const parts = clean.split('.');
+  if (parts.length > 2) {
+    clean = parts[0] + '.' + parts.slice(1).join('');
+  }
+  return clean;
 };
 
 export const formatDate = (): string => {
@@ -48,8 +63,8 @@ const calculateStepUpProjection = (
   }
 
   return {
-    invested: Math.round(totalInvested),
-    value: Math.round(balance),
+    invested: Math.round(totalInvested * 100) / 100,
+    value: Math.round(balance * 100) / 100,
   };
 };
 
@@ -59,7 +74,7 @@ export const calculateAllocation = (
   exclusions: Exclusions
 ): AllocationResult => {
   const age = parseInt(inputs.age) || 0;
-  const monthlyInvestment = parseInt(inputs.amount) || 0;
+  const monthlyInvestment = parseFloat(inputs.amount) || 0;
   const horizon = parseInt(inputs.horizon) || 0;
   const stepUp = parseFloat(inputs.stepUp) || 0;
   
@@ -104,13 +119,6 @@ export const calculateAllocation = (
     notes.push("Volatility Shield: Small-caps removed for short horizon (< 3 yrs).");
   }
 
-  // Rule 3: High-Risk/Low-Risk Refinement
-  if (R === 1) { // Low Risk
-    const shift = midCap * 0.2;
-    midCap -= shift;
-    largeCap += shift;
-  }
-
   // --- EXCLUSIONS HANDLING ---
   if (exclusions.usEquity) {
     const usAmount = usPercent;
@@ -142,47 +150,29 @@ export const calculateAllocation = (
   smallCap = roundTo2(smallCap);
 
   // Fix rounding errors to ensure exactly 100%
-  const total = goldPercent + usPercent + largeCap + midCap + smallCap;
+  const total = roundTo2(goldPercent + usPercent + largeCap + midCap + smallCap);
   if (total !== 100) {
-    largeCap += (100 - total);
-    largeCap = roundTo2(largeCap);
+    largeCap = roundTo2(largeCap + (100 - total));
   }
 
   const equityPercent = roundTo2(largeCap + midCap + smallCap + usPercent);
 
-  // Normalize equity split to sum to 100% of the equity portion
-  const normalize = (val: number) => equityPercent > 0 ? roundTo2((val / equityPercent) * 100) : 0;
-  
-  let normLarge = normalize(largeCap);
-  let normMid = normalize(midCap);
-  let normSmall = normalize(smallCap);
-  let normUS = normalize(usPercent);
-
-  // Ensure normalized values sum to exactly 100
-  if (equityPercent > 0) {
-    const normTotal = normLarge + normMid + normSmall + normUS;
-    if (normTotal !== 100) {
-      normLarge += (100 - normTotal);
-      normLarge = roundTo2(normLarge);
-    }
-  }
-
   const equitySplit = {
-    'Large Cap / Nifty 50': normLarge,
-    'Mid Cap': normMid,
-    'Small Cap': normSmall,
-    'US / International': normUS,
+    'Large Cap / Nifty 50': largeCap,
+    'Mid Cap': midCap,
+    'Small Cap': smallCap,
+    'US / International': usPercent,
   };
 
   const amounts = {
-    equity: Math.round((C * equityPercent) / 100),
-    gold: Math.round((C * goldPercent) / 100),
+    equity: roundTo2((C * equityPercent) / 100),
+    gold: roundTo2((C * goldPercent) / 100),
   };
 
   // Fix total amount rounding
-  const totalAmount = amounts.equity + amounts.gold;
+  const totalAmount = roundTo2(amounts.equity + amounts.gold);
   if (totalAmount !== C && C > 0) {
-    amounts.equity += (C - totalAmount);
+    amounts.equity = roundTo2(amounts.equity + (C - totalAmount));
   }
 
   const equityProj = calculateStepUpProjection(amounts.equity, rates.equity, horizon, stepUp);

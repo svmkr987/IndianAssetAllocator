@@ -26,12 +26,12 @@ export const SipCalculatorModal: React.FC<SipModalProps> = ({ isOpen, onClose, i
     if (t > 0 && y > 0 && r > 0) {
       // Inflation Adjusted Target Calculation
       const inflationAdjustedTargetValue = t * Math.pow(1 + inf / 100, y);
-      setAdjustedTarget(Math.round(inflationAdjustedTargetValue));
+      setAdjustedTarget(Math.round(inflationAdjustedTargetValue * 100) / 100);
       
       const i = r / 12 / 100;
       const n = y * 12;
       const factor = ((Math.pow(1 + i, n) - 1) / i) * (1 + i);
-      setCalculatedSip(Math.round(inflationAdjustedTargetValue / factor));
+      setCalculatedSip(Math.round((inflationAdjustedTargetValue / factor) * 100) / 100);
     } else {
       setCalculatedSip(0);
       setAdjustedTarget(0);

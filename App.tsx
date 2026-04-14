@@ -79,7 +79,7 @@ const ReportHeader: React.FC<{ inputs: UserInputs }> = ({ inputs }) => (
       </div>
       <div>
         <div className="text-[10px] text-slate-400 uppercase font-bold tracking-wider mb-1">Monthly SIP</div>
-        <div className="font-black text-slate-900 text-xl">{formatCurrency(parseInt(inputs.amount))}</div>
+        <div className="font-black text-slate-900 text-xl">{formatCurrency(parseFloat(inputs.amount))}</div>
       </div>
     </div>
   </div>
@@ -149,7 +149,7 @@ export default function App() {
   };
 
   const handleCalculate = () => {
-    const amountVal = parseInt(inputs.amount);
+    const amountVal = parseFloat(inputs.amount);
     if (!inputs.amount || isNaN(amountVal) || amountVal < 500) {
       alert("Minimum monthly investment is ₹500");
       return;
@@ -278,6 +278,7 @@ export default function App() {
                     <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest">Annual Step-up (%)</label>
                     <input type="number" name="stepUp" value={inputs.stepUp} onChange={handleInputChange}
                       className="w-full bg-transparent border-none outline-none font-black text-slate-900 p-0 focus:ring-0 text-2xl" />
+                    <p className="text-[9px] text-slate-400 mt-1 font-medium italic">* Used exclusively for wealth projections, not asset allocation.</p>
                   </div>
                   <span className="text-sm font-black text-slate-400">P.A.</span>
                 </div>
@@ -418,8 +419,10 @@ export default function App() {
                   </div>
                   <div className="p-12">
                     {(Object.entries(result.equitySplit) as [string, number][]).map(([name, pct]) => {
-                      const amount = Math.round((result!.amounts.equity * pct) / 100);
-                      return pct > 0 && <ProgressBar key={name} label={name} value={pct} amount={formatCurrency(amount)} colorClass={name.includes('US') ? 'bg-slate-950' : 'bg-emerald-600'} />
+                      const amount = (parseFloat(inputs.amount) * pct) / 100;
+                      // Calculate the width relative to the equity portion so the bars look proportionate
+                      const relativeWidth = result.percentages.equity > 0 ? (pct / result.percentages.equity) * 100 : 0;
+                      return pct > 0 && <ProgressBar key={name} label={name} value={pct} relativeWidth={relativeWidth} amount={formatCurrency(amount)} colorClass={name.includes('US') ? 'bg-slate-950' : 'bg-emerald-600'} />
                     })}
                   </div>
                 </div>
