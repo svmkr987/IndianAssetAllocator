@@ -261,26 +261,23 @@ export default function App() {
                     value={formatNumberIndian(inputs.amount)} 
                     onChange={handleInputChange} 
                     readOnly={isSipLocked}
-                    className={`w-full p-8 border rounded-2xl outline-none transition-all font-black text-4xl tracking-tighter ${
+                    className={`w-full p-5 border rounded-2xl outline-none transition-all font-black text-2xl ${
                       isSipLocked 
                         ? 'bg-slate-100 text-slate-400 border-slate-100' 
-                        : 'bg-slate-50 border-slate-200 text-slate-900 focus:ring-4 focus:ring-amber-500/5 focus:border-amber-500'
+                        : 'bg-slate-50 border-slate-200 text-slate-900 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500'
                     }`} 
                   />
-                  {!isSipLocked && <div className="absolute right-6 top-1/2 -translate-y-1/2 text-slate-300 font-bold text-lg">INR</div>}
+                  {!isSipLocked && <div className="absolute right-5 top-1/2 -translate-y-1/2 text-slate-300 font-bold text-sm">INR</div>}
                 </div>
                 
-                <div className="mt-8 flex items-center gap-6 bg-slate-50 p-6 rounded-3xl border border-slate-100">
-                  <div className="p-3 bg-white rounded-xl border border-slate-200 shadow-sm">
-                    <TrendingUp className="w-5 h-5 text-emerald-600" />
-                  </div>
-                  <div className="flex-1">
-                    <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest">Annual Step-up (%)</label>
+                <div className="mt-8">
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">Annual Step-up (%)</label>
+                  <div className="relative">
                     <input type="number" name="stepUp" value={inputs.stepUp} onChange={handleInputChange}
-                      className="w-full bg-transparent border-none outline-none font-black text-slate-900 p-0 focus:ring-0 text-2xl" />
-                    <p className="text-[9px] text-slate-400 mt-1 font-medium italic">* Used exclusively for wealth projections, not asset allocation.</p>
+                      className="w-full p-5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all font-black text-2xl text-slate-900" />
+                    <div className="absolute right-5 top-1/2 -translate-y-1/2 text-slate-300 font-bold text-sm">P.A.</div>
                   </div>
-                  <span className="text-sm font-black text-slate-400">P.A.</span>
+                  <p className="text-[10px] text-slate-400 mt-2 font-medium italic">* Used exclusively for wealth projections, not asset allocation.</p>
                 </div>
               </div>
 
