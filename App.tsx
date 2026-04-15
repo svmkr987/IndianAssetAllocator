@@ -351,17 +351,17 @@ export default function App() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-12 relative z-10">
                   <div>
                     <div className="text-slate-500 text-[10px] font-bold uppercase tracking-widest mb-4">Cumulative Capital</div>
-                    <div className="text-3xl font-black text-white tracking-tight">{formatCurrency(result!.projection.invested)}</div>
+                    <div className="text-2xl font-black text-white tracking-tight">{formatCurrency(result!.projection.invested)}</div>
                   </div>
                   <div>
                     <div className="text-slate-500 text-[10px] font-bold uppercase tracking-widest mb-4">Estimated Yield</div>
-                    <div className="text-3xl font-black text-emerald-500 tracking-tight">
+                    <div className="text-2xl font-black text-emerald-500 tracking-tight">
                       +{formatCurrency(result.projection.value - result.projection.invested)}
                     </div>
                   </div>
                   <div>
                     <div className="text-amber-500/80 text-[10px] font-bold uppercase tracking-widest mb-4">Estimated Corpus</div>
-                    <div className="text-3xl font-black text-white tracking-tight">{formatCurrency(result!.projection.value)}</div>
+                    <div className="text-2xl font-black text-white tracking-tight">{formatCurrency(result!.projection.value)}</div>
                   </div>
                 </div>
                 
