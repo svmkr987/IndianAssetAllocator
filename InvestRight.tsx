@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   TrendingUp, Shield, AlertTriangle, PieChart, Target, ArrowRight,
   Calculator, RefreshCw, Settings2, BarChart3,
@@ -97,8 +97,13 @@ export default function InvestRight({ onBack }: { onBack?: () => void }) {
   const [exclusions, setExclusions] = useState<Exclusions>(INITIAL_EXCLUSIONS);
   const [result, setResult] = useState<AllocationResult | null>(null);
 
+  const hasFetched = useRef(false);
+
   // Improved Visitor Counter Logic (using counterapi.dev - more stable)
   useEffect(() => {
+    if (hasFetched.current) return;
+    hasFetched.current = true;
+
     const updateCounter = async () => {
       try {
         const response = await fetch('https://api.counterapi.dev/v1/mkrfinwise/investright-v1/up');
