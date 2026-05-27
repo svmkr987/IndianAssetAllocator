@@ -206,11 +206,74 @@ export class StockAnalyzer {
       verdictColor = "text-red-500";
     }
 
+    // --- Investment Horizon Analysis (Pure Math Approach) ---
+    const horizons = {
+      shortTerm: { score: 0, maxScore: 3, verdict: "", color: "", description: "" },
+      mediumTerm: { score: 0, maxScore: 3, verdict: "", color: "", description: "" },
+      longTerm: { score: 0, maxScore: 3, verdict: "", color: "", description: "" }
+    };
+
+    // Short Term (0 to 3 points)
+    let shortPoints = 0;
+    const vol = getVal(sd, 'regularMarketVolume') || data.quote?.regularMarketVolume;
+    const avgVol10 = getVal(sd, 'averageDailyVolume10Day') || data.quote?.averageDailyVolume10Day;
+    if (vol && avgVol10 && vol > avgVol10) shortPoints++; // Volume increasing above 10-day avg
+    if (price && sma50 && price > sma50) shortPoints++; // Momentum above 50-day SMA
+    
+    if (data.chart && data.chart.quotes && data.chart.quotes.length >= 10) {
+      const idxLast = data.chart.quotes.length - 1;
+      const currentClose = data.chart.quotes[idxLast].close;
+      const price10DaysAgo = data.chart.quotes[idxLast - 9].close;
+      if (currentClose && price10DaysAgo && currentClose > price10DaysAgo) {
+        shortPoints++; // Price increased over last 10 days
+      }
+    }
+
+    horizons.shortTerm = {
+        score: shortPoints,
+        maxScore: 3,
+        verdict: shortPoints === 3 ? "BULLISH" : shortPoints === 2 ? "NEUTRAL-BULLISH" : shortPoints === 1 ? "NEUTRAL-BEARISH" : "BEARISH",
+        color: shortPoints >= 2 ? "text-emerald-500" : (shortPoints === 0 ? "text-red-500" : "text-amber-500"),
+        description: "Evaluates pure momentum using 10-day vs current volume, 50-day SMA crossover, and 10-day price trend."
+    };
+
+    // Medium Term (0 to 3 points)
+    let mediumPoints = 0;
+    const fpe = getVal(sd, 'forwardPE');
+    const tpe = getVal(sd, 'trailingPE');
+    if (fpe && tpe && fpe < tpe) mediumPoints++; // Anticipates earnings growth lowering PE
+    if (earGrowth !== null && earGrowth > 0.10) mediumPoints++; // YoY Earnings Growth > 10%
+    if (roe !== null && roe > 0.15) mediumPoints++; // Strong ROE > 15%
+
+    horizons.mediumTerm = {
+        score: mediumPoints,
+        maxScore: 3,
+        verdict: mediumPoints === 3 ? "STRONG" : mediumPoints === 2 ? "FAIR" : mediumPoints === 1 ? "WEAK" : "POOR",
+        color: mediumPoints >= 2 ? "text-emerald-500" : (mediumPoints === 0 ? "text-red-500" : "text-amber-500"),
+        description: "Assesses 3-12 month outlook based on forward P/E divergence, YoY earnings growth rate, and ROE baseline."
+    };
+
+    // Long Term (0 to 3 points)
+    let longPoints = 0;
+    if (de !== null && de < 50) longPoints++; // Low Debt-to-Equity (< 50)
+    if (roa !== null && roa > 0.05) longPoints++; // Efficient Asset Usage (ROA > 5%)
+    const divYield = getVal(sd, 'dividendYield');
+    if ((divYield !== null && divYield > 0.01) || (pb !== null && pb < 3)) longPoints++; // Dividend support or reasonable Book Value
+
+    horizons.longTerm = {
+        score: longPoints,
+        maxScore: 3,
+        verdict: longPoints === 3 ? "EXCELLENT" : longPoints === 2 ? "SECURE" : longPoints === 1 ? "SPECULATIVE" : "AVOID",
+        color: longPoints >= 2 ? "text-emerald-500" : (longPoints === 0 ? "text-red-500" : "text-amber-500"),
+        description: "Measures 1-5 year stability using Debt-to-Equity ratio limits, ROA efficiency, and Dividend/Book Value anchors."
+    };
+
     return {
       totalPoints: points,
       verdict,
       verdictColor,
-      details
+      details,
+      horizons
     };
   }
 

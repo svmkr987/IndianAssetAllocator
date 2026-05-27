@@ -11,6 +11,11 @@ export interface ScoreResult {
             description: string;
         }[];
     }[];
+    horizons?: {
+        shortTerm: { verdict: string; color: string; description: string; score: number; maxScore: number };
+        mediumTerm: { verdict: string; color: string; description: string; score: number; maxScore: number };
+        longTerm: { verdict: string; color: string; description: string; score: number; maxScore: number };
+    };
 }
 
 export interface Metric {

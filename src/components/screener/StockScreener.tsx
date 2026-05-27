@@ -111,8 +111,7 @@ export default function StockScreener({ onBack }: { onBack?: () => void }) {
     if (value.trim()) {
       const exactStart = stocksList.filter(s => s.symbol.startsWith(value));
       const otherMatches = stocksList.filter(s => 
-        (s.symbol.includes(value) && !s.symbol.startsWith(value)) || 
-        s.name.toUpperCase().includes(value)
+        !s.symbol.startsWith(value) && (s.symbol.includes(value) || s.name.toUpperCase().includes(value))
       );
       setSuggestions([...exactStart, ...otherMatches].slice(0, 50));
       setShowSuggestions(true);
@@ -279,6 +278,76 @@ export default function StockScreener({ onBack }: { onBack?: () => void }) {
                   <PriceChart data={data.chart} />
                </div>
             </div>
+            
+            {/* Investment Horizon Analysis */}
+            {scoreResult.horizons && (
+              <div className="bg-black rounded-3xl border border-amber-500/20 shadow-xl overflow-hidden mt-6">
+                <div className="px-8 py-6 border-b border-amber-500/20 bg-slate-950 flex items-center justify-between">
+                  <h3 className="font-black text-amber-500 tracking-[0.2em] text-sm uppercase flex items-center gap-2">
+                    <Activity className="w-5 h-5" /> Investment Horizon Matrix
+                  </h3>
+                  <span className="text-[10px] text-slate-400 font-bold uppercase tracking-widest hidden sm:inline">Pure Math & Heuristics</span>
+                </div>
+                
+                <div className="grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-amber-500/10">
+                  
+                  {/* Short Term */}
+                  <div className="p-8 flex flex-col items-center text-center">
+                     <h4 className="text-[10px] font-black tracking-[0.3em] text-slate-500 uppercase mb-2">Short-Term</h4>
+                     <p className="text-white font-bold text-sm mb-6 uppercase tracking-wide">1-3 Months</p>
+                     
+                     <div className="w-16 h-16 rounded-2xl bg-slate-950 border border-slate-800 flex items-center justify-center mb-4 shadow-inner">
+                        <span className={`text-2xl font-black ${scoreResult.horizons.shortTerm.color}`}>
+                          {scoreResult.horizons.shortTerm.score}/{scoreResult.horizons.shortTerm.maxScore}
+                        </span>
+                     </div>
+                     <div className={`text-sm font-black tracking-widest mb-4 uppercase ${scoreResult.horizons.shortTerm.color}`}>
+                        {scoreResult.horizons.shortTerm.verdict}
+                     </div>
+                     <p className="text-[11px] text-slate-400 leading-relaxed font-medium">
+                        {scoreResult.horizons.shortTerm.description}
+                     </p>
+                  </div>
+                  
+                  {/* Medium Term */}
+                  <div className="p-8 flex flex-col items-center text-center">
+                     <h4 className="text-[10px] font-black tracking-[0.3em] text-slate-500 uppercase mb-2">Medium-Term</h4>
+                     <p className="text-white font-bold text-sm mb-6 uppercase tracking-wide">3-12 Months</p>
+                     
+                     <div className="w-16 h-16 rounded-2xl bg-slate-950 border border-slate-800 flex items-center justify-center mb-4 shadow-inner">
+                        <span className={`text-2xl font-black ${scoreResult.horizons.mediumTerm.color}`}>
+                          {scoreResult.horizons.mediumTerm.score}/{scoreResult.horizons.mediumTerm.maxScore}
+                        </span>
+                     </div>
+                     <div className={`text-sm font-black tracking-widest mb-4 uppercase ${scoreResult.horizons.mediumTerm.color}`}>
+                        {scoreResult.horizons.mediumTerm.verdict}
+                     </div>
+                     <p className="text-[11px] text-slate-400 leading-relaxed font-medium">
+                        {scoreResult.horizons.mediumTerm.description}
+                     </p>
+                  </div>
+                  
+                  {/* Long Term */}
+                  <div className="p-8 flex flex-col items-center text-center">
+                     <h4 className="text-[10px] font-black tracking-[0.3em] text-slate-500 uppercase mb-2">Long-Term</h4>
+                     <p className="text-white font-bold text-sm mb-6 uppercase tracking-wide">1-5 Years</p>
+                     
+                     <div className="w-16 h-16 rounded-2xl bg-slate-950 border border-slate-800 flex items-center justify-center mb-4 shadow-inner">
+                        <span className={`text-2xl font-black ${scoreResult.horizons.longTerm.color}`}>
+                          {scoreResult.horizons.longTerm.score}/{scoreResult.horizons.longTerm.maxScore}
+                        </span>
+                     </div>
+                     <div className={`text-sm font-black tracking-widest mb-4 uppercase ${scoreResult.horizons.longTerm.color}`}>
+                        {scoreResult.horizons.longTerm.verdict}
+                     </div>
+                     <p className="text-[11px] text-slate-400 leading-relaxed font-medium">
+                        {scoreResult.horizons.longTerm.description}
+                     </p>
+                  </div>
+                  
+                </div>
+              </div>
+            )}
 
             {/* Detailed Analysis Breakdowns */}
             <div className="bg-black rounded-3xl border border-amber-500/20 shadow-xl overflow-hidden">
