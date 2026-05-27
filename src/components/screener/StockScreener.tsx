@@ -5,6 +5,7 @@ import { StockData, ScoreResult } from '../../types/screener';
 import MetricsGrid from './MetricsGrid';
 import PriceChart from './PriceChart';
 import ScoreGauge from './ScoreGauge';
+import { stocksList } from '../../data/stocks';
 
 const BASE_VISITORS = 1000;
 
@@ -24,6 +25,8 @@ const StylishActivityLogo: React.FC<{ size?: number; className?: string }> = ({
 
 export default function StockScreener({ onBack }: { onBack?: () => void }) {
   const [query, setQuery] = useState('');
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [suggestions, setSuggestions] = useState<{symbol: string, name: string}[]>([]);
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<StockData | null>(null);
   const [scoreResult, setScoreResult] = useState<ScoreResult | null>(null);
@@ -31,6 +34,17 @@ export default function StockScreener({ onBack }: { onBack?: () => void }) {
   const [visitorCount, setVisitorCount] = useState<number | null>(null);
 
   const hasFetched = useRef(false);
+  const searchContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (searchContainerRef.current && !searchContainerRef.current.contains(event.target as Node)) {
+        setShowSuggestions(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   useEffect(() => {
     if (hasFetched.current) return;
@@ -58,6 +72,7 @@ export default function StockScreener({ onBack }: { onBack?: () => void }) {
     setError('');
     setData(null);
     setScoreResult(null);
+    setShowSuggestions(false);
 
     try {
       const response = await fetch(`/api/analyze?symbols=${encodeURIComponent(query)}`);
@@ -87,6 +102,29 @@ export default function StockScreener({ onBack }: { onBack?: () => void }) {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.toUpperCase();
+    setQuery(value);
+    
+    if (value.trim()) {
+      const exactStart = stocksList.filter(s => s.symbol.startsWith(value));
+      const otherMatches = stocksList.filter(s => 
+        (s.symbol.includes(value) && !s.symbol.startsWith(value)) || 
+        s.name.toUpperCase().includes(value)
+      );
+      setSuggestions([...exactStart, ...otherMatches].slice(0, 50));
+      setShowSuggestions(true);
+    } else {
+      setSuggestions([]);
+      setShowSuggestions(false);
+    }
+  };
+
+  const handleSuggestionSelect = (symbol: string) => {
+    setQuery(symbol);
+    setShowSuggestions(false);
   };
 
   // Helper to extract top level metrics for the grid
@@ -152,22 +190,40 @@ export default function StockScreener({ onBack }: { onBack?: () => void }) {
           </h2>
 
         <form onSubmit={handleSearch} className="max-w-xl mx-auto mb-12">
-          <div className="relative flex items-center">
-            <Search className="absolute left-6 text-amber-500 w-5 h-5" />
+          <div className="relative flex items-center" ref={searchContainerRef}>
+            <Search className="absolute left-6 text-amber-500 w-5 h-5 z-10" />
             <input 
               type="text" 
               placeholder="Enter Stock Symbol" 
               value={query}
-              onChange={(e) => setQuery(e.target.value.toUpperCase())}
+              onChange={handleQueryChange}
+              onFocus={() => { if (suggestions.length > 0) setShowSuggestions(true); }}
               className="w-full pl-14 pr-32 py-5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all font-black text-slate-900 text-lg tracking-wide placeholder:text-slate-400 placeholder:font-bold"
             />
             <button 
               type="submit"
               disabled={loading || !query.trim()}
-              className="absolute right-3 top-2.5 bottom-2.5 px-6 bg-slate-950 border border-amber-500/30 text-amber-500 rounded-xl font-black text-sm tracking-[0.2em] uppercase hover:bg-black hover:border-amber-500/50 transition-all disabled:opacity-50 flex items-center shadow-lg"
+              className="absolute right-3 top-2.5 bottom-2.5 z-10 px-6 bg-slate-950 border border-amber-500/30 text-amber-500 rounded-xl font-black text-sm tracking-[0.2em] uppercase hover:bg-black hover:border-amber-500/50 transition-all disabled:opacity-50 flex items-center shadow-lg"
             >
               {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : "Analyze"}
             </button>
+            
+            {showSuggestions && suggestions.length > 0 && (
+              <div className="absolute top-[105%] left-0 w-full bg-white border border-slate-200 rounded-2xl shadow-2xl overflow-hidden z-50 max-h-72 overflow-y-auto">
+                <ul className="divide-y divide-slate-100">
+                  {suggestions.map((s, idx) => (
+                    <li 
+                      key={idx}
+                      className="px-6 py-4 hover:bg-amber-50 cursor-pointer flex justify-between items-center transition-colors"
+                      onClick={() => handleSuggestionSelect(s.symbol)}
+                    >
+                      <span className="font-black text-slate-900">{s.symbol}</span>
+                      <span className="text-xs font-semibold text-slate-400 truncate max-w-[60%]">{s.name}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         </form>
 
