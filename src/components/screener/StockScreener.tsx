@@ -177,7 +177,7 @@ export default function StockScreener({ onBack }: { onBack?: () => void }) {
 
           <h2 className="text-2xl font-black text-slate-900 mb-10 flex flex-wrap items-center gap-4">
             <div className="p-3 bg-slate-950 rounded-xl shadow-lg border border-amber-500/30">
-              <LineChart className="h-6 w-6 text-amber-500 stroke-[2.5px] drop-shadow-[0_0_8px_rgba(245,158,11,0.5)]" />
+              <Activity className="h-6 w-6 text-amber-500 stroke-[2.5px] drop-shadow-[0_0_8px_rgba(245,158,11,0.5)]" />
             </div>
             <div className="flex items-center flex-wrap gap-3 text-slate-900">
               <span>Fundamental Health Check</span>
