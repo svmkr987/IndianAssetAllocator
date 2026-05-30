@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import InvestRight from './InvestRight';
 import StockScreener from './src/components/screener/StockScreener';
-import { LineChart, BarChart, ArrowRight, ShieldCheck } from 'lucide-react';
+import { LineChart, BarChart, ArrowRight, ShieldCheck, Send } from 'lucide-react';
 
 export default function App() {
   const [currentApp, setCurrentApp] = useState<'home' | 'invest-right' | 'stock-screener'>('home');
@@ -29,9 +29,24 @@ export default function App() {
           <h1 className="text-5xl md:text-6xl font-black tracking-tight text-white mb-6 drop-shadow-xl">
             MKR FinWise
           </h1>
-          <p className="text-amber-500 font-bold uppercase tracking-[0.25em] text-xs sm:text-sm shadow-black drop-shadow-md">
+          <p className="text-amber-500 font-bold uppercase tracking-[0.25em] text-xs sm:text-sm shadow-black drop-shadow-md mb-6">
             SELECT A MODULE TO CONTINUE
           </p>
+          
+          <div className="flex justify-center animate-in fade-in slide-in-from-bottom-2 duration-700 delay-300">
+            <a 
+              href="https://t.me/MKR_FinWise_Hub" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#229ED9]/10 border border-[#229ED9]/20 text-slate-300 hover:bg-[#229ED9]/20 hover:border-[#229ED9]/40 transition-all duration-300 text-[13px] group"
+            >
+              <span>To learn Swing trading, join</span>
+              <span className="font-bold text-[#229ED9] flex items-center gap-1.5 group-hover:text-[#2AABEA] transition-colors">
+                <Send className="w-3.5 h-3.5 -mt-0.5" /> 
+                MKR FinWise Hub
+              </span>
+            </a>
+          </div>
         </div>
 
         <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
