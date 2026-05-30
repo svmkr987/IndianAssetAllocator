@@ -40,7 +40,7 @@ export default function App() {
               rel="noopener noreferrer" 
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#229ED9]/10 border border-[#229ED9]/20 text-slate-300 hover:bg-[#229ED9]/20 hover:border-[#229ED9]/40 transition-all duration-300 text-[13px] group"
             >
-              <span>To learn Swing trading, join</span>
+              <span>To learn Swing Trading, join</span>
               <span className="font-bold text-[#229ED9] flex items-center gap-1.5 group-hover:text-[#2AABEA] transition-colors">
                 <Send className="w-3.5 h-3.5 -mt-0.5" /> 
                 MKR FinWise Hub
