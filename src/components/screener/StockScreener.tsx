@@ -183,7 +183,7 @@ export default function StockScreener({ onBack }: { onBack?: () => void }) {
               <span>Fundamental Health Check</span>
               <div className="flex items-center gap-1.5 px-3 py-1 bg-amber-50 rounded-full border border-amber-200">
                 <CheckCircle2 className="w-3.5 h-3.5 text-amber-500" />
-                <span className="text-amber-600 text-[10px] font-bold tracking-[0.1em] uppercase shadow-sm">12-Point Verification Process</span>
+                <span className="text-amber-600 text-[10px] font-bold tracking-[0.1em] uppercase">12-Point Verification Process</span>
               </div>
             </div>
           </h2>
