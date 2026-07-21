@@ -172,7 +172,7 @@ export default function StockScreener({ onBack }: { onBack?: () => void }) {
       </div>
 
       <main className="max-w-4xl mx-auto px-4 py-10 print:p-0 print:max-w-none flex-grow w-full">
-        <div className="bg-white rounded-3xl shadow-2xl border border-slate-200/60 p-8 sm:p-12 min-h-[500px] animate-in fade-in slide-in-from-bottom-6 duration-500 relative">
+        <div className="bg-white rounded-3xl shadow-2xl border border-slate-200/60 p-8 sm:p-12 min-h-[500px] animate-in fade-in slide-in-from-bottom-6 duration-500 relative overflow-hidden">
           <div className="absolute top-0 left-0 right-0 h-1.5 rounded-t-3xl bg-gradient-to-r from-amber-500 via-amber-200 to-amber-500"></div>
 
           <h2 className="text-2xl font-black text-slate-900 mb-10 flex flex-wrap items-center gap-4">

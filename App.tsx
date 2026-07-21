@@ -15,102 +15,82 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen relative bg-[#030303] flex items-center justify-center p-4 sm:p-8 overflow-hidden font-sans">
+    <div className="min-h-screen bg-[#0a0c10] text-slate-200 font-sans selection:bg-amber-500/30">
       
-      {/* Premium Background Effects */}
-      <div className="absolute inset-0 z-0 select-none pointer-events-none">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-amber-500/5 blur-[120px] rounded-full pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-full h-[500px] bg-gradient-to-t from-amber-500/5 to-transparent blur-[100px] pointer-events-none" />
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:64px_64px] pointer-events-none" style={{ maskImage: 'radial-gradient(ellipse at center, black 40%, transparent 80%)' }} />
-      </div>
+      {/* Header */}
+      <header className="fixed top-0 w-full z-50 border-b border-white/5 bg-[#0a0c10]/80 backdrop-blur-md">
+        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+          <div className="text-xl font-black tracking-tighter text-white">
+            MKR <span className="text-amber-600">FinWise</span>
+          </div>
+          <nav className="flex items-center gap-8 text-[13px] uppercase tracking-[0.2em] font-medium text-slate-400">
+            <a href="#" className="hover:text-amber-500 transition-colors">Home</a>
+            <a href="https://t.me/MKR_FinWise_Hub" target="_blank" rel="noopener noreferrer" className="hover:text-amber-500 transition-colors">Community</a>
+          </nav>
+        </div>
+      </header>
 
-      <div className="max-w-5xl w-full z-10 animate-in fade-in duration-1000 relative">
-        <div className="text-center mb-16 relative">
-          <h1 className="text-5xl md:text-6xl font-black tracking-tight text-white mb-6 drop-shadow-xl">
-            MKR FinWise
-          </h1>
-          <p className="text-amber-500 font-bold uppercase tracking-[0.25em] text-xs sm:text-sm shadow-black drop-shadow-md mb-6">
-            SELECT A MODULE TO CONTINUE
-          </p>
+      {/* Main Content */}
+      <main className="pt-32 pb-20 px-6">
+        <div className="max-w-5xl mx-auto">
           
-          <div className="flex justify-center animate-in fade-in slide-in-from-bottom-2 duration-700 delay-300">
+          {/* Hero Section */}
+          <div className="text-center mb-24">
+            <h1 className="text-5xl md:text-7xl font-black tracking-tighter text-white mb-8">
+              Precision Financial <span className="text-amber-600">Intelligence</span>
+            </h1>
+            <p className="text-slate-400 font-medium tracking-[0.15em] text-xs sm:text-sm uppercase mb-12 max-w-2xl mx-auto leading-relaxed">
+              Empowering professional traders with institutional-grade analytics and asset allocation tools for superior market performance.
+            </p>
+            
             <a 
               href="https://t.me/MKR_FinWise_Hub" 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#229ED9]/10 border border-[#229ED9]/20 text-slate-300 hover:bg-[#229ED9]/20 hover:border-[#229ED9]/40 transition-all duration-300 text-[13px] group"
+              className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-white/5 border border-white/10 text-white hover:bg-amber-600/10 hover:border-amber-600/30 transition-all duration-300 text-[13px] font-bold uppercase tracking-[0.15em] shadow-xl hover:shadow-amber-900/10"
             >
-              <span>To learn Swing Trading, join</span>
-              <span className="font-bold text-[#229ED9] flex items-center gap-1.5 group-hover:text-[#2AABEA] transition-colors">
-                <Send className="w-3.5 h-3.5 -mt-0.5" /> 
-                MKR FinWise Hub
-              </span>
+              <Send className="w-4 h-4" /> Join The Inner Circle
             </a>
           </div>
-        </div>
 
-        <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
-          {/* Invest Right Card */}
-          <button 
-            onClick={() => setCurrentApp('invest-right')}
-            className="group relative bg-[#080808] rounded-3xl border border-white/5 hover:border-amber-500/30 transition-all duration-500 text-left overflow-hidden hover:shadow-[0_0_60px_rgba(245,158,11,0.05)] hover:-translate-y-1 animate-in slide-in-from-bottom-8 fade-in duration-700 delay-100"
-          >
-            {/* Hover Gradients */}
-            <div className="absolute inset-0 bg-gradient-to-br from-amber-500/[0.03] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-            <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/10 blur-[60px] rounded-full translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
-            
-            <div className="relative p-8 sm:p-10">
-              <div className="flex justify-between items-start mb-10">
-                <div className="w-14 h-14 bg-black border border-amber-500/20 text-amber-500 rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:border-amber-500/40 group-hover:bg-amber-500/10 transition-all duration-500 shadow-lg">
-                  <BarChart className="w-7 h-7 stroke-[1.5px]" />
+          {/* Modules Section */}
+          <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
+            {/* Invest Right Card */}
+            <button 
+              onClick={() => setCurrentApp('invest-right')}
+              className="group relative bg-[#0f1218] rounded-3xl border border-white/5 transition-all duration-500 text-left overflow-hidden hover:border-amber-600/30 hover:shadow-[0_20px_50px_rgba(180,130,50,0.1)]"
+            >
+              <div className="relative p-10 sm:p-12">
+                <div className="w-16 h-16 mb-12 bg-white/5 text-amber-600 rounded-2xl flex items-center justify-center group-hover:scale-105 transition-transform duration-500">
+                  <BarChart className="w-8 h-8" />
                 </div>
-                <div className="w-8 h-8 rounded-full border border-white/5 flex items-center justify-center -rotate-45 group-hover:rotate-0 group-hover:bg-amber-500 hover:scale-110 group-hover:border-amber-500 group-hover:text-black text-slate-600 transition-all duration-500">
-                  <ArrowRight className="w-4 h-4 stroke-[2px]" />
-                </div>
+                <h2 className="text-3xl font-black text-white mb-2 uppercase tracking-tight">Invest Right</h2>
+                <p className="text-[11px] font-bold text-amber-600 uppercase tracking-[0.25em] mb-6">Asset Allocation & SIP Planner</p>
+                <p className="text-slate-400 text-sm leading-relaxed font-medium group-hover:text-slate-300">
+                  Determine your optimal asset allocation strategy based on your risk tolerance and investment horizon.
+                </p>
               </div>
-              
-              <h2 className="text-3xl font-black text-white mb-2 uppercase tracking-tight">INVEST RIGHT</h2>
-              <p className="text-[12px] font-bold text-amber-500 uppercase tracking-[0.2em] mb-4">ASSET ALLOCATION & SIP PLANNER</p>
-              
-              <div className="h-px bg-gradient-to-r from-white/10 to-transparent w-full mb-5" />
-              
-              <p className="text-slate-400 text-sm leading-relaxed font-medium group-hover:text-slate-300 transition-colors">
-                Determine your optimal asset allocation strategy based on your age, risk tolerance, and investment horizon. Plan your SIPs effectively.
-              </p>
-            </div>
-          </button>
+            </button>
 
-          {/* Stock Screener Card */}
-          <button 
-            onClick={() => setCurrentApp('stock-screener')}
-            className="group relative bg-[#080808] rounded-3xl border border-white/5 hover:border-amber-500/30 transition-all duration-500 text-left overflow-hidden hover:shadow-[0_0_60px_rgba(245,158,11,0.05)] hover:-translate-y-1 animate-in slide-in-from-bottom-8 fade-in duration-700 delay-200"
-          >
-            {/* Hover Gradients */}
-            <div className="absolute inset-0 bg-gradient-to-br from-amber-500/[0.03] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-            <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/10 blur-[60px] rounded-full translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
-            
-            <div className="relative p-8 sm:p-10">
-              <div className="flex justify-between items-start mb-10">
-                <div className="w-14 h-14 bg-black border border-amber-500/20 text-amber-500 rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:border-amber-500/40 group-hover:bg-amber-500/10 transition-all duration-500 shadow-lg">
-                  <LineChart className="w-7 h-7 stroke-[1.5px]" />
+            {/* Stock Screener Card */}
+            <button 
+              onClick={() => setCurrentApp('stock-screener')}
+              className="group relative bg-[#0f1218] rounded-3xl border border-white/5 transition-all duration-500 text-left overflow-hidden hover:border-amber-600/30 hover:shadow-[0_20px_50px_rgba(180,130,50,0.1)]"
+            >
+              <div className="relative p-10 sm:p-12">
+                <div className="w-16 h-16 mb-12 bg-white/5 text-amber-600 rounded-2xl flex items-center justify-center group-hover:scale-105 transition-transform duration-500">
+                  <LineChart className="w-8 h-8" />
                 </div>
-                <div className="w-8 h-8 rounded-full border border-white/5 flex items-center justify-center -rotate-45 group-hover:rotate-0 group-hover:bg-amber-500 hover:scale-110 group-hover:border-amber-500 group-hover:text-black text-slate-600 transition-all duration-500">
-                  <ArrowRight className="w-4 h-4 stroke-[2px]" />
-                </div>
+                <h2 className="text-3xl font-black text-white mb-2 uppercase tracking-tight">Stock Analyser</h2>
+                <p className="text-[11px] font-bold text-amber-600 uppercase tracking-[0.25em] mb-6">Fundamental Health Screener</p>
+                <p className="text-slate-400 text-sm leading-relaxed font-medium group-hover:text-slate-300">
+                  Evaluate the fundamental strength of stocks across profitability, valuation, health, and momentum.
+                </p>
               </div>
-              
-              <h2 className="text-3xl font-black text-white mb-2 uppercase tracking-tight">STOCK RANK ANALYSER</h2>
-              <p className="text-[12px] font-bold text-amber-500 uppercase tracking-[0.2em] mb-4">FUNDAMENTAL HEALTH SCREENER</p>
-              
-              <div className="h-px bg-gradient-to-r from-white/10 to-transparent w-full mb-5" />
-              
-              <p className="text-slate-400 text-sm leading-relaxed font-medium group-hover:text-slate-300 transition-colors">
-                Evaluate the fundamental strength of stocks across profitability, valuation, health, growth, and momentum with a precise 12-point scoring system.
-              </p>
-            </div>
-          </button>
+            </button>
+          </div>
         </div>
-      </div>
+      </main>
     </div>
   );
 }
