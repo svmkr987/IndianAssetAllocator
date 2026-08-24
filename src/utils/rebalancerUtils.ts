@@ -28,6 +28,7 @@ export const calculateRebalance = (
   targets: AssetAllocation
 ): RebalanceResult[] => {
   const monthlySIP = typeof profile.monthlySIP === 'number' ? profile.monthlySIP : 0;
+  const totalTargetPercent = Object.values(targets).reduce((sum, v) => sum + v, 0);
   const totalAnnualInflow = monthlySIP * 12;
   
   const getNum = (v: number | '') => (typeof v === 'number' ? v : 0);
@@ -60,7 +61,9 @@ export const calculateRebalance = (
 
   const results: RebalanceResult[] = deficits.map(a => {
     let sip = 0;
-    if (totalDeficitSum === 0) {
+    if (totalTargetPercent === 0) {
+      sip = 0;
+    } else if (totalDeficitSum === 0) {
       sip = (a.target / 100) * profile.monthlySIP;
     } else {
       sip = (a.deficit / totalDeficitSum) * profile.monthlySIP;
@@ -80,14 +83,16 @@ export const calculateRebalance = (
   });
 
   // Handle rounding discrepancy
-  const totalRecommended = results.reduce((sum, r) => sum + r.recommendedSIP, 0);
-  const diff = profile.monthlySIP - totalRecommended;
-  
-  if (diff !== 0) {
-    // Add/subtract diff to largest deficit asset
-    const largestDeficitIndex = results.reduce((maxIdx, r, i, arr) => 
-      r.deficit > arr[maxIdx].deficit ? i : maxIdx, 0);
-    results[largestDeficitIndex].recommendedSIP += diff;
+  if (totalTargetPercent !== 0) {
+    const totalRecommended = results.reduce((sum, r) => sum + r.recommendedSIP, 0);
+    const diff = profile.monthlySIP - totalRecommended;
+    
+    if (diff !== 0) {
+      // Add/subtract diff to largest deficit asset
+      const largestDeficitIndex = results.reduce((maxIdx, r, i, arr) => 
+        r.deficit > arr[maxIdx].deficit ? i : maxIdx, 0);
+      results[largestDeficitIndex].recommendedSIP += diff;
+    }
   }
 
   return results;
