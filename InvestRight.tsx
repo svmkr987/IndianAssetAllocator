@@ -5,6 +5,7 @@ import {
   Sliders, FileText, CheckSquare, Coins, Lock, PlusCircle,
   Gem, Printer, Loader2, Check, ShieldCheck, Users
 } from 'lucide-react';
+import BarChartLogo from './src/components/UI/BarChart';
 import { UserInputs, Exclusions, ReturnRates, AllocationResult, RiskLevel, ProjectionBreakdown } from './types';
 import { calculateAllocation, formatCurrency, formatDate, formatNumberIndian, parseNumberIndian } from './utils';
 import { AssetCard, ProgressBar } from './components/UI';
@@ -48,13 +49,30 @@ const StylishTickLogo: React.FC<{ size?: number; className?: string }> = ({
   );
 };
 
+/**
+ * Bar Chart Logo
+ */
+const BarChartLogoComp: React.FC<{ size?: number; className?: string }> = ({ 
+  size = 32,
+  className = ""
+}) => {
+  return (
+    <div className={`flex items-center justify-center p-2 bg-white rounded-xl border border-slate-200 shadow-sm ${className}`}>
+      <BarChartLogo
+        size={size} 
+        className="text-amber-600 stroke-[2.5px]" 
+      />
+    </div>
+  );
+};
+
 const ReportHeader: React.FC<{ inputs: UserInputs }> = ({ inputs }) => (
   <div className="flex flex-col border-b border-slate-200 pb-8 mb-8">
     <div className="flex justify-between items-center">
       <div className="flex items-center gap-6">
-        <StylishTickLogo size={40} />
+        <BarChartLogoComp size={40} />
         <div>
-          <h1 className="text-3xl font-black text-slate-900 tracking-tight leading-none uppercase">Invest Right</h1>
+          <h1 className="text-3xl font-black text-slate-900 tracking-tight leading-none uppercase">Portfolio Architect</h1>
           <p className="text-amber-500 text-[11px] mt-2 font-bold uppercase tracking-[0.25em]">by MKR FinWise</p>
         </div>
       </div>
@@ -181,13 +199,13 @@ export default function InvestRight({ onBack }: { onBack?: () => void }) {
     <div className="min-h-screen pb-32 print:bg-white print:pb-0 flex flex-col">
       
       {/* Navbar */}
-      <div className="bg-slate-950 text-white shadow-xl sticky top-0 z-50 no-print border-b border-amber-500/20">
-        <div className="max-w-4xl mx-auto px-6 py-4 flex justify-between items-center">
+      <div className="bg-white text-slate-900 shadow-sm sticky top-0 z-50 no-print border-b border-slate-200">
+        <div className="w-full px-6 py-4 flex justify-between items-center">
           <div className="flex items-center gap-4">
-            <StylishTickLogo size={24} />
+            <BarChartLogoComp size={24} />
             <div className="flex flex-col">
-              <h1 className="text-base font-black tracking-tight leading-none uppercase">Invest Right</h1>
-              <p className="text-amber-500 text-[10px] font-bold uppercase tracking-[0.2em] mt-1">by MKR FinWise</p>
+              <h1 className="text-base font-black tracking-tight leading-none uppercase">Portfolio Architect</h1>
+              <p className="text-amber-600 text-[10px] font-bold uppercase tracking-[0.2em] mt-1">by MKR FinWise</p>
             </div>
           </div>
           
@@ -195,7 +213,7 @@ export default function InvestRight({ onBack }: { onBack?: () => void }) {
             {step === 2 && (
               <button 
                 onClick={resetPlan} 
-                className="bg-white/10 hover:bg-white/20 px-4 py-2 rounded-lg transition-all text-white flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider border border-white/10 hidden"
+                className="bg-slate-100 hover:bg-slate-200 px-4 py-2 rounded-lg transition-all text-slate-900 flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider border border-slate-200"
               >
                 <PlusCircle className="w-3.5 h-3.5" />
                 <span>Reset</span>
@@ -204,8 +222,8 @@ export default function InvestRight({ onBack }: { onBack?: () => void }) {
             {onBack && (
               <button 
                 onClick={onBack}
-                className="bg-white/5 hover:bg-white/10 px-4 py-2 rounded-lg transition-all text-amber-500 flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider border border-amber-500/20"
-                title="Back to Home"
+                className="bg-slate-50 hover:bg-slate-100 px-4 py-2 rounded-lg transition-all text-amber-600 flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider border border-slate-200"
+                title="Home"
               >
                 <span>Home</span>
               </button>
@@ -222,7 +240,7 @@ export default function InvestRight({ onBack }: { onBack?: () => void }) {
             <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-amber-500 via-amber-200 to-amber-500"></div>
             
             <h2 className="text-2xl font-black text-slate-900 mb-10 flex items-center gap-4">
-              <div className="p-3 bg-slate-950 rounded-xl shadow-xl border border-amber-500/20">
+              <div className="p-3 bg-white rounded-xl shadow-sm border border-slate-200">
                 <ShieldCheck className="h-6 w-6 text-amber-500" />
               </div>
               Portfolio Configuration
@@ -351,8 +369,8 @@ export default function InvestRight({ onBack }: { onBack?: () => void }) {
               <ReportHeader inputs={inputs} />
 
               {/* Strategic Terminal Value - Dashboard Section (Plain Black) */}
-              <div className="dark-banner bg-black rounded-3xl p-10 text-white shadow-2xl relative overflow-hidden">
-                <div className="flex items-center justify-between text-amber-500 mb-10 border-b border-white/10 pb-6">
+              <div className="dark-banner bg-slate-900 rounded-3xl p-10 text-white shadow-2xl relative overflow-hidden">
+                <div className="flex items-center justify-between text-amber-400 mb-10 border-b border-white/10 pb-6">
                   <div className="flex items-center gap-3 font-bold text-[11px] uppercase tracking-[0.3em]">
                     <BarChart3 className="w-5 h-5" /> Strategic Terminal Value
                   </div>
@@ -509,20 +527,19 @@ export default function InvestRight({ onBack }: { onBack?: () => void }) {
         )}
       </main>
 
-      {/* FIXED Professional Black Footer */}
-      <footer className="no-print fixed bottom-0 left-0 right-0 bg-slate-950 text-white border-t border-amber-500/20 py-6 z-50 shadow-[0_-4px_20px_-5px_rgba(0,0,0,0.5)]">
+      <footer className="no-print fixed bottom-0 left-0 right-0 bg-white text-slate-600 border-t border-slate-200 py-6 z-50 shadow-[0_-4px_20px_-5px_rgba(0,0,0,0.05)]">
         <div className="max-w-4xl mx-auto px-6 text-center flex flex-col items-center gap-1.5">
-          <div className="flex items-center gap-2 px-3 py-1 bg-white/5 rounded-full border border-white/10 mb-1">
-            <Users className="w-3 h-3 text-amber-500" />
-            <span className="text-[9px] font-bold text-slate-300 uppercase tracking-[0.2em]">
+          <div className="flex items-center gap-2 px-3 py-1 bg-slate-100 rounded-full border border-slate-200 mb-1">
+            <Users className="w-3 h-3 text-amber-600" />
+            <span className="text-[9px] font-bold text-slate-500 uppercase tracking-[0.2em]">
               Trusted by {displayCount.toLocaleString()}+ Investors
             </span>
           </div>
-          <p className="text-white text-[11px] italic font-medium tracking-wide opacity-90">
+          <p className="text-slate-600 text-[11px] italic font-medium tracking-wide opacity-90">
             "Not all Mutual Funds & ETFs are worth your money."
           </p>
           <p className="text-slate-400 text-[10px] font-medium tracking-wide">
-            Find out which ones: <a href="https://wa.me/919008264816?text=Hi" target="_blank" rel="noopener noreferrer" className="text-amber-500 font-bold ml-1" >+91-9008264816</a> (Only Whatsapp). To learn Swing trading, click <a href="https://t.me/MKR_FinWise_Hub" target="_blank" rel="noopener noreferrer" className="text-amber-500 font-bold ml-1" >MKR FinWise Hub</a>.
+            Find out which ones: <a href="https://wa.me/919008264816?text=Hi" target="_blank" rel="noopener noreferrer" className="text-amber-600 font-bold ml-1" >+91-9008264816</a> (Only Whatsapp). To learn Swing trading, click <a href="https://t.me/MKR_FinWise_Hub" target="_blank" rel="noopener noreferrer" className="text-amber-600 font-bold ml-1" >MKR FinWise Hub</a>.
           </p>
         </div>
       </footer>

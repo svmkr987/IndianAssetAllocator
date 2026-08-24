@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import InvestRight from './InvestRight';
 import StockScreener from './src/components/screener/StockScreener';
-import { LineChart, BarChart, ArrowRight, ShieldCheck, Send } from 'lucide-react';
+import SIPRebalancer from './src/components/rebalancer/SIPRebalancer';
+import { LineChart, BarChart, ArrowRight, ShieldCheck, Send, Calculator } from 'lucide-react';
 
 export default function App() {
-  const [currentApp, setCurrentApp] = useState<'home' | 'invest-right' | 'stock-screener'>('home');
+  const [currentApp, setCurrentApp] = useState<'home' | 'invest-right' | 'stock-screener' | 'sip-rebalancer'>('home');
 
   if (currentApp === 'invest-right') {
     return <InvestRight onBack={() => setCurrentApp('home')} />;
@@ -14,18 +15,21 @@ export default function App() {
     return <StockScreener onBack={() => setCurrentApp('home')} />;
   }
 
+  if (currentApp === 'sip-rebalancer') {
+    return <SIPRebalancer onBack={() => setCurrentApp('home')} />;
+  }
+
   return (
-    <div className="min-h-screen bg-[#0a0c10] text-slate-200 font-sans selection:bg-amber-500/30">
+    <div className="min-h-screen bg-[#f9f9f9] text-[#1a1a1a] font-sans selection:bg-amber-500/20">
       
       {/* Header */}
-      <header className="fixed top-0 w-full z-50 border-b border-white/5 bg-[#0a0c10]/80 backdrop-blur-md">
+      <header className="fixed top-0 w-full z-50 border-b border-slate-200 bg-white/80 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-          <div className="text-xl font-black tracking-tighter text-white">
+          <div className="text-xl font-black tracking-tighter text-[#1a1a1a]">
             MKR <span className="text-amber-600">FinWise</span>
           </div>
-          <nav className="flex items-center gap-8 text-[13px] uppercase tracking-[0.2em] font-medium text-slate-400">
-            <a href="#" className="hover:text-amber-500 transition-colors">Home</a>
-            <a href="https://t.me/MKR_FinWise_Hub" target="_blank" rel="noopener noreferrer" className="hover:text-amber-500 transition-colors">Community</a>
+          <nav className="flex items-center gap-8 text-[12px] uppercase tracking-[0.2em] font-semibold text-slate-500">
+            <a href="https://t.me/MKR_FinWise_Hub" target="_blank" rel="noopener noreferrer" className="hover:text-amber-600 transition-colors">Community</a>
           </nav>
         </div>
       </header>
@@ -36,10 +40,10 @@ export default function App() {
           
           {/* Hero Section */}
           <div className="text-center mb-24">
-            <h1 className="text-5xl md:text-7xl font-black tracking-tighter text-white mb-8">
+            <h1 className="text-5xl md:text-7xl font-black tracking-tighter text-[#1a1a1a] mb-8">
               Precision Financial <span className="text-amber-600">Intelligence</span>
             </h1>
-            <p className="text-slate-400 font-medium tracking-[0.15em] text-xs sm:text-sm uppercase mb-12 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-slate-500 font-medium tracking-[0.1em] text-xs sm:text-sm uppercase mb-12 max-w-2xl mx-auto leading-relaxed">
               Empowering professional traders with institutional-grade analytics and asset allocation tools for superior market performance.
             </p>
             
@@ -47,27 +51,44 @@ export default function App() {
               href="https://t.me/MKR_FinWise_Hub" 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-white/5 border border-white/10 text-white hover:bg-amber-600/10 hover:border-amber-600/30 transition-all duration-300 text-[13px] font-bold uppercase tracking-[0.15em] shadow-xl hover:shadow-amber-900/10"
+              className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-slate-900 text-white hover:bg-amber-700 transition-all duration-300 text-[12px] font-bold uppercase tracking-[0.15em] shadow-lg"
             >
               <Send className="w-4 h-4" /> Join The Inner Circle
             </a>
           </div>
 
           {/* Modules Section */}
-          <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
+          <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
             {/* Invest Right Card */}
             <button 
               onClick={() => setCurrentApp('invest-right')}
-              className="group relative bg-[#0f1218] rounded-3xl border border-white/5 transition-all duration-500 text-left overflow-hidden hover:border-amber-600/30 hover:shadow-[0_20px_50px_rgba(180,130,50,0.1)]"
+              className="group relative bg-white rounded-3xl border border-slate-200 transition-all duration-500 text-left overflow-hidden hover:border-amber-500/50 hover:shadow-xl"
             >
               <div className="relative p-10 sm:p-12">
-                <div className="w-16 h-16 mb-12 bg-white/5 text-amber-600 rounded-2xl flex items-center justify-center group-hover:scale-105 transition-transform duration-500">
+                <div className="w-16 h-16 mb-12 bg-white text-amber-600 rounded-2xl flex items-center justify-center border border-slate-100 group-hover:bg-amber-50 transition-colors duration-500">
                   <BarChart className="w-8 h-8" />
                 </div>
-                <h2 className="text-3xl font-black text-white mb-2 uppercase tracking-tight">Invest Right</h2>
-                <p className="text-[11px] font-bold text-amber-600 uppercase tracking-[0.25em] mb-6">Asset Allocation & SIP Planner</p>
-                <p className="text-slate-400 text-sm leading-relaxed font-medium group-hover:text-slate-300">
+                <h2 className="text-2xl font-black text-[#1a1a1a] mb-2 uppercase tracking-tight">Portfolio Architect</h2>
+                <p className="text-[10px] font-bold text-amber-600 uppercase tracking-[0.25em] mb-6">Asset Allocation & SIP Planner</p>
+                <p className="text-slate-600 text-sm leading-relaxed font-medium group-hover:text-slate-900">
                   Determine your optimal asset allocation strategy based on your risk tolerance and investment horizon.
+                </p>
+              </div>
+            </button>
+
+            {/* Rebalancer Card */}
+            <button 
+              onClick={() => setCurrentApp('sip-rebalancer')}
+              className="group relative bg-white rounded-3xl border border-slate-200 transition-all duration-500 text-left overflow-hidden hover:border-amber-500/50 hover:shadow-xl"
+            >
+              <div className="relative p-10 sm:p-12">
+                <div className="w-16 h-16 mb-12 bg-white text-amber-600 rounded-2xl flex items-center justify-center border border-slate-100 group-hover:bg-amber-50 transition-colors duration-500">
+                  <Calculator className="w-8 h-8" />
+                </div>
+                <h2 className="text-2xl font-black text-[#1a1a1a] mb-2 uppercase tracking-tight">Portfolio Refiner</h2>
+                <p className="text-[10px] font-bold text-amber-600 uppercase tracking-[0.25em] mb-6">1-Year Portfolio Optimization</p>
+                <p className="text-slate-600 text-sm leading-relaxed font-medium group-hover:text-slate-900">
+                  Align your portfolio with target allocations over next 12 months using fresh monthly SIP cash flows.
                 </p>
               </div>
             </button>
@@ -75,15 +96,15 @@ export default function App() {
             {/* Stock Screener Card */}
             <button 
               onClick={() => setCurrentApp('stock-screener')}
-              className="group relative bg-[#0f1218] rounded-3xl border border-white/5 transition-all duration-500 text-left overflow-hidden hover:border-amber-600/30 hover:shadow-[0_20px_50px_rgba(180,130,50,0.1)]"
+              className="group relative bg-white rounded-3xl border border-slate-200 transition-all duration-500 text-left overflow-hidden hover:border-amber-500/50 hover:shadow-xl"
             >
               <div className="relative p-10 sm:p-12">
-                <div className="w-16 h-16 mb-12 bg-white/5 text-amber-600 rounded-2xl flex items-center justify-center group-hover:scale-105 transition-transform duration-500">
+                <div className="w-16 h-16 mb-12 bg-white text-amber-600 rounded-2xl flex items-center justify-center border border-slate-100 group-hover:bg-amber-50 transition-colors duration-500">
                   <LineChart className="w-8 h-8" />
                 </div>
-                <h2 className="text-3xl font-black text-white mb-2 uppercase tracking-tight">Stock Analyser</h2>
-                <p className="text-[11px] font-bold text-amber-600 uppercase tracking-[0.25em] mb-6">Fundamental Health Screener</p>
-                <p className="text-slate-400 text-sm leading-relaxed font-medium group-hover:text-slate-300">
+                <h2 className="text-2xl font-black text-[#1a1a1a] mb-2 uppercase tracking-tight">Stock Analyser</h2>
+                <p className="text-[10px] font-bold text-amber-600 uppercase tracking-[0.25em] mb-6">Fundamental Health Screener</p>
+                <p className="text-slate-600 text-sm leading-relaxed font-medium group-hover:text-slate-900">
                   Evaluate the fundamental strength of stocks across profitability, valuation, health, and momentum.
                 </p>
               </div>
