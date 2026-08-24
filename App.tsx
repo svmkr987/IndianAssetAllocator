@@ -102,7 +102,7 @@ export default function App() {
                 <div className="w-16 h-16 mb-12 bg-white text-amber-600 rounded-2xl flex items-center justify-center border border-slate-100 group-hover:bg-amber-50 transition-colors duration-500">
                   <LineChart className="w-8 h-8" />
                 </div>
-                <h2 className="text-2xl font-black text-[#1a1a1a] mb-2 uppercase tracking-tight">Stock Analyser</h2>
+                <h2 className="text-2xl font-black text-[#1a1a1a] mb-2 uppercase tracking-tight">Stock Rank Analyser</h2>
                 <p className="text-[10px] font-bold text-amber-600 uppercase tracking-[0.25em] mb-6">Fundamental Health Screener</p>
                 <p className="text-slate-600 text-sm leading-relaxed font-medium group-hover:text-slate-900">
                   Evaluate the fundamental strength of stocks across profitability, valuation, health, and momentum.
