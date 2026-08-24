@@ -57,10 +57,10 @@ const BarChartLogoComp: React.FC<{ size?: number; className?: string }> = ({
   className = ""
 }) => {
   return (
-    <div className={`flex items-center justify-center p-2 bg-white rounded-xl border border-slate-200 shadow-sm ${className}`}>
+    <div className={`flex items-center justify-center p-2 bg-slate-900 rounded-xl border border-slate-800 shadow-sm ${className}`}>
       <BarChartLogo
         size={size} 
-        className="text-amber-600 stroke-[2.5px]" 
+        className="text-amber-500 stroke-[2.5px]" 
       />
     </div>
   );
@@ -196,16 +196,16 @@ export default function InvestRight({ onBack }: { onBack?: () => void }) {
   const displayCount = (visitorCount !== null ? visitorCount + BASE_VISITORS : BASE_VISITORS);
 
   return (
-    <div className="min-h-screen pb-32 print:bg-white print:pb-0 flex flex-col">
+    <div className="min-h-screen pb-32 print:bg-slate-950 print:pb-0 flex flex-col bg-slate-950 text-slate-300 selection:bg-amber-500/20">
       
       {/* Navbar */}
-      <div className="bg-white text-slate-900 shadow-sm sticky top-0 z-50 no-print border-b border-slate-200">
+      <div className="bg-slate-950 text-white shadow-sm sticky top-0 z-50 no-print border-b border-slate-800">
         <div className="w-full px-6 py-4 flex justify-between items-center">
           <div className="flex items-center gap-4">
             <BarChartLogoComp size={24} />
             <div className="flex flex-col">
-              <h1 className="text-base font-black tracking-tight leading-none uppercase">Portfolio Architect</h1>
-              <p className="text-amber-600 text-[10px] font-bold uppercase tracking-[0.2em] mt-1">by MKR FinWise</p>
+              <h1 className="text-base font-black tracking-tight leading-none uppercase text-white">Portfolio Architect</h1>
+              <p className="text-amber-500 text-[10px] font-bold uppercase tracking-[0.2em] mt-1">by MKR FinWise</p>
             </div>
           </div>
           
@@ -213,7 +213,7 @@ export default function InvestRight({ onBack }: { onBack?: () => void }) {
             {step === 2 && (
               <button 
                 onClick={resetPlan} 
-                className="bg-slate-100 hover:bg-slate-200 px-4 py-2 rounded-lg transition-all text-slate-900 flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider border border-slate-200"
+                className="bg-slate-900 hover:bg-slate-800 px-4 py-2 rounded-lg transition-all text-slate-400 flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider border border-slate-800"
               >
                 <PlusCircle className="w-3.5 h-3.5" />
                 <span>Reset</span>
@@ -222,7 +222,7 @@ export default function InvestRight({ onBack }: { onBack?: () => void }) {
             {onBack && (
               <button 
                 onClick={onBack}
-                className="bg-slate-50 hover:bg-slate-100 px-4 py-2 rounded-lg transition-all text-amber-600 flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider border border-slate-200"
+                className="bg-slate-900 hover:bg-slate-800 px-4 py-2 rounded-lg transition-all text-amber-500 flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider border border-slate-800"
                 title="Home"
               >
                 <span>Home</span>
@@ -236,11 +236,11 @@ export default function InvestRight({ onBack }: { onBack?: () => void }) {
         
         {/* Input Stage */}
         {step === 1 && (
-          <div className="bg-white rounded-3xl shadow-2xl border border-slate-200/60 p-8 sm:p-12 animate-in fade-in slide-in-from-bottom-6 duration-500 relative overflow-hidden">
-            <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-amber-500 via-amber-200 to-amber-500"></div>
+          <div className="bg-slate-900 rounded-3xl shadow-2xl border border-slate-800 p-8 sm:p-12 animate-in fade-in slide-in-from-bottom-6 duration-500 relative overflow-hidden">
+            <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-amber-500 via-amber-600 to-amber-500"></div>
             
-            <h2 className="text-2xl font-black text-slate-900 mb-10 flex items-center gap-4">
-              <div className="p-3 bg-white rounded-xl shadow-sm border border-slate-200">
+            <h2 className="text-2xl font-black text-white mb-10 flex items-center gap-4">
+              <div className="p-3 bg-slate-950 rounded-xl shadow-sm border border-slate-800">
                 <ShieldCheck className="h-6 w-6 text-amber-500" />
               </div>
               Portfolio Configuration
@@ -249,12 +249,12 @@ export default function InvestRight({ onBack }: { onBack?: () => void }) {
             <div className="space-y-10">
               <div className="grid grid-cols-2 gap-8">
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">Your Age</label>
+                  <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3">Your Age</label>
                   <input type="number" name="age" value={inputs.age} onChange={handleInputChange}
-                    className="w-full p-5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all font-black text-2xl text-slate-900" />
+                    className="w-full p-5 bg-slate-950 border border-slate-800 rounded-2xl focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all font-black text-2xl text-white" />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">Horizon (Years)</label>
+                  <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3">Horizon (Years)</label>
                   <div className="relative">
                     <input 
                       type="number" 
@@ -264,26 +264,26 @@ export default function InvestRight({ onBack }: { onBack?: () => void }) {
                       readOnly={isSipLocked}
                       className={`w-full p-5 border rounded-2xl outline-none transition-all font-black text-2xl ${
                         isSipLocked 
-                          ? 'bg-slate-100 text-slate-400 border-slate-100' 
-                          : 'bg-slate-50 border-slate-200 text-slate-900 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500'
+                          ? 'bg-slate-900 text-slate-600 border-slate-800' 
+                          : 'bg-slate-950 border-slate-800 text-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500'
                       }`} 
                     />
-                    {isSipLocked && <Lock className="w-5 h-5 text-slate-300 absolute right-5 top-1/2 -translate-y-1/2" />}
+                    {isSipLocked && <Lock className="w-5 h-5 text-slate-600 absolute right-5 top-1/2 -translate-y-1/2" />}
                   </div>
                 </div>
               </div>
 
               <div>
                 <div className="flex justify-between items-end mb-4">
-                   <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest">Monthly SIP (₹)</label>
+                   <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest">Monthly SIP (₹)</label>
                    {!isSipLocked ? (
                      <button onClick={() => setShowCalculator(true)}
-                       className="text-[10px] text-amber-600 font-extrabold hover:text-amber-700 flex items-center gap-1.5 uppercase tracking-[0.15em]">
+                       className="text-[10px] text-amber-500 font-extrabold hover:text-amber-400 flex items-center gap-1.5 uppercase tracking-[0.15em]">
                        <Calculator className="w-4 h-4" /> Inflation adjusted SIP Estimator
                      </button>
                    ) : (
                      <button onClick={handleUnlockSip}
-                       className="text-[10px] text-red-500 font-extrabold hover:text-red-600 flex items-center gap-1.5 uppercase tracking-[0.15em]">
+                       className="text-[10px] text-red-500 font-extrabold hover:text-red-400 flex items-center gap-1.5 uppercase tracking-[0.15em]">
                        <RefreshCw className="w-4 h-4" /> Change Input
                      </button>
                    )}
@@ -297,33 +297,33 @@ export default function InvestRight({ onBack }: { onBack?: () => void }) {
                     readOnly={isSipLocked}
                     className={`w-full p-5 border rounded-2xl outline-none transition-all font-black text-2xl ${
                       isSipLocked 
-                        ? 'bg-slate-100 text-slate-400 border-slate-100' 
-                        : 'bg-slate-50 border-slate-200 text-slate-900 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500'
+                        ? 'bg-slate-900 text-slate-600 border-slate-800' 
+                        : 'bg-slate-950 border-slate-800 text-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500'
                     }`} 
                   />
-                  {!isSipLocked && <div className="absolute right-5 top-1/2 -translate-y-1/2 text-slate-300 font-bold text-sm">INR</div>}
+                  {!isSipLocked && <div className="absolute right-5 top-1/2 -translate-y-1/2 text-slate-600 font-bold text-sm">INR</div>}
                 </div>
                 
                 <div className="mt-8">
-                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">Annual Step-up (%)</label>
+                  <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3">Annual Step-up (%)</label>
                   <div className="relative">
                     <input type="number" name="stepUp" value={inputs.stepUp} onChange={handleInputChange}
-                      className="w-full p-5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all font-black text-2xl text-slate-900" />
-                    <div className="absolute right-5 top-1/2 -translate-y-1/2 text-slate-300 font-bold text-sm">P.A.</div>
+                      className="w-full p-5 bg-slate-950 border border-slate-800 rounded-2xl focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all font-black text-2xl text-white" />
+                    <div className="absolute right-5 top-1/2 -translate-y-1/2 text-slate-600 font-bold text-sm">P.A.</div>
                   </div>
-                  <p className="text-[10px] text-slate-400 mt-2 font-medium italic">* Used exclusively for wealth projections, not asset allocation.</p>
+                  <p className="text-[10px] text-slate-500 mt-2 font-medium italic">* Used exclusively for wealth projections, not asset allocation.</p>
                 </div>
               </div>
 
               <div>
-                <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-5">Risk Tolerance</label>
+                <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-5">Risk Tolerance</label>
                 <div className="grid grid-cols-3 gap-5">
                   {(['Low', 'Medium', 'High'] as RiskLevel[]).map((level) => (
                     <button key={level} onClick={() => setInputs({...inputs, risk: level})}
                       className={`py-5 px-3 rounded-2xl border font-black uppercase tracking-[0.2em] transition-all text-xs ${
                         inputs.risk === level 
-                          ? 'bg-slate-950 border-slate-950 text-amber-500 scale-[1.05] shadow-2xl' 
-                          : 'bg-white border-slate-200 text-slate-400 hover:border-slate-300'
+                          ? 'bg-amber-500 border-amber-500 text-slate-950 scale-[1.05] shadow-2xl' 
+                          : 'bg-slate-950 border-slate-800 text-slate-500 hover:border-slate-700'
                       }`}>
                       {level}
                     </button>
@@ -331,20 +331,20 @@ export default function InvestRight({ onBack }: { onBack?: () => void }) {
                 </div>
               </div>
 
-              <div className="border-t border-slate-100 pt-10">
-                 <div className="flex items-center gap-3 text-[11px] font-bold text-slate-900 mb-6 uppercase tracking-[0.2em]">
-                    <Sliders className="w-5 h-5 text-amber-600" /> 
+              <div className="border-t border-slate-800 pt-10">
+                 <div className="flex items-center gap-3 text-[11px] font-bold text-white mb-6 uppercase tracking-[0.2em]">
+                    <Sliders className="w-5 h-5 text-amber-500" /> 
                     Custom Exclusions
                  </div>
 
                  <div className="space-y-4">
                     {(Object.keys(exclusions) as Array<keyof Exclusions>).map((key) => (
-                      <label key={key} className={`flex items-center gap-5 p-5 rounded-2xl border transition-all cursor-pointer ${exclusions[key] ? 'bg-red-50/40 border-red-100' : 'bg-white border-slate-100 hover:border-slate-200'}`}>
-                        <div className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-colors ${exclusions[key] ? 'bg-red-500 border-red-500' : 'border-slate-300 bg-white'}`}>
+                      <label key={key} className={`flex items-center gap-5 p-5 rounded-2xl border transition-all cursor-pointer ${exclusions[key] ? 'bg-red-950/30 border-red-900' : 'bg-slate-950 border-slate-800 hover:border-slate-700'}`}>
+                        <div className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-colors ${exclusions[key] ? 'bg-red-500 border-red-500' : 'border-slate-700 bg-slate-900'}`}>
                           {exclusions[key] && <CheckSquare className="w-4 h-4 text-white" />}
                         </div>
                         <input type="checkbox" className="hidden" checked={exclusions[key]} onChange={() => toggleExclusion(key)} />
-                        <span className="text-xs font-bold text-slate-800 uppercase tracking-wider">
+                        <span className="text-xs font-bold text-slate-300 uppercase tracking-wider">
                           Exclude {key === 'usEquity' ? 'International Equity' : 'Precious Metals'}
                         </span>
                       </label>
@@ -353,7 +353,7 @@ export default function InvestRight({ onBack }: { onBack?: () => void }) {
               </div>
 
               <button onClick={handleCalculate}
-                className="w-full bg-slate-950 hover:bg-black text-amber-500 font-black py-6 rounded-2xl shadow-2xl transition-all flex items-center justify-center gap-4 active:scale-[0.98] uppercase text-sm tracking-[0.3em] border border-amber-500/20"
+                className="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-black py-6 rounded-2xl shadow-2xl transition-all flex items-center justify-center gap-4 active:scale-[0.98] uppercase text-sm tracking-[0.3em]"
               >
                 Generate Strategy <ArrowRight className="w-5 h-5" />
               </button>
@@ -364,7 +364,7 @@ export default function InvestRight({ onBack }: { onBack?: () => void }) {
         {/* Report Stage */}
         {step === 2 && result && (
           <div className="animate-in fade-in slide-in-from-bottom-6 duration-600">
-            <div id="report-content" className="space-y-12 bg-white p-6 sm:p-12 rounded-[2.5rem] shadow-inner border border-slate-100">
+            <div id="report-content" className="space-y-12 bg-slate-900 p-6 sm:p-12 rounded-[2.5rem] shadow-inner border border-slate-800">
               
               <ReportHeader inputs={inputs} />
 
