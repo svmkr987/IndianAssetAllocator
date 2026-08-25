@@ -527,19 +527,19 @@ export default function InvestRight({ onBack }: { onBack?: () => void }) {
         )}
       </main>
 
-      <footer className="no-print fixed bottom-0 left-0 right-0 bg-white text-slate-600 border-t border-slate-200 py-6 z-50 shadow-[0_-4px_20px_-5px_rgba(0,0,0,0.05)]">
+      <footer className="no-print fixed bottom-0 left-0 right-0 bg-slate-950 text-slate-300 border-t border-slate-800 py-6 z-50 shadow-[0_-4px_20px_-5px_rgba(0,0,0,0.5)]">
         <div className="max-w-4xl mx-auto px-6 text-center flex flex-col items-center gap-1.5">
-          <div className="flex items-center gap-2 px-3 py-1 bg-slate-100 rounded-full border border-slate-200 mb-1">
-            <Users className="w-3 h-3 text-amber-600" />
-            <span className="text-[9px] font-bold text-slate-500 uppercase tracking-[0.2em]">
+          <div className="flex items-center gap-2 px-3 py-1 bg-slate-900 rounded-full border border-slate-800 mb-1">
+            <Users className="w-3 h-3 text-amber-500" />
+            <span className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.2em]">
               Trusted by {displayCount.toLocaleString()}+ Investors
             </span>
           </div>
-          <p className="text-slate-600 text-[11px] italic font-medium tracking-wide opacity-90">
+          <p className="text-slate-300 text-[11px] italic font-medium tracking-wide opacity-90">
             "Not all Mutual Funds & ETFs are worth your money."
           </p>
-          <p className="text-slate-400 text-[10px] font-medium tracking-wide">
-            Find out which ones: <a href="https://wa.me/919008264816?text=Hi" target="_blank" rel="noopener noreferrer" className="text-amber-600 font-bold ml-1" >+91-9008264816</a> (Only Whatsapp). To learn Swing trading, click <a href="https://t.me/MKR_FinWise_Hub" target="_blank" rel="noopener noreferrer" className="text-amber-600 font-bold ml-1" >MKR FinWise Hub</a>.
+          <p className="text-slate-500 text-[10px] font-medium tracking-wide">
+            Find out which ones: <a href="https://wa.me/919008264816?text=Hi" target="_blank" rel="noopener noreferrer" className="text-amber-500 font-bold ml-1" >+91-9008264816</a> (Only Whatsapp). To learn Swing trading, click <a href="https://t.me/MKR_FinWise_Hub" target="_blank" rel="noopener noreferrer" className="text-amber-500 font-bold ml-1" >MKR FinWise Hub</a>.
           </p>
         </div>
       </footer>
