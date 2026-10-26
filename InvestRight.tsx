@@ -10,6 +10,7 @@ import { UserInputs, Exclusions, ReturnRates, AllocationResult, RiskLevel, Proje
 import { calculateAllocation, formatCurrency, formatDate, formatNumberIndian, parseNumberIndian } from './utils';
 import { AssetCard, ProgressBar } from './components/UI';
 import { SipCalculatorModal, RatesSettingsModal } from './components/Modals';
+import { MarketPulse } from './components/MarketPulse';
 
 const INITIAL_INPUTS: UserInputs = { 
   age: '25', 
@@ -40,10 +41,10 @@ const StylishTickLogo: React.FC<{ size?: number; className?: string }> = ({
   className = ""
 }) => {
   return (
-    <div className={`flex items-center justify-center p-2 bg-slate-950 rounded-xl border border-amber-500/30 shadow-lg ${className}`}>
+    <div className={`flex items-center justify-center p-2 bg-slate-900 rounded-xl border border-emerald-500/30 shadow-lg ${className}`}>
       <Check 
         size={size} 
-        className="text-amber-500 stroke-[3.5px] drop-shadow-[0_0_8px_rgba(245,158,11,0.5)]" 
+        className="text-white stroke-[3.5px] drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]" 
       />
     </div>
   );
@@ -67,37 +68,37 @@ const BarChartLogoComp: React.FC<{ size?: number; className?: string }> = ({
 };
 
 const ReportHeader: React.FC<{ inputs: UserInputs }> = ({ inputs }) => (
-  <div className="flex flex-col border-b border-slate-200 pb-8 mb-8">
+  <div className="flex flex-col border-b border-slate-800 pb-8 mb-8">
     <div className="flex justify-between items-center">
       <div className="flex items-center gap-6">
         <BarChartLogoComp size={40} />
         <div>
-          <h1 className="text-3xl font-black text-slate-900 tracking-tight leading-none uppercase">Portfolio Architect</h1>
+          <h1 className="text-3xl font-black text-white tracking-tight leading-none uppercase">Portfolio Architect</h1>
           <p className="text-amber-500 text-[11px] mt-2 font-bold uppercase tracking-[0.25em]">by MKR FinWise</p>
         </div>
       </div>
       <div className="text-right">
         <div className="text-[10px] text-slate-400 uppercase tracking-widest font-bold mb-1">Issue Date</div>
-        <div className="text-slate-900 font-extrabold text-xl">{formatDate()}</div>
+        <div className="text-white font-extrabold text-xl">{formatDate()}</div>
       </div>
     </div>
     
-    <div className="mt-8 grid grid-cols-4 gap-6 bg-slate-50 p-6 rounded-2xl border border-slate-100">
+    <div className="mt-8 grid grid-cols-4 gap-6 bg-slate-900 p-6 rounded-2xl border border-slate-800">
       <div>
         <div className="text-[10px] text-slate-400 uppercase font-bold tracking-wider mb-1">Investor Age</div>
-        <div className="font-black text-slate-900 text-xl">{inputs.age} Years</div>
+        <div className="font-black text-white text-xl">{inputs.age} Years</div>
       </div>
       <div>
         <div className="text-[10px] text-slate-400 uppercase font-bold tracking-wider mb-1">Horizon</div>
-        <div className="font-black text-slate-900 text-xl">{inputs.horizon} Years</div>
+        <div className="font-black text-white text-xl">{inputs.horizon} Years</div>
       </div>
       <div>
         <div className="text-[10px] text-slate-400 uppercase font-bold tracking-wider mb-1">Risk Profile</div>
-        <div className="font-black text-slate-900 text-xl">{inputs.risk}</div>
+        <div className="font-black text-white text-xl">{inputs.risk}</div>
       </div>
       <div>
         <div className="text-[10px] text-slate-400 uppercase font-bold tracking-wider mb-1">Monthly SIP</div>
-        <div className="font-black text-slate-900 text-xl">{formatCurrency(parseFloat(inputs.amount))}</div>
+        <div className="font-black text-white text-xl">{formatCurrency(parseFloat(inputs.amount))}</div>
       </div>
     </div>
   </div>
@@ -236,30 +237,64 @@ export default function InvestRight({ onBack }: { onBack?: () => void }) {
         
         {/* Input Stage */}
         {step === 1 && (
-          <div className="bg-slate-900 rounded-3xl shadow-2xl border border-slate-800 p-8 sm:p-12 animate-in fade-in slide-in-from-bottom-6 duration-500 relative overflow-hidden">
-            <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-amber-500 via-amber-600 to-amber-500"></div>
-            
-            <h2 className="text-2xl font-black text-white mb-10 flex items-center gap-4">
-              <div className="p-3 bg-slate-950 rounded-xl shadow-sm border border-slate-800">
-                <ShieldCheck className="h-6 w-6 text-amber-500" />
-              </div>
-              Portfolio Configuration
-            </h2>
-
-            <div className="space-y-10">
-              <div className="grid grid-cols-2 gap-8">
-                <div>
-                  <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3">Your Age</label>
-                  <input type="number" name="age" value={inputs.age} onChange={handleInputChange}
-                    className="w-full p-5 bg-slate-950 border border-slate-800 rounded-2xl focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all font-black text-2xl text-white" />
+          <div className="space-y-6">
+            <div className="bg-slate-900 rounded-3xl shadow-2xl border border-slate-800 p-8 sm:p-12 animate-in fade-in slide-in-from-bottom-6 duration-500 relative overflow-hidden">
+              <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-amber-500 via-amber-600 to-amber-500"></div>
+              
+              <h2 className="text-2xl font-black text-white mb-10 flex items-center gap-4">
+                <div className="p-3 bg-slate-950 rounded-xl shadow-sm border border-slate-800">
+                  <ShieldCheck className="h-6 w-6 text-amber-500" />
                 </div>
+                Portfolio Configuration
+              </h2>
+
+              <div className="space-y-10">
+                <div className="grid grid-cols-2 gap-8">
+                  <div>
+                    <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3">Your Age</label>
+                    <input type="number" name="age" value={inputs.age} onChange={handleInputChange}
+                      className="w-full p-5 bg-slate-950 border border-slate-800 rounded-2xl focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all font-black text-2xl text-white" />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3">Horizon (Years)</label>
+                    <div className="relative">
+                      <input 
+                        type="number" 
+                        name="horizon" 
+                        value={inputs.horizon} 
+                        onChange={handleInputChange} 
+                        readOnly={isSipLocked}
+                        className={`w-full p-5 border rounded-2xl outline-none transition-all font-black text-2xl ${
+                          isSipLocked 
+                            ? 'bg-slate-900 text-slate-600 border-slate-800' 
+                            : 'bg-slate-950 border-slate-800 text-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500'
+                        }`} 
+                      />
+                      {isSipLocked && <Lock className="w-5 h-5 text-slate-600 absolute right-5 top-1/2 -translate-y-1/2" />}
+                    </div>
+                  </div>
+                </div>
+
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3">Horizon (Years)</label>
+                  <div className="flex justify-between items-end mb-4">
+                     <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest">Monthly SIP (₹)</label>
+                     {!isSipLocked ? (
+                       <button onClick={() => setShowCalculator(true)}
+                         className="text-[10px] text-amber-500 font-extrabold hover:text-amber-400 flex items-center gap-1.5 uppercase tracking-[0.15em]">
+                         <Calculator className="w-4 h-4" /> Inflation adjusted SIP Estimator
+                       </button>
+                     ) : (
+                       <button onClick={handleUnlockSip}
+                         className="text-[10px] text-red-500 font-extrabold hover:text-red-400 flex items-center gap-1.5 uppercase tracking-[0.15em]">
+                         <RefreshCw className="w-4 h-4" /> Change Input
+                       </button>
+                     )}
+                  </div>
                   <div className="relative">
                     <input 
-                      type="number" 
-                      name="horizon" 
-                      value={inputs.horizon} 
+                      type="text" 
+                      name="amount" 
+                      value={formatNumberIndian(inputs.amount)} 
                       onChange={handleInputChange} 
                       readOnly={isSipLocked}
                       className={`w-full p-5 border rounded-2xl outline-none transition-all font-black text-2xl ${
@@ -268,96 +303,65 @@ export default function InvestRight({ onBack }: { onBack?: () => void }) {
                           : 'bg-slate-950 border-slate-800 text-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500'
                       }`} 
                     />
-                    {isSipLocked && <Lock className="w-5 h-5 text-slate-600 absolute right-5 top-1/2 -translate-y-1/2" />}
+                    {!isSipLocked && <div className="absolute right-5 top-1/2 -translate-y-1/2 text-slate-600 font-bold text-sm">INR</div>}
+                  </div>
+                  
+                  <div className="mt-8">
+                    <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3">Annual Step-up (%)</label>
+                    <div className="relative">
+                      <input type="number" name="stepUp" value={inputs.stepUp} onChange={handleInputChange}
+                        className="w-full p-5 bg-slate-950 border border-slate-800 rounded-2xl focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all font-black text-2xl text-white" />
+                      <div className="absolute right-5 top-1/2 -translate-y-1/2 text-slate-600 font-bold text-sm">P.A.</div>
+                    </div>
+                    <p className="text-[10px] text-slate-500 mt-2 font-medium italic">* Used exclusively for wealth projections, not asset allocation.</p>
                   </div>
                 </div>
-              </div>
 
-              <div>
-                <div className="flex justify-between items-end mb-4">
-                   <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest">Monthly SIP (₹)</label>
-                   {!isSipLocked ? (
-                     <button onClick={() => setShowCalculator(true)}
-                       className="text-[10px] text-amber-500 font-extrabold hover:text-amber-400 flex items-center gap-1.5 uppercase tracking-[0.15em]">
-                       <Calculator className="w-4 h-4" /> Inflation adjusted SIP Estimator
-                     </button>
-                   ) : (
-                     <button onClick={handleUnlockSip}
-                       className="text-[10px] text-red-500 font-extrabold hover:text-red-400 flex items-center gap-1.5 uppercase tracking-[0.15em]">
-                       <RefreshCw className="w-4 h-4" /> Change Input
-                     </button>
-                   )}
-                </div>
-                <div className="relative">
-                  <input 
-                    type="text" 
-                    name="amount" 
-                    value={formatNumberIndian(inputs.amount)} 
-                    onChange={handleInputChange} 
-                    readOnly={isSipLocked}
-                    className={`w-full p-5 border rounded-2xl outline-none transition-all font-black text-2xl ${
-                      isSipLocked 
-                        ? 'bg-slate-900 text-slate-600 border-slate-800' 
-                        : 'bg-slate-950 border-slate-800 text-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500'
-                    }`} 
-                  />
-                  {!isSipLocked && <div className="absolute right-5 top-1/2 -translate-y-1/2 text-slate-600 font-bold text-sm">INR</div>}
-                </div>
-                
-                <div className="mt-8">
-                  <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3">Annual Step-up (%)</label>
-                  <div className="relative">
-                    <input type="number" name="stepUp" value={inputs.stepUp} onChange={handleInputChange}
-                      className="w-full p-5 bg-slate-950 border border-slate-800 rounded-2xl focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all font-black text-2xl text-white" />
-                    <div className="absolute right-5 top-1/2 -translate-y-1/2 text-slate-600 font-bold text-sm">P.A.</div>
-                  </div>
-                  <p className="text-[10px] text-slate-500 mt-2 font-medium italic">* Used exclusively for wealth projections, not asset allocation.</p>
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-5">Risk Tolerance</label>
-                <div className="grid grid-cols-3 gap-5">
-                  {(['Low', 'Medium', 'High'] as RiskLevel[]).map((level) => (
-                    <button key={level} onClick={() => setInputs({...inputs, risk: level})}
-                      className={`py-5 px-3 rounded-2xl border font-black uppercase tracking-[0.2em] transition-all text-xs ${
-                        inputs.risk === level 
-                          ? 'bg-amber-500 border-amber-500 text-slate-950 scale-[1.05] shadow-2xl' 
-                          : 'bg-slate-950 border-slate-800 text-slate-500 hover:border-slate-700'
-                      }`}>
-                      {level}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div className="border-t border-slate-800 pt-10">
-                 <div className="flex items-center gap-3 text-[11px] font-bold text-white mb-6 uppercase tracking-[0.2em]">
-                    <Sliders className="w-5 h-5 text-amber-500" /> 
-                    Custom Exclusions
-                 </div>
-
-                 <div className="space-y-4">
-                    {(Object.keys(exclusions) as Array<keyof Exclusions>).map((key) => (
-                      <label key={key} className={`flex items-center gap-5 p-5 rounded-2xl border transition-all cursor-pointer ${exclusions[key] ? 'bg-red-950/30 border-red-900' : 'bg-slate-950 border-slate-800 hover:border-slate-700'}`}>
-                        <div className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-colors ${exclusions[key] ? 'bg-red-500 border-red-500' : 'border-slate-700 bg-slate-900'}`}>
-                          {exclusions[key] && <CheckSquare className="w-4 h-4 text-white" />}
-                        </div>
-                        <input type="checkbox" className="hidden" checked={exclusions[key]} onChange={() => toggleExclusion(key)} />
-                        <span className="text-xs font-bold text-slate-300 uppercase tracking-wider">
-                          Exclude {key === 'usEquity' ? 'International Equity' : 'Precious Metals'}
-                        </span>
-                      </label>
+                <div>
+                  <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-5">Risk Tolerance</label>
+                  <div className="grid grid-cols-3 gap-5">
+                    {(['Low', 'Medium', 'High'] as RiskLevel[]).map((level) => (
+                      <button key={level} onClick={() => setInputs({...inputs, risk: level})}
+                        className={`py-5 px-3 rounded-2xl border font-black uppercase tracking-[0.2em] transition-all text-xs ${
+                          inputs.risk === level 
+                            ? 'bg-amber-500 border-amber-500 text-slate-950 scale-[1.05] shadow-2xl' 
+                            : 'bg-slate-950 border-slate-800 text-slate-500 hover:border-slate-700'
+                        }`}>
+                        {level}
+                      </button>
                     ))}
-                 </div>
-              </div>
+                  </div>
+                </div>
 
-              <button onClick={handleCalculate}
-                className="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-black py-6 rounded-2xl shadow-2xl transition-all flex items-center justify-center gap-4 active:scale-[0.98] uppercase text-sm tracking-[0.3em]"
-              >
-                Generate Strategy <ArrowRight className="w-5 h-5" />
-              </button>
+                <div className="border-t border-slate-800 pt-10">
+                   <div className="flex items-center gap-3 text-[11px] font-bold text-white mb-6 uppercase tracking-[0.2em]">
+                      <Sliders className="w-5 h-5 text-amber-500" /> 
+                      Custom Exclusions
+                   </div>
+
+                   <div className="space-y-4">
+                      {(Object.keys(exclusions) as Array<keyof Exclusions>).map((key) => (
+                        <label key={key} className={`flex items-center gap-5 p-5 rounded-2xl border transition-all cursor-pointer ${exclusions[key] ? 'bg-red-950/30 border-red-900' : 'bg-slate-950 border-slate-800 hover:border-slate-700'}`}>
+                          <div className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-colors ${exclusions[key] ? 'bg-red-500 border-red-500' : 'border-slate-700 bg-slate-900'}`}>
+                            {exclusions[key] && <CheckSquare className="w-4 h-4 text-white" />}
+                          </div>
+                          <input type="checkbox" className="hidden" checked={exclusions[key]} onChange={() => toggleExclusion(key)} />
+                          <span className="text-xs font-bold text-slate-300 uppercase tracking-wider">
+                            Exclude {key === 'usEquity' ? 'International Equity' : 'Precious Metals'}
+                          </span>
+                        </label>
+                      ))}
+                   </div>
+                </div>
+
+                <button onClick={handleCalculate}
+                  className="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-black py-6 rounded-2xl shadow-2xl transition-all flex items-center justify-center gap-4 active:scale-[0.98] uppercase text-sm tracking-[0.3em]"
+                >
+                  Generate Strategy <ArrowRight className="w-5 h-5" />
+                </button>
+              </div>
             </div>
+            <MarketPulse />
           </div>
         )}
 
@@ -441,10 +445,10 @@ export default function InvestRight({ onBack }: { onBack?: () => void }) {
 
               {/* Equity Split */}
               {result.percentages.equity > 0 && (
-                <div className="bg-white rounded-[2rem] overflow-hidden border border-slate-200/60 shadow-sm">
-                  <div className="bg-slate-50 p-6 border-b border-slate-100 flex justify-between items-center">
-                    <h3 className="font-black text-slate-900 flex items-center gap-4 text-sm uppercase tracking-widest"><TrendingUp className="w-6 h-6 text-emerald-600" /> Equity Components</h3>
-                    <div className="px-5 py-2 bg-white rounded-xl border border-slate-200 text-[11px] font-black text-slate-600 uppercase tracking-widest">
+                <div className="bg-slate-900 rounded-[2rem] overflow-hidden border border-slate-800 shadow-sm">
+                  <div className="bg-slate-900 p-6 border-b border-slate-800 flex justify-between items-center">
+                    <h3 className="font-black text-white flex items-center gap-4 text-sm uppercase tracking-widest"><TrendingUp className="w-6 h-6 text-emerald-600" /> Equity Components</h3>
+                    <div className="px-5 py-2 bg-slate-950 rounded-xl border border-slate-800 text-[11px] font-black text-slate-400 uppercase tracking-widest">
                       {formatCurrency(result.amounts.equity)} / Month
                     </div>
                   </div>
@@ -461,14 +465,14 @@ export default function InvestRight({ onBack }: { onBack?: () => void }) {
 
               {/* Rationale & Recommendations */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-                <div className="bg-white p-10 rounded-[2rem] border border-slate-200/60 shadow-sm">
-                  <h4 className="font-black text-slate-900 mb-6 text-[11px] uppercase tracking-[0.3em] border-b border-slate-100 pb-4 flex items-center gap-3">
+                <div className="bg-slate-900 p-10 rounded-[2rem] border border-slate-800 shadow-sm">
+                  <h4 className="font-black text-white mb-6 text-[11px] uppercase tracking-[0.3em] border-b border-slate-800 pb-4 flex items-center gap-3">
                     <FileText className="w-6 h-6 text-amber-600" /> Allocation Thesis
                   </h4>
-                  <p className={`text-sm leading-relaxed font-medium text-slate-700`}>{result.rationale}</p>
+                  <p className={`text-sm leading-relaxed font-medium text-slate-300`}>{result.rationale}</p>
                 </div>
-                <div className="bg-white p-10 rounded-[2rem] border border-slate-200/60 shadow-sm">
-                  <h4 className="font-black text-slate-900 mb-6 text-[11px] uppercase tracking-[0.3em] border-b border-slate-100 pb-4 flex items-center gap-3">
+                <div className="bg-slate-900 p-10 rounded-[2rem] border border-slate-800 shadow-sm">
+                  <h4 className="font-black text-white mb-6 text-[11px] uppercase tracking-[0.3em] border-b border-slate-800 pb-4 flex items-center gap-3">
                     <Gem className="w-6 h-6 text-emerald-600" /> Expert View
                   </h4>
                   <div className="text-[11px] text-slate-500 leading-relaxed font-bold italic">
@@ -478,15 +482,15 @@ export default function InvestRight({ onBack }: { onBack?: () => void }) {
               </div>
 
               {/* Professional Disclosure */}
-              <div className="flex gap-8 p-10 border border-slate-100 bg-slate-50 rounded-[2rem]">
+              <div className="flex gap-8 p-10 border border-slate-800 bg-slate-900 rounded-[2rem]">
                 <AlertTriangle className="w-8 h-8 text-amber-600 shrink-0" />
-                <div className="text-[11px] text-slate-500 leading-relaxed font-semibold uppercase tracking-wide">
-                  <p><strong className="text-slate-900">Important Notice:</strong> This framework is based on modern portfolio theory. The information shared is for educational and informational purposes only and should not be considered as investment advice. The presenter is not a SEBI registered investment advisor. Market investments are subject to risk. Please consult a SEBI registered financial advisor before making any investment decisions.</p>
+                <div className="text-[11px] text-slate-400 leading-relaxed font-semibold uppercase tracking-wide">
+                  <p><strong className="text-white">Important Notice:</strong> This framework is based on modern portfolio theory. The information shared is for educational and informational purposes only and should not be considered as investment advice. The presenter is not a SEBI registered investment advisor. Market investments are subject to risk. Please consult a SEBI registered financial advisor before making any investment decisions.</p>
                 </div>
               </div>
               
               {/* Report Footer Contact (Visible only on the report/PDF) */}
-              <div className="pt-8 border-t border-slate-100 text-center flex flex-col items-center gap-1.5">
+              <div className="pt-8 border-t border-slate-800 text-center flex flex-col items-center gap-1.5">
                 <div className="flex items-center gap-2 px-4 py-1.5 bg-slate-950 rounded-full border border-amber-500/20 mb-2">
                   <Users className="w-3.5 h-3.5 text-amber-500" />
                   <span className="text-[10px] font-black text-slate-100 uppercase tracking-widest italic">
@@ -510,7 +514,7 @@ export default function InvestRight({ onBack }: { onBack?: () => void }) {
                   <Settings2 className="w-5 h-5" /> Refine Inputs
                 </button>
                 <button onClick={resetPlan}
-                  className="bg-white hover:bg-slate-50 text-slate-500 font-black py-6 rounded-2xl border border-slate-200 transition-all text-[12px] uppercase tracking-widest flex items-center justify-center gap-3">
+                  className="bg-slate-900 hover:bg-slate-800 text-slate-400 font-black py-6 rounded-2xl border border-slate-800 transition-all text-[12px] uppercase tracking-widest flex items-center justify-center gap-3">
                   <PlusCircle className="w-5 h-5" /> New Session
                 </button>
               </div>

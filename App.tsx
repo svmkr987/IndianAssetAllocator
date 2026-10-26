@@ -1,11 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import InvestRight from './InvestRight';
 import StockScreener from './src/components/screener/StockScreener';
 import SIPRebalancer from './src/components/rebalancer/SIPRebalancer';
+import { MarketPulse } from './components/MarketPulse';
 import { LineChart, BarChart, ArrowRight, ShieldCheck, Send, Calculator } from 'lucide-react';
 
 export default function App() {
   const [currentApp, setCurrentApp] = useState<'home' | 'invest-right' | 'stock-screener' | 'sip-rebalancer'>('home');
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const totalScroll = document.documentElement.scrollTop;
+      const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const progress = windowHeight > 0 ? (totalScroll / windowHeight) * 100 : 0;
+      setScrollProgress(Math.min(100, Math.max(0, progress)));
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   if (currentApp === 'invest-right') {
     return <InvestRight onBack={() => setCurrentApp('home')} />;
@@ -21,6 +34,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-300 font-sans selection:bg-amber-500/20">
+      <div className="fixed top-0 left-0 h-1 bg-amber-500 z-[60] transition-all duration-100 ease-out" style={{ width: `${scrollProgress}%` }} />
       
       {/* Header */}
       <header className="fixed top-0 w-full z-50 border-b border-slate-800 bg-slate-950/80 backdrop-blur-md">
@@ -62,7 +76,7 @@ export default function App() {
             {/* Invest Right Card */}
             <button 
               onClick={() => setCurrentApp('invest-right')}
-              className="group relative bg-slate-950 rounded-3xl border border-slate-800 transition-all duration-500 text-left overflow-hidden hover:border-amber-500/50 hover:shadow-xl"
+              className="group relative bg-slate-950 rounded-3xl border border-slate-800 transition-all duration-300 text-left overflow-hidden hover:border-amber-500/50 hover:shadow-2xl hover:shadow-amber-500/30 hover:scale-105"
             >
               <div className="relative p-10 sm:p-12">
                 <div className="w-16 h-16 mb-12 bg-slate-900 text-amber-500 rounded-2xl flex items-center justify-center border border-slate-800 group-hover:bg-slate-950 transition-colors duration-500">
@@ -78,7 +92,7 @@ export default function App() {
             {/* Rebalancer Card */}
             <button 
               onClick={() => setCurrentApp('sip-rebalancer')}
-              className="group relative bg-slate-950 rounded-3xl border border-slate-800 transition-all duration-500 text-left overflow-hidden hover:border-amber-500/50 hover:shadow-xl"
+              className="group relative bg-slate-950 rounded-3xl border border-slate-800 transition-all duration-300 text-left overflow-hidden hover:border-amber-500/50 hover:shadow-2xl hover:shadow-amber-500/30 hover:scale-105"
             >
               <div className="relative p-10 sm:p-12">
                 <div className="w-16 h-16 mb-12 bg-slate-900 text-amber-500 rounded-2xl flex items-center justify-center border border-slate-800 group-hover:bg-slate-950 transition-colors duration-500">
@@ -94,7 +108,7 @@ export default function App() {
             {/* Stock Screener Card */}
             <button 
               onClick={() => setCurrentApp('stock-screener')}
-              className="group relative bg-slate-950 rounded-3xl border border-slate-800 transition-all duration-500 text-left overflow-hidden hover:border-amber-500/50 hover:shadow-xl"
+              className="group relative bg-slate-950 rounded-3xl border border-slate-800 transition-all duration-300 text-left overflow-hidden hover:border-amber-500/50 hover:shadow-2xl hover:shadow-amber-500/30 hover:scale-105"
             >
               <div className="relative p-10 sm:p-12">
                 <div className="w-16 h-16 mb-12 bg-slate-900 text-amber-500 rounded-2xl flex items-center justify-center border border-slate-800 group-hover:bg-slate-950 transition-colors duration-500">
@@ -107,6 +121,11 @@ export default function App() {
                 </p>
               </div>
             </button>
+          </div>
+          
+          <div className="mt-20">
+            <h2 className="text-xl font-black text-white uppercase tracking-tighter mb-8">MarketPulse</h2>
+            <MarketPulse />
           </div>
         </div>
       </main>

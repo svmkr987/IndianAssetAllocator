@@ -9,12 +9,14 @@
     "start": "node dist/server.cjs"
   },
   "dependencies": {
+    "@google/genai": "^2.31.0",
     "date-fns": "^4.3.0",
     "express": "^5.2.1",
     "lucide-react": "^0.562.0",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "recharts": "^3.8.1",
+    "rss-parser": "^3.13.0",
     "yahoo-finance2": "^3.14.1"
   },
   "devDependencies": {

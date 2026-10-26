@@ -2,6 +2,5 @@
   "name": "MKR FinWise",
   "description": "Premium asset allocation and wealth planning engine by MKR FinWise, optimized for Indian investors with dynamic SIP growth projections and risk-adjusted strategies.",
   "requestFramePermissions": [],
-  "y7": [],
-  "Yp": []
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
