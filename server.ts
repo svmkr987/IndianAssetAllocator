@@ -88,6 +88,7 @@ async function startServer() {
         return res.json(newsCache);
       }
 
+      console.log("Fetching news from LiveMint...");
       const feed = await parser.parseURL('https://www.livemint.com/rss/markets');
       
       newsCache = feed.items.slice(0, 5).map(item => ({
@@ -97,9 +98,10 @@ async function startServer() {
       }));
       
       lastFetched = now;
+      console.log("News fetched successfully.");
       res.json(newsCache);
     } catch (error: any) {
-      console.error("/api/news error:", error);
+      console.error("/api/news error:", error.message, error.stack);
       
       // If we don't have a cache, pre-populate with default data to avoid UI error state
       if (!newsCache) {
