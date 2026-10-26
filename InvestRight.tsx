@@ -10,7 +10,6 @@ import { UserInputs, Exclusions, ReturnRates, AllocationResult, RiskLevel, Proje
 import { calculateAllocation, formatCurrency, formatDate, formatNumberIndian, parseNumberIndian } from './utils';
 import { AssetCard, ProgressBar } from './components/UI';
 import { SipCalculatorModal, RatesSettingsModal } from './components/Modals';
-import { MarketPulse } from './components/MarketPulse';
 
 const INITIAL_INPUTS: UserInputs = { 
   age: '25', 
@@ -361,7 +360,6 @@ export default function InvestRight({ onBack }: { onBack?: () => void }) {
                 </button>
               </div>
             </div>
-            <MarketPulse />
           </div>
         )}
 

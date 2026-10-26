@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import InvestRight from './InvestRight';
 import StockScreener from './src/components/screener/StockScreener';
 import SIPRebalancer from './src/components/rebalancer/SIPRebalancer';
-import { MarketPulse } from './components/MarketPulse';
 import { LineChart, BarChart, ArrowRight, ShieldCheck, Send, Calculator } from 'lucide-react';
 
 export default function App() {
@@ -123,10 +122,6 @@ export default function App() {
             </button>
           </div>
           
-          <div className="mt-20">
-            <h2 className="text-xl font-black text-white uppercase tracking-tighter mb-8">MarketPulse</h2>
-            <MarketPulse />
-          </div>
         </div>
       </main>
     </div>
