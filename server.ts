@@ -2,21 +2,12 @@ import express from "express";
 import path from "path";
 import { createServer as createViteServer } from "vite";
 import yfAny from 'yahoo-finance2';
-import { GoogleGenAI, Type } from "@google/genai";
 import Parser from 'rss-parser';
 
 // Handle transpilation differences between ts-node, esbuild, and native ESM
 const YFClass = (yfAny as any).default?.default || (yfAny as any).default || yfAny;
 const yahooFinance = new YFClass({ suppressNotices: ['yahooSurvey'] });
 
-const ai = new GoogleGenAI({
-  apiKey: process.env.GEMINI_API_KEY,
-  httpOptions: {
-    headers: {
-      'User-Agent': 'aistudio-build',
-    }
-  }
-});
 
 async function startServer() {
   const app = express();
@@ -79,7 +70,11 @@ async function startServer() {
   let lastFetched: number = 0;
   const CACHE_TTL = 1000 * 60 * 30; // 30 minutes
 
-  const parser = new Parser();
+  const parser = new Parser({
+    headers: {
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+    }
+  });
 
   app.get("/api/news", async (req, res) => {
     try {
