@@ -4,17 +4,17 @@ export default function ScoreGauge({ score, maxScore = 12 }: { score: number, ma
   const percentage = (score / maxScore) * 100;
   
   // Choose color based on score directly (sync with utils)
-  let colorClass = "text-red-500";
+  let colorClass = "text-danger";
   let strokeColor = "#ef4444"; // red-500
   
   if (score >= 10) {
-    colorClass = "text-emerald-500";
+    colorClass = "text-success";
     strokeColor = "#10b981";
   } else if (score >= 7) {
     colorClass = "text-blue-500";
     strokeColor = "#3b82f6";
   } else if (score >= 5) {
-    colorClass = "text-amber-500";
+    colorClass = "text-champagne";
     strokeColor = "#f59e0b";
   } else if (score >= 3) {
     colorClass = "text-orange-500";
@@ -33,7 +33,7 @@ export default function ScoreGauge({ score, maxScore = 12 }: { score: number, ma
           stroke="currentColor" 
           strokeWidth="6" 
           fill="transparent" 
-          className="text-white/10" 
+          className="text-warm/10" 
         />
         <circle 
           cx="64" cy="64" r="36" 
@@ -50,7 +50,7 @@ export default function ScoreGauge({ score, maxScore = 12 }: { score: number, ma
         <span className={`text-3xl font-black ${colorClass} tracking-tighter leading-none`}>
           {score}
         </span>
-        <span className="text-[10px] font-bold text-slate-400">/ {maxScore}</span>
+        <span className="text-[10px] font-bold text-bluegrey">/ {maxScore}</span>
       </div>
     </div>
   );

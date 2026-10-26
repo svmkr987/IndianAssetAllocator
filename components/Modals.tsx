@@ -41,70 +41,70 @@ export const SipCalculatorModal: React.FC<SipModalProps> = ({ isOpen, onClose, i
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-slate-950/80 z-[60] flex items-center justify-center p-4 backdrop-blur-md animate-in fade-in duration-300">
+    <div className="fixed inset-0 bg-midnight/80 z-[60] flex items-center justify-center p-4 backdrop-blur-md animate-in fade-in duration-300">
       <div className="bg-white rounded-2xl w-full max-w-md shadow-2xl overflow-hidden border border-white/10">
-        <div className="bg-slate-950 p-6 flex justify-between items-center border-b border-white/5">
-          <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-amber-500 flex items-center gap-3">
+        <div className="bg-midnight p-6 flex justify-between items-center border-b border-white/5">
+          <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-champagne flex items-center gap-3">
             <Calculator className="w-4 h-4" /> Wealth Goal Planner
           </h3>
-          <button onClick={onClose} className="text-slate-400 hover:text-white transition-colors"><X className="w-5 h-5" /></button>
+          <button onClick={onClose} className="text-bluegrey hover:text-warm transition-colors"><X className="w-5 h-5" /></button>
         </div>
         <div className="p-8 space-y-6">
           <div>
-            <label className="block text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-2">Target Goal (₹)</label>
+            <label className="block text-[9px] font-bold text-bluegrey uppercase tracking-widest mb-2">Target Goal (₹)</label>
             <input 
               type="text" 
               value={formatNumberIndian(targetAmount)} 
               onChange={(e) => setTargetAmount(parseNumberIndian(e.target.value))}
               placeholder="e.g. 50,00,000"
-              className="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none font-bold text-xl text-slate-800" 
+              className="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500/20 focus:border-champagne outline-none font-bold text-xl text-slate-800" 
               autoFocus 
             />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-2">Years</label>
+              <label className="block text-[9px] font-bold text-bluegrey uppercase tracking-widest mb-2">Years</label>
               <div className="relative">
                 <input 
                   type="number" 
                   value={initialDuration} 
                   readOnly 
-                  className="w-full p-4 bg-slate-100 text-slate-400 border border-slate-100 rounded-xl font-bold" 
+                  className="w-full p-4 bg-slate-100 text-bluegrey border border-slate-100 rounded-xl font-bold" 
                 />
-                <Lock className="w-3 h-3 text-slate-300 absolute right-4 top-1/2 -translate-y-1/2" />
+                <Lock className="w-3 h-3 text-bluegrey absolute right-4 top-1/2 -translate-y-1/2" />
               </div>
             </div>
             <div>
-              <label className="block text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-2">Return Rate (%)</label>
+              <label className="block text-[9px] font-bold text-bluegrey uppercase tracking-widest mb-2">Return Rate (%)</label>
               <input 
                 type="number" 
                 value={returnRate} 
                 onChange={(e) => setReturnRate(Number(e.target.value))} 
-                className="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none font-bold" 
+                className="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500/20 focus:border-champagne outline-none font-bold" 
               />
             </div>
           </div>
           <div>
-            <label className="block text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-2">Expected Inflation (%)</label>
+            <label className="block text-[9px] font-bold text-bluegrey uppercase tracking-widest mb-2">Expected Inflation (%)</label>
             <input 
               type="number" 
               value={inflationRate} 
               onChange={(e) => setInflationRate(Number(e.target.value))} 
-              className="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none font-bold" 
+              className="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500/20 focus:border-champagne outline-none font-bold" 
             />
           </div>
           <div className="bg-slate-50 rounded-xl p-4 border border-slate-100">
-            <label className="block text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1">Adjusted Target Value (Future Value)</label>
+            <label className="block text-[9px] font-bold text-bluegrey uppercase tracking-widest mb-1">Adjusted Target Value (Future Value)</label>
             <p className="text-lg font-black text-slate-700">{adjustedTarget > 0 ? formatCurrency(adjustedTarget) : "₹0"}</p>
           </div>
-          <div className="bg-slate-950 rounded-xl p-6 text-center border border-amber-500/10 shadow-xl">
-            <p className="text-[9px] text-slate-500 font-bold uppercase tracking-widest mb-2">Calculated Monthly Requirement</p>
-            <p className="text-3xl font-black text-amber-500 tracking-tight">{calculatedSip > 0 ? formatCurrency(calculatedSip) : "₹0"}</p>
+          <div className="bg-midnight rounded-xl p-6 text-center border border-champagne/10 shadow-xl">
+            <p className="text-[9px] text-bluegrey font-bold uppercase tracking-widest mb-2">Calculated Monthly Requirement</p>
+            <p className="text-3xl font-black text-champagne tracking-tight">{calculatedSip > 0 ? formatCurrency(calculatedSip) : "₹0"}</p>
           </div>
           <button 
             disabled={calculatedSip <= 0} 
             onClick={() => onApply(calculatedSip)}
-            className="w-full bg-slate-950 hover:bg-black disabled:bg-slate-200 text-amber-500 font-bold py-5 rounded-xl transition-all shadow-xl active:scale-[0.98] uppercase text-[11px] tracking-widest border border-amber-500/20"
+            className="w-full bg-midnight hover:bg-black disabled:bg-slate-200 text-champagne font-bold py-5 rounded-xl transition-all shadow-xl active:scale-[0.98] uppercase text-[11px] tracking-widest border border-champagne/20"
           >
             Apply to Portfolio
           </button>
@@ -128,16 +128,16 @@ export const RatesSettingsModal: React.FC<RatesModalProps> = ({ isOpen, onClose,
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-slate-950/80 z-[60] flex items-center justify-center p-4 backdrop-blur-md animate-in fade-in duration-300">
+    <div className="fixed inset-0 bg-midnight/80 z-[60] flex items-center justify-center p-4 backdrop-blur-md animate-in fade-in duration-300">
       <div className="bg-white rounded-2xl w-full max-sm shadow-2xl overflow-hidden border border-white/10">
-        <div className="bg-slate-950 p-6 flex justify-between items-center border-b border-white/5">
-          <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-amber-500 flex items-center gap-3">
+        <div className="bg-midnight p-6 flex justify-between items-center border-b border-white/5">
+          <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-champagne flex items-center gap-3">
             <Settings2 className="w-4 h-4" /> Expected Returns
           </h3>
-          <button onClick={onClose} className="text-slate-400 hover:text-white transition-colors"><X className="w-5 h-5" /></button>
+          <button onClick={onClose} className="text-bluegrey hover:text-warm transition-colors"><X className="w-5 h-5" /></button>
         </div>
         <div className="p-8 space-y-6">
-          <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mb-4">Adjust annual growth rates for model sensitivity.</p>
+          <p className="text-[10px] text-bluegrey font-bold uppercase tracking-widest mb-4">Adjust annual growth rates for model sensitivity.</p>
           {[
             { id: 'equity', label: 'Equity Allocation', color: 'text-emerald-600' },
             { id: 'gold', label: 'Gold Bullion', color: 'text-amber-600' },
@@ -148,12 +148,12 @@ export const RatesSettingsModal: React.FC<RatesModalProps> = ({ isOpen, onClose,
                 <input type="number" 
                   value={localRates[item.id as keyof ReturnRates]} 
                   onChange={(e) => setLocalRates({...localRates, [item.id]: Number(e.target.value)})}
-                  className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-right pr-10 outline-none focus:border-amber-500 font-bold" />
-                <span className="absolute right-3 top-3 text-slate-300 text-xs">%</span>
+                  className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-right pr-10 outline-none focus:border-champagne font-bold" />
+                <span className="absolute right-3 top-3 text-bluegrey text-xs">%</span>
               </div>
             </div>
           ))}
-          <button onClick={() => { onSave(localRates); onClose(); }} className="w-full bg-slate-950 hover:bg-black text-amber-500 font-bold py-5 rounded-xl transition-all flex items-center justify-center gap-3 shadow-xl uppercase text-[11px] tracking-widest border border-amber-500/20">
+          <button onClick={() => { onSave(localRates); onClose(); }} className="w-full bg-midnight hover:bg-black text-champagne font-bold py-5 rounded-xl transition-all flex items-center justify-center gap-3 shadow-xl uppercase text-[11px] tracking-widest border border-champagne/20">
             <Save className="w-4 h-4" /> Update Strategy
           </button>
         </div>

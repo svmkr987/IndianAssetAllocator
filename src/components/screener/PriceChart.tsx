@@ -9,8 +9,8 @@ interface PriceChartProps {
 export default function PriceChart({ data }: PriceChartProps) {
   if (!data || !data.quotes || data.quotes.length === 0) {
     return (
-      <div className="h-64 flex items-center justify-center bg-slate-950 rounded-2xl border border-white/5">
-        <span className="text-slate-500 font-medium">No chart data available</span>
+      <div className="h-64 flex items-center justify-center bg-midnight rounded-2xl border border-white/5">
+        <span className="text-bluegrey font-medium">No chart data available</span>
       </div>
     );
   }
@@ -62,11 +62,11 @@ export default function PriceChart({ data }: PriceChartProps) {
             content={({ active, payload }) => {
               if (active && payload && payload.length) {
                 return (
-                  <div className="bg-black p-3 border border-amber-500/20 shadow-xl rounded-xl">
-                    <p className="text-[10px] font-bold text-amber-500/80 mb-1 uppercase">
+                  <div className="bg-black p-3 border border-champagne/20 shadow-xl rounded-xl">
+                    <p className="text-[10px] font-bold text-champagne/80 mb-1 uppercase">
                       {format(payload[0].payload.date, 'dd MMM yyyy')}
                     </p>
-                    <p className="text-lg font-black text-white">
+                    <p className="text-lg font-black text-warm">
                       ₹{Number(payload[0].value).toFixed(2)}
                     </p>
                   </div>

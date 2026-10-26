@@ -40,10 +40,10 @@ const StylishTickLogo: React.FC<{ size?: number; className?: string }> = ({
   className = ""
 }) => {
   return (
-    <div className={`flex items-center justify-center p-2 bg-slate-900 rounded-xl border border-emerald-500/30 shadow-lg ${className}`}>
+    <div className={`flex items-center justify-center p-2 bg-deep rounded-xl border border-emerald-500/30 shadow-lg ${className}`}>
       <Check 
         size={size} 
-        className="text-white stroke-[3.5px] drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]" 
+        className="text-warm stroke-[3.5px] drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]" 
       />
     </div>
   );
@@ -57,47 +57,47 @@ const BarChartLogoComp: React.FC<{ size?: number; className?: string }> = ({
   className = ""
 }) => {
   return (
-    <div className={`flex items-center justify-center p-2 bg-slate-900 rounded-xl border border-slate-800 shadow-sm ${className}`}>
+    <div className={`flex items-center justify-center p-2 bg-deep rounded-xl border border-slatenavy shadow-sm ${className}`}>
       <BarChartLogo
         size={size} 
-        className="text-amber-500 stroke-[2.5px]" 
+        className="text-champagne stroke-[2.5px]" 
       />
     </div>
   );
 };
 
 const ReportHeader: React.FC<{ inputs: UserInputs }> = ({ inputs }) => (
-  <div className="flex flex-col border-b border-slate-800 pb-8 mb-8">
+  <div className="flex flex-col border-b border-slatenavy pb-8 mb-8">
     <div className="flex justify-between items-center">
       <div className="flex items-center gap-6">
         <BarChartLogoComp size={40} />
         <div>
-          <h1 className="text-3xl font-black text-white tracking-tight leading-none uppercase">Portfolio Architect</h1>
-          <p className="text-amber-500 text-[11px] mt-2 font-bold uppercase tracking-[0.25em]">by MKR FinWise</p>
+          <h1 className="text-3xl font-black text-warm tracking-tight leading-none uppercase">Portfolio Architect</h1>
+          <p className="text-champagne text-[11px] mt-2 font-bold uppercase tracking-[0.25em]">by MKR FinWise</p>
         </div>
       </div>
       <div className="text-right">
-        <div className="text-[10px] text-slate-400 uppercase tracking-widest font-bold mb-1">Issue Date</div>
-        <div className="text-white font-extrabold text-xl">{formatDate()}</div>
+        <div className="text-[10px] text-bluegrey uppercase tracking-widest font-bold mb-1">Issue Date</div>
+        <div className="text-warm font-extrabold text-xl">{formatDate()}</div>
       </div>
     </div>
     
-    <div className="mt-8 grid grid-cols-4 gap-6 bg-slate-900 p-6 rounded-2xl border border-slate-800">
+    <div className="mt-8 grid grid-cols-4 gap-6 bg-deep p-6 rounded-2xl border border-slatenavy">
       <div>
-        <div className="text-[10px] text-slate-400 uppercase font-bold tracking-wider mb-1">Investor Age</div>
-        <div className="font-black text-white text-xl">{inputs.age} Years</div>
+        <div className="text-[10px] text-bluegrey uppercase font-bold tracking-wider mb-1">Investor Age</div>
+        <div className="font-black text-warm text-xl">{inputs.age} Years</div>
       </div>
       <div>
-        <div className="text-[10px] text-slate-400 uppercase font-bold tracking-wider mb-1">Horizon</div>
-        <div className="font-black text-white text-xl">{inputs.horizon} Years</div>
+        <div className="text-[10px] text-bluegrey uppercase font-bold tracking-wider mb-1">Horizon</div>
+        <div className="font-black text-warm text-xl">{inputs.horizon} Years</div>
       </div>
       <div>
-        <div className="text-[10px] text-slate-400 uppercase font-bold tracking-wider mb-1">Risk Profile</div>
-        <div className="font-black text-white text-xl">{inputs.risk}</div>
+        <div className="text-[10px] text-bluegrey uppercase font-bold tracking-wider mb-1">Risk Profile</div>
+        <div className="font-black text-warm text-xl">{inputs.risk}</div>
       </div>
       <div>
-        <div className="text-[10px] text-slate-400 uppercase font-bold tracking-wider mb-1">Monthly SIP</div>
-        <div className="font-black text-white text-xl">{formatCurrency(parseFloat(inputs.amount))}</div>
+        <div className="text-[10px] text-bluegrey uppercase font-bold tracking-wider mb-1">Monthly SIP</div>
+        <div className="font-black text-warm text-xl">{formatCurrency(parseFloat(inputs.amount))}</div>
       </div>
     </div>
   </div>
@@ -196,16 +196,16 @@ export default function InvestRight({ onBack }: { onBack?: () => void }) {
   const displayCount = (visitorCount !== null ? visitorCount + BASE_VISITORS : BASE_VISITORS);
 
   return (
-    <div className="min-h-screen pb-32 print:bg-slate-950 print:pb-0 flex flex-col bg-slate-950 text-slate-300 selection:bg-amber-500/20">
+    <div className="min-h-screen pb-32 print:bg-midnight print:pb-0 flex flex-col bg-midnight text-bluegrey selection:bg-champagne/20">
       
       {/* Navbar */}
-      <div className="bg-slate-950 text-white shadow-sm sticky top-0 z-50 no-print border-b border-slate-800">
+      <div className="bg-midnight text-warm shadow-sm sticky top-0 z-50 no-print border-b border-slatenavy">
         <div className="w-full px-6 py-4 flex justify-between items-center">
           <div className="flex items-center gap-4">
             <BarChartLogoComp size={24} />
             <div className="flex flex-col">
-              <h1 className="text-base font-black tracking-tight leading-none uppercase text-white">Portfolio Architect</h1>
-              <p className="text-amber-500 text-[10px] font-bold uppercase tracking-[0.2em] mt-1">by MKR FinWise</p>
+              <h1 className="text-base font-black tracking-tight leading-none uppercase text-warm">Portfolio Architect</h1>
+              <p className="text-champagne text-[10px] font-bold uppercase tracking-[0.2em] mt-1">by MKR FinWise</p>
             </div>
           </div>
           
@@ -213,7 +213,7 @@ export default function InvestRight({ onBack }: { onBack?: () => void }) {
             {step === 2 && (
               <button 
                 onClick={resetPlan} 
-                className="bg-slate-900 hover:bg-slate-800 px-4 py-2 rounded-lg transition-all text-slate-400 flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider border border-slate-800"
+                className="bg-deep hover:bg-slate-800 px-4 py-2 rounded-lg transition-all text-bluegrey flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider border border-slatenavy"
               >
                 <PlusCircle className="w-3.5 h-3.5" />
                 <span>Reset</span>
@@ -222,7 +222,7 @@ export default function InvestRight({ onBack }: { onBack?: () => void }) {
             {onBack && (
               <button 
                 onClick={onBack}
-                className="bg-slate-900 hover:bg-slate-800 px-4 py-2 rounded-lg transition-all text-amber-500 flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider border border-slate-800"
+                className="bg-deep hover:bg-slate-800 px-4 py-2 rounded-lg transition-all text-champagne flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider border border-slatenavy"
                 title="Home"
               >
                 <span>Home</span>
@@ -237,12 +237,12 @@ export default function InvestRight({ onBack }: { onBack?: () => void }) {
         {/* Input Stage */}
         {step === 1 && (
           <div className="space-y-6">
-            <div className="bg-slate-900 rounded-3xl shadow-2xl border border-slate-800 p-8 sm:p-12 animate-in fade-in slide-in-from-bottom-6 duration-500 relative overflow-hidden">
+            <div className="bg-deep rounded-3xl shadow-2xl border border-slatenavy p-8 sm:p-12 animate-in fade-in slide-in-from-bottom-6 duration-500 relative overflow-hidden">
               <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-amber-500 via-amber-600 to-amber-500"></div>
               
-              <h2 className="text-2xl font-black text-white mb-10 flex items-center gap-4">
-                <div className="p-3 bg-slate-950 rounded-xl shadow-sm border border-slate-800">
-                  <ShieldCheck className="h-6 w-6 text-amber-500" />
+              <h2 className="text-2xl font-black text-warm mb-10 flex items-center gap-4">
+                <div className="p-3 bg-midnight rounded-xl shadow-sm border border-slatenavy">
+                  <ShieldCheck className="h-6 w-6 text-champagne" />
                 </div>
                 Portfolio Configuration
               </h2>
@@ -250,12 +250,12 @@ export default function InvestRight({ onBack }: { onBack?: () => void }) {
               <div className="space-y-10">
                 <div className="grid grid-cols-2 gap-8">
                   <div>
-                    <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3">Your Age</label>
+                    <label className="block text-[10px] font-bold text-bluegrey uppercase tracking-widest mb-3">Your Age</label>
                     <input type="number" name="age" value={inputs.age} onChange={handleInputChange}
-                      className="w-full p-5 bg-slate-950 border border-slate-800 rounded-2xl focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all font-black text-2xl text-white" />
+                      className="w-full p-5 bg-midnight border border-slatenavy rounded-2xl focus:ring-2 focus:ring-amber-500/20 focus:border-champagne outline-none transition-all font-black text-2xl text-warm" />
                   </div>
                   <div>
-                    <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3">Horizon (Years)</label>
+                    <label className="block text-[10px] font-bold text-bluegrey uppercase tracking-widest mb-3">Horizon (Years)</label>
                     <div className="relative">
                       <input 
                         type="number" 
@@ -265,8 +265,8 @@ export default function InvestRight({ onBack }: { onBack?: () => void }) {
                         readOnly={isSipLocked}
                         className={`w-full p-5 border rounded-2xl outline-none transition-all font-black text-2xl ${
                           isSipLocked 
-                            ? 'bg-slate-900 text-slate-600 border-slate-800' 
-                            : 'bg-slate-950 border-slate-800 text-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500'
+                            ? 'bg-deep text-slate-600 border-slatenavy' 
+                            : 'bg-midnight border-slatenavy text-warm focus:ring-2 focus:ring-amber-500/20 focus:border-champagne'
                         }`} 
                       />
                       {isSipLocked && <Lock className="w-5 h-5 text-slate-600 absolute right-5 top-1/2 -translate-y-1/2" />}
@@ -276,15 +276,15 @@ export default function InvestRight({ onBack }: { onBack?: () => void }) {
 
                 <div>
                   <div className="flex justify-between items-end mb-4">
-                     <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest">Monthly SIP (₹)</label>
+                     <label className="block text-[10px] font-bold text-bluegrey uppercase tracking-widest">Monthly SIP (₹)</label>
                      {!isSipLocked ? (
                        <button onClick={() => setShowCalculator(true)}
-                         className="text-[10px] text-amber-500 font-extrabold hover:text-amber-400 flex items-center gap-1.5 uppercase tracking-[0.15em]">
+                         className="text-[10px] text-champagne font-extrabold hover:text-bright flex items-center gap-1.5 uppercase tracking-[0.15em]">
                          <Calculator className="w-4 h-4" /> Inflation adjusted SIP Estimator
                        </button>
                      ) : (
                        <button onClick={handleUnlockSip}
-                         className="text-[10px] text-red-500 font-extrabold hover:text-red-400 flex items-center gap-1.5 uppercase tracking-[0.15em]">
+                         className="text-[10px] text-danger font-extrabold hover:text-red-400 flex items-center gap-1.5 uppercase tracking-[0.15em]">
                          <RefreshCw className="w-4 h-4" /> Change Input
                        </button>
                      )}
@@ -298,33 +298,33 @@ export default function InvestRight({ onBack }: { onBack?: () => void }) {
                       readOnly={isSipLocked}
                       className={`w-full p-5 border rounded-2xl outline-none transition-all font-black text-2xl ${
                         isSipLocked 
-                          ? 'bg-slate-900 text-slate-600 border-slate-800' 
-                          : 'bg-slate-950 border-slate-800 text-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500'
+                          ? 'bg-deep text-slate-600 border-slatenavy' 
+                          : 'bg-midnight border-slatenavy text-warm focus:ring-2 focus:ring-amber-500/20 focus:border-champagne'
                       }`} 
                     />
                     {!isSipLocked && <div className="absolute right-5 top-1/2 -translate-y-1/2 text-slate-600 font-bold text-sm">INR</div>}
                   </div>
                   
                   <div className="mt-8">
-                    <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3">Annual Step-up (%)</label>
+                    <label className="block text-[10px] font-bold text-bluegrey uppercase tracking-widest mb-3">Annual Step-up (%)</label>
                     <div className="relative">
                       <input type="number" name="stepUp" value={inputs.stepUp} onChange={handleInputChange}
-                        className="w-full p-5 bg-slate-950 border border-slate-800 rounded-2xl focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all font-black text-2xl text-white" />
+                        className="w-full p-5 bg-midnight border border-slatenavy rounded-2xl focus:ring-2 focus:ring-amber-500/20 focus:border-champagne outline-none transition-all font-black text-2xl text-warm" />
                       <div className="absolute right-5 top-1/2 -translate-y-1/2 text-slate-600 font-bold text-sm">P.A.</div>
                     </div>
-                    <p className="text-[10px] text-slate-500 mt-2 font-medium italic">* Used exclusively for wealth projections, not asset allocation.</p>
+                    <p className="text-[10px] text-bluegrey mt-2 font-medium italic">* Used exclusively for wealth projections, not asset allocation.</p>
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-5">Risk Tolerance</label>
+                  <label className="block text-[10px] font-bold text-bluegrey uppercase tracking-widest mb-5">Risk Tolerance</label>
                   <div className="grid grid-cols-3 gap-5">
                     {(['Low', 'Medium', 'High'] as RiskLevel[]).map((level) => (
                       <button key={level} onClick={() => setInputs({...inputs, risk: level})}
                         className={`py-5 px-3 rounded-2xl border font-black uppercase tracking-[0.2em] transition-all text-xs ${
                           inputs.risk === level 
-                            ? 'bg-amber-500 border-amber-500 text-slate-950 scale-[1.05] shadow-2xl' 
-                            : 'bg-slate-950 border-slate-800 text-slate-500 hover:border-slate-700'
+                            ? 'bg-champagne border-champagne text-slate-950 scale-[1.05] shadow-2xl' 
+                            : 'bg-midnight border-slatenavy text-bluegrey hover:border-slate-700'
                         }`}>
                         {level}
                       </button>
@@ -332,20 +332,20 @@ export default function InvestRight({ onBack }: { onBack?: () => void }) {
                   </div>
                 </div>
 
-                <div className="border-t border-slate-800 pt-10">
-                   <div className="flex items-center gap-3 text-[11px] font-bold text-white mb-6 uppercase tracking-[0.2em]">
-                      <Sliders className="w-5 h-5 text-amber-500" /> 
+                <div className="border-t border-slatenavy pt-10">
+                   <div className="flex items-center gap-3 text-[11px] font-bold text-warm mb-6 uppercase tracking-[0.2em]">
+                      <Sliders className="w-5 h-5 text-champagne" /> 
                       Custom Exclusions
                    </div>
 
                    <div className="space-y-4">
                       {(Object.keys(exclusions) as Array<keyof Exclusions>).map((key) => (
-                        <label key={key} className={`flex items-center gap-5 p-5 rounded-2xl border transition-all cursor-pointer ${exclusions[key] ? 'bg-red-950/30 border-red-900' : 'bg-slate-950 border-slate-800 hover:border-slate-700'}`}>
-                          <div className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-colors ${exclusions[key] ? 'bg-red-500 border-red-500' : 'border-slate-700 bg-slate-900'}`}>
-                            {exclusions[key] && <CheckSquare className="w-4 h-4 text-white" />}
+                        <label key={key} className={`flex items-center gap-5 p-5 rounded-2xl border transition-all cursor-pointer ${exclusions[key] ? 'bg-red-950/30 border-danger' : 'bg-midnight border-slatenavy hover:border-slate-700'}`}>
+                          <div className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-colors ${exclusions[key] ? 'bg-danger border-red-500' : 'border-slate-700 bg-deep'}`}>
+                            {exclusions[key] && <CheckSquare className="w-4 h-4 text-warm" />}
                           </div>
                           <input type="checkbox" className="hidden" checked={exclusions[key]} onChange={() => toggleExclusion(key)} />
-                          <span className="text-xs font-bold text-slate-300 uppercase tracking-wider">
+                          <span className="text-xs font-bold text-bluegrey uppercase tracking-wider">
                             Exclude {key === 'usEquity' ? 'International Equity' : 'Precious Metals'}
                           </span>
                         </label>
@@ -354,7 +354,7 @@ export default function InvestRight({ onBack }: { onBack?: () => void }) {
                 </div>
 
                 <button onClick={handleCalculate}
-                  className="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-black py-6 rounded-2xl shadow-2xl transition-all flex items-center justify-center gap-4 active:scale-[0.98] uppercase text-sm tracking-[0.3em]"
+                  className="w-full bg-champagne hover:bg-bright text-slate-950 font-black py-6 rounded-2xl shadow-2xl transition-all flex items-center justify-center gap-4 active:scale-[0.98] uppercase text-sm tracking-[0.3em]"
                 >
                   Generate Strategy <ArrowRight className="w-5 h-5" />
                 </button>
@@ -366,35 +366,35 @@ export default function InvestRight({ onBack }: { onBack?: () => void }) {
         {/* Report Stage */}
         {step === 2 && result && (
           <div className="animate-in fade-in slide-in-from-bottom-6 duration-600">
-            <div id="report-content" className="space-y-12 bg-slate-900 p-6 sm:p-12 rounded-[2.5rem] shadow-inner border border-slate-800">
+            <div id="report-content" className="space-y-12 bg-deep p-6 sm:p-12 rounded-[2.5rem] shadow-inner border border-slatenavy">
               
               <ReportHeader inputs={inputs} />
 
               {/* Strategic Terminal Value - Dashboard Section (Plain Black) */}
-              <div className="dark-banner bg-slate-900 rounded-3xl p-10 text-white shadow-2xl relative overflow-hidden">
-                <div className="flex items-center justify-between text-amber-400 mb-10 border-b border-white/10 pb-6">
+              <div className="dark-banner bg-deep rounded-3xl p-10 text-warm shadow-2xl relative overflow-hidden">
+                <div className="flex items-center justify-between text-bright mb-10 border-b border-white/10 pb-6">
                   <div className="flex items-center gap-3 font-bold text-[11px] uppercase tracking-[0.3em]">
                     <BarChart3 className="w-5 h-5" /> Strategic Terminal Value
                   </div>
-                  <button onClick={() => setShowRatesModal(true)} className="no-print p-3 bg-white/10 hover:bg-white/20 rounded-xl transition-colors text-[11px] text-amber-500 flex items-center gap-2 font-black uppercase tracking-widest border border-white/20">
+                  <button onClick={() => setShowRatesModal(true)} className="no-print p-3 bg-white/10 hover:bg-white/20 rounded-xl transition-colors text-[11px] text-champagne flex items-center gap-2 font-black uppercase tracking-widest border border-white/20">
                     <Settings2 className="w-4 h-4" /> Expected Returns
                   </button>
                 </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-12 relative z-10">
                   <div>
-                    <div className="text-slate-500 text-[10px] font-bold uppercase tracking-widest mb-4">Cumulative Capital</div>
-                    <div className="text-2xl font-black text-white tracking-tight">{formatCurrency(result!.projection.invested)}</div>
+                    <div className="text-bluegrey text-[10px] font-bold uppercase tracking-widest mb-4">Cumulative Capital</div>
+                    <div className="text-2xl font-black text-warm tracking-tight">{formatCurrency(result!.projection.invested)}</div>
                   </div>
                   <div>
-                    <div className="text-slate-500 text-[10px] font-bold uppercase tracking-widest mb-4">Estimated Yield</div>
-                    <div className="text-2xl font-black text-emerald-500 tracking-tight">
+                    <div className="text-bluegrey text-[10px] font-bold uppercase tracking-widest mb-4">Estimated Yield</div>
+                    <div className="text-2xl font-black text-success tracking-tight">
                       +{formatCurrency(result.projection.value - result.projection.invested)}
                     </div>
                   </div>
                   <div>
-                    <div className="text-amber-500/80 text-[10px] font-bold uppercase tracking-widest mb-4">Estimated Corpus</div>
-                    <div className="text-2xl font-black text-white tracking-tight">{formatCurrency(result!.projection.value)}</div>
+                    <div className="text-champagne/80 text-[10px] font-bold uppercase tracking-widest mb-4">Estimated Corpus</div>
+                    <div className="text-2xl font-black text-warm tracking-tight">{formatCurrency(result!.projection.value)}</div>
                   </div>
                 </div>
                 
@@ -403,17 +403,17 @@ export default function InvestRight({ onBack }: { onBack?: () => void }) {
                     const breakdown = data as ProjectionBreakdown;
                     return breakdown.invested > 0 && (
                       <div key={asset} className="bg-white/[0.08] p-5 rounded-2xl border border-white/5 w-full sm:w-64">
-                        <div className="font-bold text-slate-400 text-[10px] uppercase tracking-wider mb-4 flex items-center justify-between border-b border-white/5 pb-2">
-                          {asset} <span className="text-amber-500/70">{rates[asset as keyof ReturnRates]}%</span>
+                        <div className="font-bold text-bluegrey text-[10px] uppercase tracking-wider mb-4 flex items-center justify-between border-b border-white/5 pb-2">
+                          {asset} <span className="text-champagne/70">{rates[asset as keyof ReturnRates]}%</span>
                         </div>
                         <div className="space-y-2">
                           <div className="flex justify-between items-center">
-                            <span className="text-[9px] text-slate-500 uppercase font-bold tracking-widest">Invested</span>
-                            <span className="text-xs font-bold text-slate-300">{formatCurrency(breakdown.invested)}</span>
+                            <span className="text-[9px] text-bluegrey uppercase font-bold tracking-widest">Invested</span>
+                            <span className="text-xs font-bold text-bluegrey">{formatCurrency(breakdown.invested)}</span>
                           </div>
                           <div className="flex justify-between items-center">
-                            <span className="text-[9px] text-slate-500 uppercase font-bold tracking-widest">Yield</span>
-                            <span className="text-xs font-bold text-emerald-500">+{formatCurrency(breakdown.returns)}</span>
+                            <span className="text-[9px] text-bluegrey uppercase font-bold tracking-widest">Yield</span>
+                            <span className="text-xs font-bold text-success">+{formatCurrency(breakdown.returns)}</span>
                           </div>
                         </div>
                       </div>
@@ -423,13 +423,13 @@ export default function InvestRight({ onBack }: { onBack?: () => void }) {
 
                 <div className="mt-10 pt-8 border-t border-white/10 flex flex-wrap gap-10 items-center">
                   <div className="flex items-center gap-4">
-                    <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Model Yield</span>
-                    <span className="text-sm font-black text-emerald-500 bg-emerald-500/10 px-5 py-2 rounded-xl border border-emerald-500/20">~{result.projection.weightedRate}% Weighted</span>
+                    <span className="text-[10px] text-bluegrey font-bold uppercase tracking-widest">Model Yield</span>
+                    <span className="text-sm font-black text-success bg-success/10 px-5 py-2 rounded-xl border border-emerald-500/20">~{result.projection.weightedRate}% Weighted</span>
                   </div>
                   {parseFloat(inputs.stepUp) > 0 && (
                     <div className="flex items-center gap-4">
-                      <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Growth Factor</span>
-                      <span className="text-sm font-black text-amber-500 bg-amber-500/10 px-5 py-2 rounded-xl border border-amber-500/20">{inputs.stepUp}% Annual Step-up</span>
+                      <span className="text-[10px] text-bluegrey font-bold uppercase tracking-widest">Growth Factor</span>
+                      <span className="text-sm font-black text-champagne bg-champagne/10 px-5 py-2 rounded-xl border border-champagne/20">{inputs.stepUp}% Annual Step-up</span>
                     </div>
                   )}
                 </div>
@@ -437,16 +437,16 @@ export default function InvestRight({ onBack }: { onBack?: () => void }) {
 
               {/* Asset Grid */}
               <div className="grid grid-cols-2 gap-6">
-                <AssetCard title="Equity" percent={result.percentages.equity} amount={result.amounts.equity} color="border-emerald-600" icon={TrendingUp} desc="Long-term Growth" />
-                <AssetCard title="Gold" percent={result.percentages.gold} amount={result.amounts.gold} color={exclusions.commodities ? "border-slate-200 opacity-40" : "border-amber-500"} icon={PieChart} desc={exclusions.commodities ? "Excluded" : "Inflation Hedge"} />
+                <AssetCard title="Equity" percent={result.percentages.equity} amount={result.amounts.equity} color="border-success" icon={TrendingUp} desc="Long-term Growth" />
+                <AssetCard title="Gold" percent={result.percentages.gold} amount={result.amounts.gold} color={exclusions.commodities ? "border-slate-200 opacity-40" : "border-champagne"} icon={PieChart} desc={exclusions.commodities ? "Excluded" : "Inflation Hedge"} />
               </div>
 
               {/* Equity Split */}
               {result.percentages.equity > 0 && (
-                <div className="bg-slate-900 rounded-[2rem] overflow-hidden border border-slate-800 shadow-sm">
-                  <div className="bg-slate-900 p-6 border-b border-slate-800 flex justify-between items-center">
-                    <h3 className="font-black text-white flex items-center gap-4 text-sm uppercase tracking-widest"><TrendingUp className="w-6 h-6 text-emerald-600" /> Equity Components</h3>
-                    <div className="px-5 py-2 bg-slate-950 rounded-xl border border-slate-800 text-[11px] font-black text-slate-400 uppercase tracking-widest">
+                <div className="bg-deep rounded-[2rem] overflow-hidden border border-slatenavy shadow-sm">
+                  <div className="bg-deep p-6 border-b border-slatenavy flex justify-between items-center">
+                    <h3 className="font-black text-warm flex items-center gap-4 text-sm uppercase tracking-widest"><TrendingUp className="w-6 h-6 text-emerald-600" /> Equity Components</h3>
+                    <div className="px-5 py-2 bg-midnight rounded-xl border border-slatenavy text-[11px] font-black text-bluegrey uppercase tracking-widest">
                       {formatCurrency(result.amounts.equity)} / Month
                     </div>
                   </div>
@@ -455,7 +455,7 @@ export default function InvestRight({ onBack }: { onBack?: () => void }) {
                       const amount = (parseFloat(inputs.amount) * pct) / 100;
                       // Calculate the width relative to the equity portion so the bars look proportionate
                       const relativeWidth = result.percentages.equity > 0 ? (pct / result.percentages.equity) * 100 : 0;
-                      return pct > 0 && <ProgressBar key={name} label={name} value={pct} relativeWidth={relativeWidth} amount={formatCurrency(amount)} colorClass={name.includes('US') ? 'bg-slate-950' : 'bg-emerald-600'} />
+                      return pct > 0 && <ProgressBar key={name} label={name} value={pct} relativeWidth={relativeWidth} amount={formatCurrency(amount)} colorClass={name.includes('US') ? 'bg-midnight' : 'bg-emerald-600'} />
                     })}
                   </div>
                 </div>
@@ -463,34 +463,34 @@ export default function InvestRight({ onBack }: { onBack?: () => void }) {
 
               {/* Rationale & Recommendations */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-                <div className="bg-slate-900 p-10 rounded-[2rem] border border-slate-800 shadow-sm">
-                  <h4 className="font-black text-white mb-6 text-[11px] uppercase tracking-[0.3em] border-b border-slate-800 pb-4 flex items-center gap-3">
+                <div className="bg-deep p-10 rounded-[2rem] border border-slatenavy shadow-sm">
+                  <h4 className="font-black text-warm mb-6 text-[11px] uppercase tracking-[0.3em] border-b border-slatenavy pb-4 flex items-center gap-3">
                     <FileText className="w-6 h-6 text-amber-600" /> Allocation Thesis
                   </h4>
-                  <p className={`text-sm leading-relaxed font-medium text-slate-300`}>{result.rationale}</p>
+                  <p className={`text-sm leading-relaxed font-medium text-bluegrey`}>{result.rationale}</p>
                 </div>
-                <div className="bg-slate-900 p-10 rounded-[2rem] border border-slate-800 shadow-sm">
-                  <h4 className="font-black text-white mb-6 text-[11px] uppercase tracking-[0.3em] border-b border-slate-800 pb-4 flex items-center gap-3">
+                <div className="bg-deep p-10 rounded-[2rem] border border-slatenavy shadow-sm">
+                  <h4 className="font-black text-warm mb-6 text-[11px] uppercase tracking-[0.3em] border-b border-slatenavy pb-4 flex items-center gap-3">
                     <Gem className="w-6 h-6 text-emerald-600" /> Expert View
                   </h4>
-                  <div className="text-[11px] text-slate-500 leading-relaxed font-bold italic">
+                  <div className="text-[11px] text-bluegrey leading-relaxed font-bold italic">
                     Focus on low-cost Index Funds for Equity core. Use Sovereign Gold Bonds (SGB) for tax-efficient metal exposure.
                   </div>
                 </div>
               </div>
 
               {/* Professional Disclosure */}
-              <div className="flex gap-8 p-10 border border-slate-800 bg-slate-900 rounded-[2rem]">
+              <div className="flex gap-8 p-10 border border-slatenavy bg-deep rounded-[2rem]">
                 <AlertTriangle className="w-8 h-8 text-amber-600 shrink-0" />
-                <div className="text-[11px] text-slate-400 leading-relaxed font-semibold uppercase tracking-wide">
-                  <p><strong className="text-white">Important Notice:</strong> This framework is based on modern portfolio theory. The information shared is for educational and informational purposes only and should not be considered as investment advice. The presenter is not a SEBI registered investment advisor. Market investments are subject to risk. Please consult a SEBI registered financial advisor before making any investment decisions.</p>
+                <div className="text-[11px] text-bluegrey leading-relaxed font-semibold uppercase tracking-wide">
+                  <p><strong className="text-warm">Important Notice:</strong> This framework is based on modern portfolio theory. The information shared is for educational and informational purposes only and should not be considered as investment advice. The presenter is not a SEBI registered investment advisor. Market investments are subject to risk. Please consult a SEBI registered financial advisor before making any investment decisions.</p>
                 </div>
               </div>
               
               {/* Report Footer Contact (Visible only on the report/PDF) */}
-              <div className="pt-8 border-t border-slate-800 text-center flex flex-col items-center gap-1.5">
-                <div className="flex items-center gap-2 px-4 py-1.5 bg-slate-950 rounded-full border border-amber-500/20 mb-2">
-                  <Users className="w-3.5 h-3.5 text-amber-500" />
+              <div className="pt-8 border-t border-slatenavy text-center flex flex-col items-center gap-1.5">
+                <div className="flex items-center gap-2 px-4 py-1.5 bg-midnight rounded-full border border-champagne/20 mb-2">
+                  <Users className="w-3.5 h-3.5 text-champagne" />
                   <span className="text-[10px] font-black text-slate-100 uppercase tracking-widest italic">
                     Trusted by {displayCount.toLocaleString()}+ Investors
                   </span>
@@ -498,8 +498,8 @@ export default function InvestRight({ onBack }: { onBack?: () => void }) {
                 <p className="text-slate-600 text-[11px] italic font-medium tracking-wide">
                   "Not all Mutual Funds & ETFs are worth your money."
                 </p>
-                <p className="text-slate-400 text-[10px] font-medium tracking-wider">
-                  Find out which ones: <a href="https://wa.me/919008264816?text=Hi" target="_blank" rel="noopener noreferrer" className="text-amber-500 font-bold ml-1" >+91-9008264816</a> (Only Whatsapp). To learn Swing trading, click <a href="https://t.me/MKR_FinWise_Hub" target="_blank" rel="noopener noreferrer" className="text-amber-500 font-bold ml-1" >MKR FinWise Hub</a>.
+                <p className="text-bluegrey text-[10px] font-medium tracking-wider">
+                  Find out which ones: <a href="https://wa.me/919008264816?text=Hi" target="_blank" rel="noopener noreferrer" className="text-champagne font-bold ml-1" >+91-9008264816</a> (Only Whatsapp). To learn Swing trading, click <a href="https://t.me/MKR_FinWise_Hub" target="_blank" rel="noopener noreferrer" className="text-champagne font-bold ml-1" >MKR FinWise Hub</a>.
                 </p>
               </div>
             </div>
@@ -512,36 +512,36 @@ export default function InvestRight({ onBack }: { onBack?: () => void }) {
                   <Settings2 className="w-5 h-5" /> Refine Inputs
                 </button>
                 <button onClick={resetPlan}
-                  className="bg-slate-900 hover:bg-slate-800 text-slate-400 font-black py-6 rounded-2xl border border-slate-800 transition-all text-[12px] uppercase tracking-widest flex items-center justify-center gap-3">
+                  className="bg-deep hover:bg-slate-800 text-bluegrey font-black py-6 rounded-2xl border border-slatenavy transition-all text-[12px] uppercase tracking-widest flex items-center justify-center gap-3">
                   <PlusCircle className="w-5 h-5" /> New Session
                 </button>
               </div>
               
               <button 
                 onClick={handlePrint} 
-                className="w-full bg-slate-950 hover:bg-black text-amber-500 font-black py-7 rounded-2xl transition-all shadow-2xl flex items-center justify-center gap-4 active:scale-[0.99] uppercase text-sm tracking-[0.35em] border border-amber-500/20"
+                className="w-full bg-midnight hover:bg-black text-champagne font-black py-7 rounded-2xl transition-all shadow-2xl flex items-center justify-center gap-4 active:scale-[0.99] uppercase text-sm tracking-[0.35em] border border-champagne/20"
               >
                 <Printer className="w-7 h-7" /> Save Strategy as PDF (Print)
               </button>
-              <p className="text-[11px] text-slate-400 text-center font-black italic tracking-widest opacity-80">Use the browser's "Save as PDF" option in the print menu for a high-quality report.</p>
+              <p className="text-[11px] text-bluegrey text-center font-black italic tracking-widest opacity-80">Use the browser's "Save as PDF" option in the print menu for a high-quality report.</p>
             </div>
           </div>
         )}
       </main>
 
-      <footer className="no-print fixed bottom-0 left-0 right-0 bg-slate-950 text-slate-300 border-t border-slate-800 py-6 z-50 shadow-[0_-4px_20px_-5px_rgba(0,0,0,0.5)]">
+      <footer className="no-print fixed bottom-0 left-0 right-0 bg-midnight text-bluegrey border-t border-slatenavy py-6 z-50 shadow-[0_-4px_20px_-5px_rgba(0,0,0,0.5)]">
         <div className="max-w-4xl mx-auto px-6 text-center flex flex-col items-center gap-1.5">
-          <div className="flex items-center gap-2 px-3 py-1 bg-slate-900 rounded-full border border-slate-800 mb-1">
-            <Users className="w-3 h-3 text-amber-500" />
-            <span className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.2em]">
+          <div className="flex items-center gap-2 px-3 py-1 bg-deep rounded-full border border-slatenavy mb-1">
+            <Users className="w-3 h-3 text-champagne" />
+            <span className="text-[9px] font-bold text-bluegrey uppercase tracking-[0.2em]">
               Trusted by {displayCount.toLocaleString()}+ Investors
             </span>
           </div>
-          <p className="text-slate-300 text-[11px] italic font-medium tracking-wide opacity-90">
+          <p className="text-bluegrey text-[11px] italic font-medium tracking-wide opacity-90">
             "Not all Mutual Funds & ETFs are worth your money."
           </p>
-          <p className="text-slate-500 text-[10px] font-medium tracking-wide">
-            Find out which ones: <a href="https://wa.me/919008264816?text=Hi" target="_blank" rel="noopener noreferrer" className="text-amber-500 font-bold ml-1" >+91-9008264816</a> (Only Whatsapp). To learn Swing trading, click <a href="https://t.me/MKR_FinWise_Hub" target="_blank" rel="noopener noreferrer" className="text-amber-500 font-bold ml-1" >MKR FinWise Hub</a>.
+          <p className="text-bluegrey text-[10px] font-medium tracking-wide">
+            Find out which ones: <a href="https://wa.me/919008264816?text=Hi" target="_blank" rel="noopener noreferrer" className="text-champagne font-bold ml-1" >+91-9008264816</a> (Only Whatsapp). To learn Swing trading, click <a href="https://t.me/MKR_FinWise_Hub" target="_blank" rel="noopener noreferrer" className="text-champagne font-bold ml-1" >MKR FinWise Hub</a>.
           </p>
         </div>
       </footer>
